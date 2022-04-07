@@ -16,7 +16,7 @@ import driving from '../../assets/images/driving.png'
 import { styles } from './styles'
 import AuthButton from '../../components/AuthButton'
 
-function Home({ navigation }: any) {
+function Landing({ navigation }: any) {
 
   function navigateToLogin() {
     console.log('navigateToLogin')
@@ -64,4 +64,4 @@ function Home({ navigation }: any) {
   )
 }
 
-export default Home
+export default Landing
