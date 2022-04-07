@@ -55,7 +55,7 @@ export default function AppStack() {
                 }
 
                 // You can return any component that you like here!
-                return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+                return <MaterialCommunityIcons name:string={iconName} size={size} color={color} />;
               },
               tabBarActiveTintColor: 'tomato',
               tabBarInactiveTintColor: 'gray',
