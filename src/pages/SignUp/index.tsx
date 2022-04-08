@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react'
 
 import {
@@ -22,16 +23,6 @@ export default function SignUp() {
 
   const { goBack } = useNavigation();
 
-  function handleNavigateBack() {
-    goBack();
-  }
-
-  function printaUser() {
-    console.log("user: " + user)
-    console.log("senha: " + password)
-    console.log("senha confirmada: " + confirmPassword)
-  }
-
   function signUpPasswordValidation() {
     if (password === confirmPassword) {
       Alert.alert("Senhas conferem")
@@ -41,47 +32,52 @@ export default function SignUp() {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.main}>
-      <View>
-        <Text style={styles.title}>
-          Seja bem vindo!
-        </Text>
+    <LinearGradient
+      colors={['#000000', '#bdbdbd']}
+      style={{ flex: 1 }}
+    >
+      <KeyboardAvoidingView style={styles.main}>
+        <View>
+          <Text style={styles.title}>
+            Seja bem vindo!
+          </Text>
 
-        <Text style={styles.subtitle}>
-          Cadastre seus dados para
-          {"\n"}monitorar o seus veículos
-        </Text>
+          <Text style={styles.subtitle}>
+            Cadastre seus dados para
+            {"\n"}monitorar o seus veículos
+          </Text>
 
-        <View style={styles.inputFields}>
-          <AuthInput
-            useState={user}
-            setUseState={setUser}
-            text={"Digite o usuário/email"}
+          <View style={styles.inputFields}>
+            <AuthInput
+              useState={user}
+              setUseState={setUser}
+              text={"Digite o usuário/email"}
+            />
+
+            <AuthInput
+              useState={password}
+              setUseState={setPassword}
+              text={"Digite a senha"}
+              additionalProps={{ secureTextEntry: true }}
+            />
+
+            <AuthInput
+              useState={confirmPassword}
+              setUseState={setConfirmPassword}
+              text={"Confirme a senha"}
+              additionalProps={{ secureTextEntry: true }}
+            />
+          </View>
+
+          <AuthButton
+            action={signUpPasswordValidation}
+            text={'Confirmar'}
+            activeOpacity={globalProps.buttonActiveOpacity}
           />
 
-          <AuthInput
-            useState={password}
-            setUseState={setPassword}
-            text={"Digite a senha"}
-            additionalProps={{ secureTextEntry: true }}
-          />
-
-          <AuthInput
-            useState={confirmPassword}
-            setUseState={setConfirmPassword}
-            text={"Confirme a senha"}
-            additionalProps={{ secureTextEntry: true }}
-          />
         </View>
-
-        <AuthButton
-          action={signUpPasswordValidation}
-          text={'Confirmar'}
-          activeOpacity={globalProps.buttonActiveOpacity}
-        />
-
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   )
 }
 

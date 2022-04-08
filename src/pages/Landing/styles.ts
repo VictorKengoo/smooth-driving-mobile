@@ -1,16 +1,18 @@
 import { StyleSheet } from 'react-native';
+import { globalProps } from '../../global/globalProps';
 
 export const styles = StyleSheet.create({
   main: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0)'
   },
 
   title: {
     color: "#fff",
     fontSize: 44.26,
-    fontFamily: 'Roboto',
+    fontFamily: globalProps.font,
     fontWeight: 'bold',
     marginBottom: 24.84,
   },
@@ -30,10 +32,10 @@ export const styles = StyleSheet.create({
   },
 
   loginButtonText: {
-    fontFamily: 'Roboto',
+    fontFamily: globalProps.font,
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#597EFF',
+    color: '#1c49e8',
     textDecorationLine: 'underline'
   },
 

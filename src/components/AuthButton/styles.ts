@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { globalProps } from '../../global/globalProps';
 
 export const styles = StyleSheet.create({
   button: {
@@ -12,7 +13,7 @@ export const styles = StyleSheet.create({
   },
 
   buttonText: {
-    fontFamily: 'Roboto',
+    fontFamily: globalProps.font,
     fontSize: 18.03,
     fontWeight: 'bold',
     color: '#000',

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { globalProps } from '../../global/globalProps';
 
 export const styles = StyleSheet.create({
   main: {
@@ -10,7 +11,7 @@ export const styles = StyleSheet.create({
   title: {
     color: "#fff",
     fontSize: 35,
-    fontFamily: 'Roboto',
+    fontFamily: globalProps.font,
     fontWeight: 'bold',
     marginBottom: 24.84,
   },

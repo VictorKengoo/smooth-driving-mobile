@@ -1,15 +1,17 @@
-import { LinearGradient } from 'expo-linear-gradient';
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { View } from 'react-native';
-import { styles } from './src/global/styles';
+import React, { useState } from 'react';
 import AppStack from './src/routes/AppStack';
+import AuthContext from './src/contexts/auth';
+import { AuthProvider } from './src/contexts/auth';
 
 export default function App() {
   return (
-    <>
-      <AppStack />
-      <StatusBar style='light' />
-    </>
+    <NavigationContainer>
+      <AuthProvider>
+        <AppStack />
+        <StatusBar style='light' />
+      </AuthProvider>
+    </NavigationContainer>
   );
 }

@@ -15,6 +15,7 @@ import { globalProps } from '../../global/globalProps'
 import driving from '../../assets/images/driving.png'
 import { styles } from './styles'
 import AuthButton from '../../components/AuthButton'
+import { LinearGradient } from 'expo-linear-gradient'
 
 function Landing({ navigation }: any) {
 
@@ -28,39 +29,44 @@ function Landing({ navigation }: any) {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.main}>
-      <View>
-        <Text style={styles.title}>
-          Smooth Driving
-        </Text>
-
-        <Text style={styles.subtitle}>
-          Monitore seus veículos em um clique
-        </Text>
-
-        <AuthButton
-          action={navigateToSignUp}
-          text={'Fazer cadastro'}
-          activeOpacity={globalProps.buttonActiveOpacity}
-        />
-
-        <TouchableOpacity
-          activeOpacity={globalProps.buttonActiveOpacity}
-          style={styles.loginButton}
-          onPress={navigateToLogin}
-        >
-          <Text style={styles.loginButtonText}>
-            Já possuo cadastro
+    <LinearGradient
+      colors={['#000000', '#bdbdbd']}
+      style={{ flex: 1 }}
+    >
+      <KeyboardAvoidingView style={styles.main}>
+        <View>
+          <Text style={styles.title}>
+            Smooth Driving
           </Text>
-        </TouchableOpacity>
 
-        <Image
-          source={driving}
-          style={styles.image}
-        />
+          <Text style={styles.subtitle}>
+            Monitore seus veículos em um clique
+          </Text>
 
-      </View>
-    </KeyboardAvoidingView>
+          <AuthButton
+            action={navigateToSignUp}
+            text={'Fazer cadastro'}
+            activeOpacity={globalProps.buttonActiveOpacity}
+          />
+
+          <TouchableOpacity
+            activeOpacity={globalProps.buttonActiveOpacity}
+            style={styles.loginButton}
+            onPress={navigateToLogin}
+          >
+            <Text style={styles.loginButtonText}>
+              Já possuo cadastro
+            </Text>
+          </TouchableOpacity>
+
+          <Image
+            source={driving}
+            style={styles.image}
+          />
+
+        </View>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   )
 }
 
