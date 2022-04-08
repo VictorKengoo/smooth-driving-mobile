@@ -9,6 +9,10 @@ export const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
 
+  signOutButtonText: {
+    color: '#fff',
+  },
+
   title: {
     color: "#fff",
     fontSize: 27,

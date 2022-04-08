@@ -1,58 +1,60 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 
 import {
   KeyboardAvoidingView,
   View,
   Text,
-  Image
+  TouchableOpacity
 } from 'react-native'
 
-import driving from '../../assets/images/driving.png'
 import { styles } from './styles'
 import { TextInput } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
-import AuthContext from '../../contexts/auth'
+import { useAuth } from '../../contexts/auth'
+import CarInfo from '../../components/CarInfo'
 
 function Home() {
 
-  const { signOut } = useContext(AuthContext)
+  const { signOut, user } = useAuth()
   const [veiculo, setVeiculo] = useState('')
 
-  function handleSignOut() {
-    signOut()
-  }
-
   return (
-    <LinearGradient
-      colors={['#000000', '#bdbdbd']}
-      style={{ flex: 1 }}
-    >
-      <KeyboardAvoidingView style={styles.main}>
-        <View>
-          <Text style={styles.title}>
-            Bem-vindo(a) de volta,
-            {"\n"}Victor
+    <KeyboardAvoidingView style={styles.main}>
+      <View>
+        <Text style={styles.title}>
+          Bem-vindo(a) de volta,
+          {"\n"}{user?.name}
+        </Text>
+
+        <View style={styles.searchSection}>
+          <TextInput placeholder='Pesquisar veículo'
+            style={styles.input}
+            placeholderTextColor={'#a0a0a0'}
+            value={veiculo}
+            autoCorrect={false}
+          />
+          <MaterialIcons style={styles.searchIcon} name='search' size={32} color='#a0a0a0' />
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.addButton}
+            onPress={() => { }}
+          >
+            <MaterialIcons name='add-circle-outline' size={40} color='white' />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.veiculosSection}>
+          <Text style={styles.veiculosTitle}>
+            Meus Veículos
           </Text>
 
-          <View style={styles.searchInput}>
-            <MaterialIcons name='search' size={18} color='white' />
-            <TextInput placeholder='Pesquisar veículo'
-              style={styles.input}
-              placeholderTextColor={'#a0a0a0'}
-              value={veiculo}
-              autoCorrect={false}
-            />
-          </View>
-
-          <Image
-            source={driving}
-            style={styles.image}
-          />
-
+          <CarInfo />
+          <CarInfo />
+          <CarInfo />
         </View>
-      </KeyboardAvoidingView>
-    </LinearGradient>
+
+      </View>
+    </KeyboardAvoidingView>
   )
 }
 

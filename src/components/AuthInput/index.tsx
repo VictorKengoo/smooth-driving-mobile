@@ -3,10 +3,6 @@ import { TextInput } from 'react-native';
 
 import { styles } from './styles'
 
-interface setUseStateProps {
-
-}
-
 interface AuthInputProps {
   useState?: string;
   setUseState?: (...props: any) => void;

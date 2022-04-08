@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 
 import {
   KeyboardAvoidingView,
@@ -10,7 +10,7 @@ import {
 import AuthButton from '../../components/AuthButton';
 
 import AuthInput from '../../components/AuthInput';
-import AuthContext from '../../contexts/auth';
+import { useAuth } from '../../contexts/auth';
 import { globalProps } from '../../global/globalProps';
 import { styles } from './styles'
 
@@ -19,7 +19,7 @@ export default function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
 
-  const { signed, signIn } = useContext(AuthContext)
+  const { signed, signIn } = useAuth()
 
   const { goBack } = useNavigation();
 
