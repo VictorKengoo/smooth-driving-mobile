@@ -6,9 +6,8 @@ export const styles = StyleSheet.create({
     height: 60,
     backgroundColor: "#FFF",
     borderRadius: 10,
-    marginBottom: 8,
-    paddingHorizontal: 24,
-    fontSize: 16,
+    paddingHorizontal: 12,
     marginVertical: 12,
+    fontSize: 16,
   },
 });

@@ -4,7 +4,8 @@ import {
   KeyboardAvoidingView,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native'
 
 import { styles } from './styles'
@@ -20,7 +21,11 @@ function User() {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.main}>
+    <KeyboardAvoidingView
+      style={styles.main}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      enabled
+    >
       <View>
         <TouchableOpacity
           activeOpacity={0.5}

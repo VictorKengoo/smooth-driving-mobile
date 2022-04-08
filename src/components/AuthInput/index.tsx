@@ -7,6 +7,7 @@ interface AuthInputProps {
   useState?: string;
   setUseState?: (...props: any) => void;
   text: string;
+  keyboardType?: string;
   additionalProps?: any;
 }
 

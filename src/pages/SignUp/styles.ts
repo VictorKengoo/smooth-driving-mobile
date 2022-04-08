@@ -5,7 +5,9 @@ export const styles = StyleSheet.create({
   main: {
     flex: 1,
     padding: 40,
+    marginTop: 120,
     justifyContent: 'center',
+    // alignItems: 'center',
   },
 
   title: {
@@ -22,6 +24,7 @@ export const styles = StyleSheet.create({
   },
 
   inputFields: {
+    justifyContent: 'space-between',
     paddingVertical: 70,
   },
 });
