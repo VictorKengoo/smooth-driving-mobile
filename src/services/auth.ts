@@ -2,20 +2,22 @@ interface Response {
   token: string
   user: {
     name: string
-    email: string
+    email?: string | null
+    password: string
   }
 }
 
-export function signIn(): Promise<Response> {
+export function signIn(name: string, password: string, email?: string | null): Promise<Response> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         token: 'fake-jwt-token',
         user: {
-          name: 'Fake User',
-          email: 'fake@email.com'
+          name: name,
+          email: email,
+          password: password,
         },
       })
-    }, 2000)
+    })
   })
 }

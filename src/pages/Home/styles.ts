@@ -9,6 +9,11 @@ export const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
 
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
   title: {
     color: "#fff",
     fontSize: 27,
@@ -17,46 +22,40 @@ export const styles = StyleSheet.create({
     marginBottom: 40,
   },
 
-  image: {
-    resizeMode: "cover",
-    height: 150,
-    width: 210,
-    alignSelf: 'center',
-    marginBottom: -100,
-    marginTop: 32,
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  searchSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#212121',
+    borderWidth: 0.5,
+    width: '85%',
+    height: 50,
+    borderRadius: 12,
   },
 
   input: {
     flex: 1,
-    backgroundColor: '#212121',
-    fontSize: 14,
-    fontFamily: globalProps.font,
-
     alignItems: 'center',
-
-    height: 50,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 10,
-    borderRadius: 12,
-    marginRight: 50,
+    color: '#fff',
+    fontSize: 18,
+    fontFamily: globalProps.font,
   },
 
   searchIcon: {
-    position: 'absolute',
-    paddingLeft: 210,
-  },
-
-  searchSection: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 10,
   },
 
   addButton: {
-    position: 'absolute',
-    paddingLeft: 340,
+    backgroundColor: '#000',
+    // justifyContent: 'flex-start',
+    // position: 'absolute',
+    // paddingLeft: 340,
   },
 
   veiculosTitle: {
@@ -69,5 +68,5 @@ export const styles = StyleSheet.create({
 
   veiculosSection: {
 
-  }
+  },
 });

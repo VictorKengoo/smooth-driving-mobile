@@ -5,7 +5,8 @@ export const styles = StyleSheet.create({
   main: {
     flex: 1,
     padding: 40,
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    paddingTop: 120,
   },
 
   title: {

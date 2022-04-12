@@ -1,70 +1,58 @@
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState, useCallback, useRef } from 'react'
+import React, { useState } from 'react'
 
 import {
   KeyboardAvoidingView,
   View,
   Text,
-  Platform,
   Alert,
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import AuthButton from '../../components/AuthButton';
-import * as Yup from 'yup'
-
-import getValidationErrors from '../../utils/getValidationErrors'
 
 import AuthInput from '../../components/AuthInput';
 import { globalProps } from '../../global/globalProps';
 import { styles } from './styles'
 import { useAuth } from '../../contexts/auth';
 
-interface SignInFormData {
-  email: string;
-  password: string;
-}
-
 export default function Login() {
 
-  const [userAuth, setUserAuth] = useState("");
+  const [userAuth, setUserAuth] = useState('');
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
 
-  const { goBack } = useNavigation();
+  const { signIn } = useAuth();
 
-  const { signIn, user } = useAuth();
+  const navigation = useNavigation();
 
-  const handleSignIn = useCallback(async (data: SignInFormData) => {
-    try {
-      // Zera os erros para cada campo preenchido ele limpe o erro
-      setErrors({});
+  function handleNavigateToHome() {
+    navigation.navigate('Home' as never);
+  }
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Senha obrigatória'),
-      });
-      await schema.validate(data, { abortEarly: false });
-
-      await signIn({
-        email: data.email,
-        password: data.password,
-      });
-    } catch (err) {
-      // verifica se o err vem da validacao Yup
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
-        return;
-      }
-
-      Alert.alert(
-        'Erro na autenticação',
-        'Ocorreu um erro ao fazer login, cheque as credenciais.',
-      );
+  let errors = [''];
+  function validateFields() {
+    if (!userAuth) {
+      errors.push("Usuário/E-mail obrigatório")
     }
-  }, []);
+
+    if (!password) {
+      errors.push("Senha obrigatória")
+    }
+
+    if (errors)
+      return true
+    else
+      return false
+  }
+
+  function handleSignIn() {
+    if (validateFields()) {
+      signIn({ name: userAuth, password: password })
+      handleNavigateToHome()
+    }
+    else
+      Alert.alert('Erro', JSON.stringify(errors))
+  }
 
   return (
     <LinearGradient
@@ -73,7 +61,6 @@ export default function Login() {
     >
       <KeyboardAvoidingView
         style={styles.main}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         enabled
       >
         <ScrollView
@@ -88,15 +75,15 @@ export default function Login() {
               style={styles.inputFields}
             >
               <AuthInput
-                useState={userAuth}
+                value={userAuth}
                 setUseState={setUserAuth}
-                text={"Digite o usuário/email"}
+                placeholder={"Digite o usuário/email"}
               />
 
               <AuthInput
-                useState={password}
+                value={password}
                 setUseState={setPassword}
-                text={"Digite a senha"}
+                placeholder={"Digite a senha"}
                 additionalProps={{ secureTextEntry: true }}
               />
               <AuthButton
@@ -105,8 +92,6 @@ export default function Login() {
                 activeOpacity={globalProps.buttonActiveOpacity}
               />
             </View>
-
-
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

@@ -5,9 +5,19 @@ export const styles = StyleSheet.create({
   main: {
     flex: 1,
     padding: 40,
-    marginTop: 120,
+    paddingTop: 120,
     justifyContent: 'center',
     // alignItems: 'center',
+  },
+
+  input: {
+    color: '#000',
+    height: 60,
+    backgroundColor: "#FFF",
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    marginVertical: 12,
+    fontSize: 16,
   },
 
   title: {

@@ -3,23 +3,29 @@ import { TextInput } from 'react-native';
 
 import { styles } from './styles'
 
-interface AuthInputProps {
-  useState?: string;
-  setUseState?: (...props: any) => void;
-  text: string;
+type AuthInputProps = {
+  setUseState: React.Dispatch<React.SetStateAction<string>>;
+  value: string
+  placeholder: string;
   keyboardType?: string;
   additionalProps?: any;
 }
 
-const AuthInput: React.FC<AuthInputProps> = ({ useState, setUseState, text, additionalProps }) => {
+const AuthInput: React.FC<AuthInputProps> = ({ setUseState, value, placeholder, additionalProps }) => {
+
+  function handleOnChangeText(text: string) {
+    console.log("Text: " + text)
+    setUseState(text);
+  }
+
   return (
     <TextInput
       style={styles.input}
-      placeholder={text}
+      placeholder={placeholder}
       placeholderTextColor={'#a0a0a0'}
-      value={useState}
       autoCorrect={false}
-      onChangeText={setUseState}
+      value={value}
+      onChangeText={(text) => handleOnChangeText(text)}
       {...additionalProps}
     />
   )

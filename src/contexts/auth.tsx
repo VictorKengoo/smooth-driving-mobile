@@ -6,29 +6,31 @@ import React, {
   useEffect,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import api from '../services/api';
-
+// import api from '../services/api';
+import * as auth from '../services/auth';
 interface AuthState {
   token: string;
   user: object;
 }
-
 interface SignInCredentials {
-  email: string;
+  email?: string | null;
+  name: string
   password: string;
 }
-
 interface AuthContextData {
-  user: object;
+  user: SignInCredentials | null;
   loading: boolean;
-  signIn(credentials: SignInCredentials): Promise<void>;
+  signIn(user: SignInCredentials): Promise<void>;
   signOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
+
   const [data, setData] = useState<AuthState>({} as AuthState); // add
+  const [user, setUser] = useState<SignInCredentials | null>(null); // add
+
   // para verificar enquanto o app carrega
   const [loading, setLoading] = useState(true); // evita os flashs de carregamento passando por uma tela a outra
 
@@ -38,6 +40,9 @@ const AuthProvider: React.FC = ({ children }) => {
         '@SmoothDriving:token',
         '@SmoothDriving:user',
       ]);
+
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
       if (token[1] && user[1]) {
         setData({ token: token[1], user: JSON.parse(user[1]) });
       }
@@ -47,30 +52,27 @@ const AuthProvider: React.FC = ({ children }) => {
     loadStorageData();
   }, []);
 
-  const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('/sessions', {
-      email,
-      password,
-    });
+  async function signIn(user: SignInCredentials) {
+    const response = await auth.signIn(user.name, user.password, user.email)
+    console.log('Armazenando user no AsyncStorage')
+    console.log('User: ', response.user)
 
-    const { token, user } = response.data; // add
+    setUser(response.user)
 
-    await AsyncStorage.multiSet([
-      ['@SmoothDriving:token', token],
-      ['@SmoothDriving:user', JSON.stringify(user)],
-    ]);
-    setData({ token, user });
-  }, []);
+    await AsyncStorage.setItem('@SmoothDriving:token', response.token)
+    await AsyncStorage.setItem('@SmoothDriving:user', JSON.stringify(response.user))
+  }
 
-  // Desloga
+  // // Desloga
   const signOut = useCallback(async () => {
     await AsyncStorage.multiRemove(['@SmoothDriving:token', '@SmoothDriving:user']);
 
+    setUser(null)
     setData({} as AuthState);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
@@ -84,5 +86,5 @@ function useAuth(): AuthContextData {
   }
   return context;
 }
-
+export default AuthContext
 export { AuthProvider, useAuth };

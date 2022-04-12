@@ -1,83 +1,61 @@
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 
 import {
   KeyboardAvoidingView,
   View,
   Text,
   Alert,
-  ScrollView
+  ScrollView,
+  TextInput,
+  Platform
 } from 'react-native'
 import AuthButton from '../../components/AuthButton';
-
-import * as Yup from 'yup'
 
 import AuthInput from '../../components/AuthInput';
 import { globalProps } from '../../global/globalProps';
 import { styles } from './styles'
-import { useAuth } from '../../contexts/auth';
-import getValidationErrors from '../../utils/getValidationErrors';
 
 interface SignUpFormData {
-  user: string;
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
-export default function SignUp() {
+const SignUp = () => {
 
-  const [userAuth, setUserAuth] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [errors, setErrors] = useState({});
-
+  const [userAuth, setUserAuth] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [data, setData] = useState<object>({});
 
-  const { goBack } = useNavigation();
-
-  const { signIn, user } = useAuth();
-
-  const handleSignUp = useCallback(async (data: SignUpFormData) => {
+  const handleSignUp = (data: SignUpFormData) => {
     try {
-      // Zera os erros para cada campo preenchido ele limpe o erro
-      setErrors({});
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Senha obrigatória'),
-      });
-      await schema.validate(data, { abortEarly: false });
+      signUpPasswordValidation()
 
-      await signIn({
-        email: data.email,
-        password: data.password,
-      });
+      console.log("Dados: " + JSON.stringify({ email: data.email, name: data.name, password: data.password }))
+
     } catch (err) {
-      // verifica se o err vem da validacao Yup
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
-        return;
-      }
 
       Alert.alert(
         'Erro na autenticação',
-        'Ocorreu um erro ao fazer login, cheque as credenciais.',
+        'Erro: ' + err,
       );
     }
-  }, []);
+  };
 
   function signUpPasswordValidation() {
+
+    console.log('User: ' + JSON.stringify(userAuth))
+    console.log('password: ' + password)
+
     if (password === confirmPassword) {
       Alert.alert("Senhas conferem")
-      setData({ user, password })
-      console.log('User: ', user)
-      console.log('password: ', password)
-      console.log(JSON.stringify(data))
+
     } else {
       Alert.alert("Senhas não conferem")
     }
@@ -111,38 +89,37 @@ export default function SignUp() {
               style={styles.inputFields}
             >
               <AuthInput
-                useState={userAuth}
+                value={userAuth}
                 setUseState={setUserAuth}
-                text="Digite o usuário"
+                placeholder="Digite o usuário"
                 additionalProps={{ autoCapitalize: "words" }}
               />
 
               <AuthInput
-                useState={email}
+                value={email}
                 setUseState={setEmail}
+                placeholder="Digite o email"
                 additionalProps={{
                   keyboardType: "email-address",
                   autoCapitalize: "none",
                   returnKeyType: "next"
                 }}
-                text="Digite o email"
               />
 
               <AuthInput
-                useState={password}
+                value={password}
                 setUseState={setPassword}
-                text="Digite a senha"
+                placeholder="Digite a senha"
                 additionalProps={{
                   secureTextEntry: true,
-                  // textContentType: "newPassword",
                   returnKeyType: "next"
                 }}
               />
 
               <AuthInput
-                useState={confirmPassword}
+                value={confirmPassword}
                 setUseState={setConfirmPassword}
-                text="Confirme a senha"
+                placeholder="Confirme a senha"
                 additionalProps={{
                   secureTextEntry: true,
                   textContentType: "newPassword",
@@ -151,9 +128,7 @@ export default function SignUp() {
               />
 
               <AuthButton
-                action={() => {
-                  signUpPasswordValidation()
-                }}
+                action={handleSignUp}
                 text={'Confirmar'}
                 activeOpacity={globalProps.buttonActiveOpacity}
               />
@@ -165,6 +140,4 @@ export default function SignUp() {
   )
 }
 
-function openModal1(id: any) {
-  throw new Error('Function not implemented.');
-}
+export default SignUp
