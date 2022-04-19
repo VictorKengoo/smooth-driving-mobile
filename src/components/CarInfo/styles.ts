@@ -14,27 +14,36 @@ export const styles = StyleSheet.create({
   },
 
   cardHeader: {
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
 
-  carName: {
+  model: {
     color: '#fff',
     fontSize: 24,
-    // marginLeft: 24,
+    marginBottom: 4,
+    fontWeight: 'bold',
   },
 
-  carTransmition: {
+  year: {
     color: '#fff',
     fontSize: 14,
-    marginBottom: 32,
+    fontWeight: 'bold',
+    marginBottom: 4,
   },
 
-  carPlate: {
+  transmission: {
+    color: '#fff',
+    fontSize: 14,
+    marginBottom: 20,
+  },
+
+  plate: {
     color: '#fff',
     fontSize: 20,
+    fontWeight: 'bold',
   },
 
-  carImage: {
+  image: {
     width: 200,
     height: 100
   },

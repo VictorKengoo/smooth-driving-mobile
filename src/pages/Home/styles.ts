@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 27,
     fontFamily: globalProps.font,
-    fontWeight: '400',
+    fontWeight: 'bold',
     paddingTop: 64,
   },
 

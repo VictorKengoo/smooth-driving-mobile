@@ -5,20 +5,30 @@ import { styles } from './styles'
 
 import CarImage from '../../../images/car.png'
 
-const CarInfo: React.FC = () => {
-  return (
+interface carInfoProps {
+  model: string,
+  manufacturer: string,
+  transmission: string,
+  year: number,
+  plate: string,
+}
 
+const CarInfo: React.FC<carInfoProps> = ({ model, manufacturer, transmission, plate, year }) => {
+  return (
     <TouchableOpacity
       activeOpacity={0.5}
       style={styles.card}
       onPress={() => { }}>
       <View style={styles.cardHeader}>
-        <Text style={styles.carName}> Toyota Yaris </Text>
-        <Text style={styles.carTransmition}> Automático </Text>
-        <Text style={styles.carPlate}> ABC1234 </Text>
+        <Text style={styles.model}>{manufacturer}</Text>
+        <Text style={styles.model}>{model}</Text>
+        {/* <Text style={styles.model}>{manufacturer} {model}</Text> */}
+        <Text style={styles.year}>{year}</Text>
+        <Text style={styles.transmission}>{transmission}</Text>
+        <Text style={styles.plate}>{plate}</Text>
       </View>
 
-      <Image style={styles.carImage} source={CarImage} />
+      <Image style={styles.image} source={CarImage} />
 
     </TouchableOpacity>
   )

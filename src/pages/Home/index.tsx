@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-
+import React, { useContext, useEffect, useState } from 'react'
+import { BACKEND_USER_URL } from '@env';
 import {
   KeyboardAvoidingView,
   View,
@@ -15,22 +15,68 @@ import AuthContext from '../../contexts/auth'
 import CarInfo from '../../components/CarInfo'
 import { useNavigation } from '@react-navigation/native'
 
+interface veiculoProps {
+  model: string,
+  manufacturer: string,
+  transmission: string,
+  year: number,
+  plate: string,
+}
+
 const Home = () => {
   const context = useContext(AuthContext)
   const navigation = useNavigation();
 
   // const { signOut, user } = useAuth()
-  const [veiculo, setVeiculo] = useState('')
+  const [veiculoSearch, setVeiculoSearch] = useState('')
+  const [veiculos, setVeiculos] = useState([] as veiculoProps[])
+
+  useEffect(() => {
+    console.log('useEffect')
+    getVeiculos()
+  }, [])
+
+  function getVeiculos() {
+    // fetch(BACKEND_USER_URL)
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     setVeiculos(data)
+    //   })
+    const veiculosList: React.SetStateAction<veiculoProps[]> = []
+
+    veiculosList.push(
+      {
+        model: 'Fusca',
+        manufacturer: 'Volkswagen',
+        transmission: 'Manual',
+        year: 2020,
+        plate: 'ABC-1234'
+      },
+      {
+        model: 'Fusca',
+        manufacturer: 'Volkswagen',
+        transmission: 'Manual',
+        year: 2020,
+        plate: 'ABC-1234'
+      }
+    )
+
+    setVeiculos(veiculosList)
+  }
 
   function handleLogout() {
     context.signOut()
     navigation.navigate('Login' as never);
   }
 
+  function handleSearch() {
+
+  }
+
   return (
     <KeyboardAvoidingView style={styles.main} enabled>
       <ScrollView
-        contentContainerStyle={{ flex: 1 }}
+        // contentContainerStyle={{ flex: 1 }}
         keyboardShouldPersistTaps="handled"
       >
         <View>
@@ -56,8 +102,8 @@ const Home = () => {
                 placeholder='Pesquisar veículo'
                 style={styles.input}
                 placeholderTextColor={'#a0a0a0'}
-                value={veiculo}
-                onChangeText={setVeiculo}
+                value={veiculoSearch}
+                onChangeText={setVeiculoSearch}
                 autoCorrect={false}
               />
             </View>
@@ -75,9 +121,36 @@ const Home = () => {
               Meus Veículos
             </Text>
 
-            <CarInfo />
-            <CarInfo />
-            <CarInfo />
+            {
+              veiculos.map((veiculo, index) => {
+                return (
+                  <CarInfo
+                    key={index}
+                    model={veiculo.model}
+                    manufacturer={veiculo.manufacturer}
+                    transmission={veiculo.transmission}
+                    year={veiculo.year}
+                    plate={veiculo.plate}
+                  />
+                )
+              })
+            }
+
+            <CarInfo
+              model={'Yaris'}
+              manufacturer={'Toyota'}
+              transmission={'Automático'}
+              year={2021}
+              plate={'ABC123'}
+            />
+
+            <CarInfo
+              model={'Yaris'}
+              manufacturer={'Toyota'}
+              transmission={'Automático'}
+              year={2021}
+              plate={'ABC123'}
+            />
           </View>
 
         </View>
