@@ -16,11 +16,11 @@ import CarInfo from '../../components/CarInfo'
 import { useNavigation } from '@react-navigation/native'
 
 interface veiculoProps {
-  model: string,
-  manufacturer: string,
-  transmission: string,
-  year: number,
-  plate: string,
+  model: String,
+  manufacturer: String,
+  transmission: String,
+  year: String,
+  plate: String,
 }
 
 const Home = () => {
@@ -28,8 +28,9 @@ const Home = () => {
   const navigation = useNavigation();
 
   // const { signOut, user } = useAuth()
-  const [veiculoSearch, setVeiculoSearch] = useState('')
   const [veiculos, setVeiculos] = useState([] as veiculoProps[])
+  const [veiculoSearch, setVeiculoSearch] = useState('')
+  // const [filteredVeiculos, setFilteredVeiculos] = useState([] as veiculoProps[])
 
   useEffect(() => {
     console.log('useEffect')
@@ -46,17 +47,31 @@ const Home = () => {
 
     veiculosList.push(
       {
-        model: 'Fusca',
         manufacturer: 'Volkswagen',
+        model: 'Fusca',
         transmission: 'Manual',
-        year: 2020,
+        year: '2020',
         plate: 'ABC-1234'
       },
       {
-        model: 'Fusca',
         manufacturer: 'Volkswagen',
+        model: 'Fusca',
         transmission: 'Manual',
-        year: 2020,
+        year: '2020',
+        plate: 'ABC-1234'
+      },
+      {
+        manufacturer: 'Toyota',
+        model: 'Yaris',
+        transmission: 'Manual',
+        year: '2020',
+        plate: 'ABC-1234'
+      },
+      {
+        manufacturer: 'Toyota',
+        model: 'Yaris',
+        transmission: 'Manual',
+        year: '2020',
         plate: 'ABC-1234'
       }
     )
@@ -70,7 +85,28 @@ const Home = () => {
   }
 
   function handleSearch() {
+    const result = [] as veiculoProps[]
+    console.log('Searching...', veiculoSearch)
 
+    if (veiculoSearch) {
+      veiculos.forEach((veiculo) => {
+        // console.log(JSON.stringify(veiculo))
+        // console.log("Modelo: " + veiculo.model)
+        // console.log("Search: " + veiculoSearch)
+        console.log('If: ' + veiculo.manufacturer.includes(veiculoSearch))
+        if (veiculo.model.includes(veiculoSearch) ||
+          veiculo.manufacturer.includes(veiculoSearch) ||
+          veiculo.transmission.includes(veiculoSearch) ||
+          veiculo.plate.includes(veiculoSearch) ||
+          veiculo.year.includes(veiculoSearch)) {
+
+          result.push(veiculo)
+        }
+        setVeiculos(result)
+      })
+    } else {
+      getVeiculos()
+    }
   }
 
   return (
@@ -105,6 +141,10 @@ const Home = () => {
                 value={veiculoSearch}
                 onChangeText={setVeiculoSearch}
                 autoCorrect={false}
+                returnKeyType='search'
+                // autoFocus={true}
+                clearButtonMode="while-editing"
+                onSubmitEditing={handleSearch}
               />
             </View>
             <TouchableOpacity
@@ -126,8 +166,8 @@ const Home = () => {
                 return (
                   <CarInfo
                     key={index}
-                    model={veiculo.model}
                     manufacturer={veiculo.manufacturer}
+                    model={veiculo.model}
                     transmission={veiculo.transmission}
                     year={veiculo.year}
                     plate={veiculo.plate}
@@ -135,22 +175,6 @@ const Home = () => {
                 )
               })
             }
-
-            <CarInfo
-              model={'Yaris'}
-              manufacturer={'Toyota'}
-              transmission={'Automático'}
-              year={2021}
-              plate={'ABC123'}
-            />
-
-            <CarInfo
-              model={'Yaris'}
-              manufacturer={'Toyota'}
-              transmission={'Automático'}
-              year={2021}
-              plate={'ABC123'}
-            />
           </View>
 
         </View>

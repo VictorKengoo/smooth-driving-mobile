@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   card: {
     // flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 25,
     backgroundColor: '#212121',
@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
   },
 
   model: {
+    flexWrap: 'wrap',
     color: '#fff',
     fontSize: 24,
     marginBottom: 4,

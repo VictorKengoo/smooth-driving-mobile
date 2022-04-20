@@ -6,14 +6,14 @@ import { styles } from './styles'
 import CarImage from '../../../images/car.png'
 
 interface carInfoProps {
-  model: string,
-  manufacturer: string,
-  transmission: string,
-  year: number,
-  plate: string,
+  manufacturer: String,
+  model: String,
+  transmission: String,
+  year: String,
+  plate: String,
 }
 
-const CarInfo: React.FC<carInfoProps> = ({ model, manufacturer, transmission, plate, year }) => {
+const CarInfo: React.FC<carInfoProps> = ({ manufacturer, model, transmission, plate, year }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
