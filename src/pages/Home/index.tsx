@@ -17,12 +17,10 @@ import { Props, veiculoProps } from '../../interfaces'
 
 const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const context = useContext(AuthContext)
-  // const navigation = useNavigation();
 
-  // const { signOut, user } = useAuth()
   const [veiculos, setVeiculos] = useState([] as veiculoProps[])
   const [veiculoSearch, setVeiculoSearch] = useState('')
-  // const [filteredVeiculos, setFilteredVeiculos] = useState([] as veiculoProps[])
+  const [allVeiculos, setAllVeiculos] = useState([] as veiculoProps[])
 
   useEffect(() => {
     console.log('useEffect')
@@ -67,7 +65,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
         plate: 'ABC-1234'
       }
     )
-
+    setAllVeiculos(veiculosList)
     setVeiculos(veiculosList)
   }
 
@@ -81,7 +79,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
     getVeiculos()
 
     if (veiculoSearch) {
-      veiculos.forEach((veiculo) => {
+      allVeiculos.forEach((veiculo) => {
         if (veiculo.model.includes(veiculoSearch) ||
           veiculo.manufacturer.includes(veiculoSearch) ||
           veiculo.transmission.includes(veiculoSearch) ||
