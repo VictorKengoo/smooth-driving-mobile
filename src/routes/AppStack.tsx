@@ -7,8 +7,18 @@ import AuthContext from '../contexts/auth';
 import { ActivityIndicator, View } from 'react-native';
 import Login from '../pages/Login';
 import Landing from '../pages/Landing';
+import CarDashboard from '../pages/CarDashboard';
+import { CarDashboardProps } from '../interfaces';
 
-const Auth = createStackNavigator()
+const Stack = createStackNavigator<RootStackParamList>();
+
+export type RootStackParamList = {
+  Landing: undefined;
+  SignUp: undefined;
+  Login: undefined;
+  Home: undefined;
+  CarDashboard: CarDashboardProps;
+};
 
 const AppStack: React.FC = () => {
   const { loading } = useContext(AuthContext)
@@ -22,16 +32,18 @@ const AppStack: React.FC = () => {
   }
 
   return (
-    <Auth.Navigator
+    <Stack.Navigator
       screenOptions={{
         headerShown: false
       }}
     >
-      <Auth.Screen name="Landing" component={Landing} />
-      <Auth.Screen name="SignUp" component={SignUp} />
-      <Auth.Screen name="Home" component={Home} options={{ gestureEnabled: false }} />
-      <Auth.Screen name="Login" component={Login} />
-    </Auth.Navigator>
+      <Stack.Screen name="Landing" component={Landing} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Home" component={Home} options={{ gestureEnabled: false }} />
+      <Stack.Screen name="CarDashboard" component={CarDashboard} />
+
+    </Stack.Navigator>
   )
 }
 

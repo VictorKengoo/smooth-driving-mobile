@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { BACKEND_USER_URL } from '@env';
+// import { BACKEND_USER_URL } from '@env';
 import {
   KeyboardAvoidingView,
   View,
@@ -13,19 +13,11 @@ import { TextInput } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
 import AuthContext from '../../contexts/auth'
 import CarInfo from '../../components/CarInfo'
-import { useNavigation } from '@react-navigation/native'
+import { Props, veiculoProps } from '../../interfaces'
 
-interface veiculoProps {
-  model: String,
-  manufacturer: String,
-  transmission: String,
-  year: String,
-  plate: String,
-}
-
-const Home = () => {
+const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const context = useContext(AuthContext)
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   // const { signOut, user } = useAuth()
   const [veiculos, setVeiculos] = useState([] as veiculoProps[])
@@ -81,19 +73,15 @@ const Home = () => {
 
   function handleLogout() {
     context.signOut()
-    navigation.navigate('Login' as never);
+    navigation.navigate('Login');
   }
 
   function handleSearch() {
     const result = [] as veiculoProps[]
-    console.log('Searching...', veiculoSearch)
+    getVeiculos()
 
     if (veiculoSearch) {
       veiculos.forEach((veiculo) => {
-        // console.log(JSON.stringify(veiculo))
-        // console.log("Modelo: " + veiculo.model)
-        // console.log("Search: " + veiculoSearch)
-        console.log('If: ' + veiculo.manufacturer.includes(veiculoSearch))
         if (veiculo.model.includes(veiculoSearch) ||
           veiculo.manufacturer.includes(veiculoSearch) ||
           veiculo.transmission.includes(veiculoSearch) ||
@@ -163,14 +151,18 @@ const Home = () => {
 
             {
               veiculos.map((veiculo, index) => {
+                console.log("Props antes: ", veiculo.manufacturer, veiculo.model, veiculo.transmission, veiculo.plate, veiculo.year)
                 return (
                   <CarInfo
                     key={index}
-                    manufacturer={veiculo.manufacturer}
-                    model={veiculo.model}
-                    transmission={veiculo.transmission}
-                    year={veiculo.year}
-                    plate={veiculo.plate}
+                    navigation={navigation}
+                    veiculoProps={{
+                      manufacturer: veiculo.manufacturer,
+                      model: veiculo.model,
+                      transmission: veiculo.transmission,
+                      year: veiculo.year,
+                      plate: veiculo.plate
+                    }}
                   />
                 )
               })

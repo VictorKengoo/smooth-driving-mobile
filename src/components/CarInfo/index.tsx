@@ -5,20 +5,26 @@ import { styles } from './styles'
 
 import CarImage from '../../../images/car.png'
 
-interface carInfoProps {
-  manufacturer: String,
-  model: String,
-  transmission: String,
-  year: String,
-  plate: String,
-}
+import { veiculoPropsNavigate } from '../../interfaces'
 
-const CarInfo: React.FC<carInfoProps> = ({ manufacturer, model, transmission, plate, year }) => {
+const CarInfo: React.FC<veiculoPropsNavigate> = ({ veiculoProps: { manufacturer, model, transmission, plate, year }, navigation }) => {
+  // const navigation = useNavigation();
+
+  function handleNavigateToDashboard() {
+    navigation.navigate('CarDashboard', {
+      manufacturer: manufacturer,
+      model: model,
+      transmission: transmission,
+      plate: plate,
+      year: year
+    });
+  }
+
   return (
     <TouchableOpacity
       activeOpacity={0.5}
       style={styles.card}
-      onPress={() => { }}>
+      onPress={handleNavigateToDashboard}>
       <View style={styles.cardHeader}>
         <Text style={styles.model}>{manufacturer}</Text>
         <Text style={styles.model}>{model}</Text>
