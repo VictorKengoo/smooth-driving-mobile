@@ -5,22 +5,25 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image
+  Image,
+  ImageBackground,
 } from 'react-native'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import api from '../../services/api'
 
 import { globalProps } from '../../global/globalProps'
 
 import driving from '../../assets/images/driving.png'
 import { styles } from './styles'
-import AuthButton from '../../components/AuthButton'
+import Button from '../../components/Button'
 import { LinearGradient } from 'expo-linear-gradient'
+
+import CarBackground from '../../../images/car-background.png'
 
 function Landing({ navigation }: any) {
 
   function navigateToLogin() {
-    console.log('navigateToLogin')
+    AsyncStorage.clear()
     navigation.navigate('Login' as never)
   }
 
@@ -29,44 +32,43 @@ function Landing({ navigation }: any) {
   }
 
   return (
-    <LinearGradient
-      colors={['#000000', '#bdbdbd']}
-      style={{ flex: 1 }}
-    >
-      <KeyboardAvoidingView style={styles.main}>
-        <View>
-          <Text style={styles.title}>
-            Smooth Driving
+    <ImageBackground
+      source={CarBackground}
+      style={styles.image}
+      imageStyle={{
+        resizeMode: "cover",
+        alignSelf: "flex-end"
+      }}>
+      <View style={styles.header}>
+        <Text style={styles.title}>
+          Smooth{"\n"}
+          Driving
+        </Text>
+      </View>
+
+      <View style={styles.bottomView}>
+        <Text style={styles.subtitle}>
+          Monitore seus veículos em um clique
+        </Text>
+
+        <TouchableOpacity
+          activeOpacity={globalProps.buttonActiveOpacity}
+          style={styles.signUpButton}
+          onPress={navigateToSignUp}
+        >
+          <Text style={styles.signUpButtonText}>
+            Fazer cadastro
           </Text>
+        </TouchableOpacity>
 
-          <Text style={styles.subtitle}>
-            Monitore seus veículos em um clique
-          </Text>
-
-          <AuthButton
-            action={navigateToSignUp}
-            text={'Fazer cadastro'}
-            activeOpacity={globalProps.buttonActiveOpacity}
+        <View style={{ width: 256, marginBottom: 24, marginTop: 4 }}>
+          <Button
+            action={navigateToLogin}
+            text='Login'
           />
-
-          <TouchableOpacity
-            activeOpacity={globalProps.buttonActiveOpacity}
-            style={styles.loginButton}
-            onPress={navigateToLogin}
-          >
-            <Text style={styles.loginButtonText}>
-              Já possuo cadastro
-            </Text>
-          </TouchableOpacity>
-
-          <Image
-            source={driving}
-            style={styles.image}
-          />
-
         </View>
-      </KeyboardAvoidingView>
-    </LinearGradient>
+      </View>
+    </ImageBackground>
   )
 }
 

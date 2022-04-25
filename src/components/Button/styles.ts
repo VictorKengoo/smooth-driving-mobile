@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     height: 60,
     borderRadius: 12,
 
-    backgroundColor: '#fff',
+    backgroundColor: globalProps.defaultWhite,
 
     marginTop: 12,
 

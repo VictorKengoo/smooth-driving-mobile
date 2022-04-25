@@ -4,9 +4,9 @@ import { globalProps } from '../../global/globalProps';
 export const styles = StyleSheet.create({
   main: {
     flex: 1,
-    padding: 29,
+    padding: 24,
     paddingTop: 98,
-    backgroundColor: 'black',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
   },
 
   header: {
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    color: "#fff",
+    color: globalProps.defaultWhite,
     fontSize: 27,
     fontFamily: globalProps.font,
     fontWeight: 'bold',
@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
   input: {
     flex: 1,
     alignItems: 'center',
-    color: '#fff',
+    color: globalProps.defaultWhite,
     fontSize: 18,
     fontFamily: globalProps.font,
   },
@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
   },
 
   veiculosTitle: {
-    color: "#fff",
+    color: globalProps.defaultWhite,
     fontSize: 27,
     fontFamily: globalProps.font,
     fontWeight: 'bold',

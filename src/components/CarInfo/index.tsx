@@ -5,9 +5,9 @@ import { styles } from './styles'
 
 import CarImage from '../../../images/car.png'
 
-import { veiculoPropsNavigate } from '../../interfaces'
+import { veiculoPropsNavigate } from '../../utils/interfaces'
 
-const CarInfo: React.FC<veiculoPropsNavigate> = ({ veiculoProps: { manufacturer, model, transmission, plate, year }, navigation }) => {
+const CarInfo: React.FC<veiculoPropsNavigate> = ({ veiculoProps: { manufacturer, model, transmission, plate, year, maxRPMReached }, navigation }) => {
   // const navigation = useNavigation();
 
   function handleNavigateToDashboard() {
@@ -16,7 +16,8 @@ const CarInfo: React.FC<veiculoPropsNavigate> = ({ veiculoProps: { manufacturer,
       model: model,
       transmission: transmission,
       plate: plate,
-      year: year
+      year: year,
+      maxRPMReached: maxRPMReached
     });
   }
 

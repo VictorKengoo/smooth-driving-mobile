@@ -5,12 +5,11 @@ export const styles = StyleSheet.create({
   main: {
     flex: 1,
     padding: 40,
-    // justifyContent: 'center',
     paddingTop: 120,
   },
 
   title: {
-    color: "#fff",
+    color: globalProps.defaultWhite,
     fontSize: 35,
     fontFamily: globalProps.font,
     fontWeight: 'bold',

@@ -1,6 +1,33 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "./routes/AppStack";
+import { number } from "yup";
+import { RootStackParamList } from "../routes/AppStack";
+
+export interface veiculoProps {
+  id: number,
+  manufacturer: String,
+  model: String,
+  transmission: String,
+  year: String,
+  plate: String,
+  maxRPMReached: number
+}
+
+export interface viagemProps {
+  carId: number,
+  eventInfo: {
+    date: String,
+    time: String,
+  },
+  eventCounts: {
+    curvaEsquerda: number,
+    curvaDireita: number,
+    trocaFaixaEsquerda: number,
+    trocaFaixaDireita: number,
+    aumentoRPM: number,
+    frenagem: number,
+  }
+}
 
 type ScreenNavigationProp<
   T extends keyof RootStackParamList
@@ -16,13 +43,6 @@ export type Props<T extends keyof RootStackParamList> = {
   navigation: ScreenNavigationProp<T>;
 };
 
-export interface veiculoProps {
-  manufacturer: String,
-  model: String,
-  transmission: String,
-  year: String,
-  plate: String,
-}
 
 export interface veiculoPropsNavigate {
   veiculoProps: veiculoProps,
@@ -34,5 +54,6 @@ export interface CarDashboardProps {
   model: String,
   transmission: String,
   plate: String,
-  year: String
+  year: String,
+  maxRPMReached: number
 }

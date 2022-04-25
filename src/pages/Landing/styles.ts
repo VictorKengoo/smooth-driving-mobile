@@ -2,48 +2,57 @@ import { StyleSheet } from 'react-native';
 import { globalProps } from '../../global/globalProps';
 
 export const styles = StyleSheet.create({
-  main: {
+  image: {
+    backgroundColor: '#000',
+    bottom: 0,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(52, 52, 52, 0)'
+    justifyContent: "center",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+
+  header: {
+    marginTop: 296,
+    marginLeft: 40,
   },
 
   title: {
-    color: "#fff",
-    fontSize: 44.26,
+    color: globalProps.defaultWhite,
+    fontSize: 48,
     fontFamily: globalProps.font,
     fontWeight: 'bold',
-    marginBottom: 24.84,
   },
 
   subtitle: {
-    color: "#fff",
-    fontSize: 18.03,
-    fontWeight: '400',
-    marginBottom: 170,
+    color: globalProps.defaultWhite,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 6,
   },
 
-  loginButton: {
+  signUpButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 13,
-    marginBottom: 88,
+    marginTop: 12,
+    borderWidth: 1,
+    width: 256,
+    borderRadius: 12,
+    height: 60,
+    borderColor: globalProps.defaultWhite,
   },
 
-  loginButtonText: {
+  signUpButtonText: {
     fontFamily: globalProps.font,
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#1c49e8',
-    textDecorationLine: 'underline'
+    color: globalProps.defaultWhite,
   },
 
-  image: {
-    resizeMode: "cover",
-    height: 150,
-    width: 210,
-    marginLeft: 20,
-    marginBottom: -100,
-  }
+  bottomView: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginBottom: 64,
+  },
 });

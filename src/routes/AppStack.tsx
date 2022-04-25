@@ -8,7 +8,7 @@ import { ActivityIndicator, View } from 'react-native';
 import Login from '../pages/Login';
 import Landing from '../pages/Landing';
 import CarDashboard from '../pages/CarDashboard';
-import { CarDashboardProps } from '../interfaces';
+import { CarDashboardProps } from '../utils/interfaces';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -42,6 +42,7 @@ const AppStack: React.FC = () => {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={Home} options={{ gestureEnabled: false }} />
       <Stack.Screen name="CarDashboard" component={CarDashboard} />
+
 
     </Stack.Navigator>
   )

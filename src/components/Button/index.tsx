@@ -1,19 +1,18 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
+import { globalProps } from '../../global/globalProps';
 
 import { styles } from './styles'
 
-interface AuthButtonProps {
+interface ButtonProps {
   action: (...props: any) => void;
   text: string;
-  activeOpacity?: number;
-  additionalProps?: any;
 }
 
-const AuthButton: React.FC<AuthButtonProps> = ({ action, text, activeOpacity, additionalProps }) => {
+const Button: React.FC<ButtonProps> = ({ action, text }) => {
   return (
     <TouchableOpacity
-      activeOpacity={activeOpacity}
+      activeOpacity={globalProps.buttonActiveOpacity}
       style={styles.button}
       onPress={action}
     >
@@ -24,4 +23,4 @@ const AuthButton: React.FC<AuthButtonProps> = ({ action, text, activeOpacity, ad
   )
 }
 
-export default AuthButton
+export default Button

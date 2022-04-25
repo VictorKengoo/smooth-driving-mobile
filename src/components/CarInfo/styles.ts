@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { globalProps } from '../../global/globalProps';
 
 export const styles = StyleSheet.create({
   card: {

@@ -3,11 +3,10 @@ import { globalProps } from '../../global/globalProps';
 
 export const styles = StyleSheet.create({
   main: {
-    backgroundColor: '#3E3D3D',
-    width: 150,
-    height: '100%',
+    backgroundColor: '#212121',
+    width: '100%',
     borderRadius: 14,
-    marginRight: 16
+    marginBottom: 16
   },
 
   infoSection: {
@@ -15,7 +14,7 @@ export const styles = StyleSheet.create({
   },
 
   infoName: {
-    color: "#fff",
+    color: globalProps.defaultWhite,
     fontSize: 16,
     fontFamily: globalProps.font,
     fontWeight: 'normal',
@@ -23,7 +22,7 @@ export const styles = StyleSheet.create({
   },
 
   infoValue: {
-    color: "#fff",
+    color: globalProps.defaultWhite,
     fontSize: 20,
     fontFamily: globalProps.font,
     fontWeight: 'bold',

@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
-import AuthButton from '../../components/AuthButton';
+import Button from '../../components/Button';
 
 import AuthInput from '../../components/AuthInput';
 import { globalProps } from '../../global/globalProps';
@@ -56,7 +56,7 @@ export default function Login() {
 
   return (
     <LinearGradient
-      colors={['#000000', '#bdbdbd']}
+      colors={['#000000', '#0c1144']}
       style={{ flex: 1 }}
     >
       <KeyboardAvoidingView
@@ -64,7 +64,7 @@ export default function Login() {
         enabled
       >
         <ScrollView
-          contentContainerStyle={{ flex: 1 }}
+          // contentContainerStyle={{ flex: 1 }}
           keyboardShouldPersistTaps="handled"
         >
           <View>
@@ -86,10 +86,9 @@ export default function Login() {
                 placeholder={"Digite a senha"}
                 additionalProps={{ secureTextEntry: true }}
               />
-              <AuthButton
+              <Button
                 action={handleSignIn}
                 text={'Entrar'}
-                activeOpacity={globalProps.buttonActiveOpacity}
               />
             </View>
           </View>

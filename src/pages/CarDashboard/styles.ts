@@ -1,27 +1,27 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { globalProps } from '../../global/globalProps';
 
 export const styles = StyleSheet.create({
   main: {
     flex: 1,
-    padding: 29,
-    paddingTop: 98,
-    backgroundColor: 'black',
+    backgroundColor: 'rgba(0,0,0,0)',
   },
 
-  header: {
+  mainContent: {
+    padding: 24,
+    paddingTop: 98,
   },
 
   title: {
-    color: "#fff",
+    color: globalProps.defaultWhite,
     fontSize: 27,
     fontFamily: globalProps.font,
     fontWeight: 'bold',
-    marginBottom: 12,
+    marginBottom: 4,
   },
 
   subtitle: {
-    color: "#fff",
+    color: globalProps.defaultWhite,
     fontSize: 18,
     fontFamily: globalProps.font,
     fontWeight: 'normal',
@@ -31,30 +31,27 @@ export const styles = StyleSheet.create({
   carImageBoard: {
     justifyContent: 'center',
     borderRadius: 20,
-    marginBottom: 36
+    marginBottom: 36,
+    height: 224,
+  },
+
+  carImageView: {
+    alignItems: 'center',
   },
 
   carImage: {
-    alignSelf: 'center',
-    width: '65%',
-    height: '65%',
-    resizeMode: 'contain',
-  },
-
-  infoSection: {
-
+    resizeMode: 'center'
   },
 
   infoTitle: {
-    color: "#fff",
-    fontSize: 20,
+    color: globalProps.defaultWhite,
+    fontSize: 24,
     fontFamily: globalProps.font,
-    fontWeight: 'normal',
-    marginBottom: 12,
+    fontWeight: 'bold',
+    marginBottom: 16,
   },
 
   infoCards: {
-
   },
 
   firstRow: {
@@ -62,7 +59,42 @@ export const styles = StyleSheet.create({
   },
 
   secondRow: {
-    marginTop: 12,
     flexDirection: 'row',
+  },
+
+  // speedometerSection: {
+  //   marginTop: 36,
+  // },
+
+  // speedometer: {
+  //   alignItems: 'center',
+  // },
+
+  // speedometerText: {
+  //   color: globalProps.defaultWhite,
+  //   marginTop: '-25%',
+  //   fontSize: 28,
+  // },
+
+  // speedometerMultiplierText: {
+  //   color: globalProps.defaultWhite,
+  //   fontSize: 20,
+  // },
+
+  statisticsSection: {
+    marginTop: 36,
+  },
+
+  filters: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  viagens: {
+    justifyContent: 'space-between',
+  },
+
+  viagem: {
+
   },
 });

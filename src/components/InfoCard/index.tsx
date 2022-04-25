@@ -3,12 +3,12 @@ import { Text, TouchableOpacity, View } from 'react-native';
 
 import { styles } from './styles'
 
-interface DashboardInfoProps {
+interface InfoCardProps {
   infoName: String,
   infoValue: String
 }
 
-const DashboardInfo: React.FC<DashboardInfoProps> = ({ infoName, infoValue }) => {
+const InfoCard: React.FC<InfoCardProps> = ({ infoName, infoValue }) => {
   return (
     <View style={styles.main}>
       <View style={styles.infoSection}>
@@ -23,4 +23,4 @@ const DashboardInfo: React.FC<DashboardInfoProps> = ({ infoName, infoValue }) =>
   )
 }
 
-export default DashboardInfo
+export default InfoCard

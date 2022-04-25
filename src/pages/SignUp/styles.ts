@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   input: {
     color: '#000',
     height: 60,
-    backgroundColor: "#FFF",
+    backgroundColor: globalProps.defaultWhite,
     borderRadius: 10,
     paddingHorizontal: 12,
     marginVertical: 12,
@@ -21,14 +21,14 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    color: "#fff",
+    color: globalProps.defaultWhite,
     fontSize: 35,
     fontFamily: globalProps.font,
     fontWeight: 'bold',
   },
 
   subtitle: {
-    color: "#fff",
+    color: globalProps.defaultWhite,
     fontSize: 18.03,
     fontWeight: '400',
   },

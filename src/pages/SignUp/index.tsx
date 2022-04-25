@@ -11,7 +11,7 @@ import {
   TextInput,
   Platform
 } from 'react-native'
-import AuthButton from '../../components/AuthButton';
+import Button from '../../components/Button';
 
 import AuthInput from '../../components/AuthInput';
 import { globalProps } from '../../global/globalProps';
@@ -63,12 +63,11 @@ const SignUp = () => {
 
   return (
     <LinearGradient
-      colors={['#000000', '#bdbdbd']}
+      colors={['#000000', '#0c1144']}
       style={{ flex: 1 }}
     >
       <KeyboardAvoidingView
         style={styles.main}
-        // behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         enabled
       >
         <ScrollView
@@ -127,10 +126,9 @@ const SignUp = () => {
                 }}
               />
 
-              <AuthButton
+              <Button
                 action={handleSignUp}
                 text={'Confirmar'}
-                activeOpacity={globalProps.buttonActiveOpacity}
               />
             </View>
           </View>
