@@ -15,16 +15,22 @@ export const styles = StyleSheet.create({
 
   infoName: {
     color: globalProps.defaultWhite,
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: globalProps.font,
-    fontWeight: 'normal',
+    fontWeight: 'bold',
     marginBottom: 12,
   },
 
   infoValue: {
     color: globalProps.defaultWhite,
-    fontSize: 20,
+    fontSize: 18,
+    fontFamily: globalProps.font,
+    // fontWeight: 'bold',
+  },
+  infoValueTitle: {
+    color: globalProps.defaultWhite,
+    fontSize: 18,
     fontFamily: globalProps.font,
     fontWeight: 'bold',
-  }
+  },
 });

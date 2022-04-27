@@ -104,8 +104,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
                   onChangeText={setVeiculoSearch}
                   autoCorrect={false}
                   returnKeyType='search'
-                  // autoFocus={true}
-                  clearButtonMode="while-editing"
+                  clearButtonMode="always"
                   onSubmitEditing={handleSearch}
                 />
               </View>

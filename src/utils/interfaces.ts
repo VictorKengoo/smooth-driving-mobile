@@ -12,21 +12,22 @@ export interface veiculoProps {
   plate: String,
   maxRPMReached: number
 }
-
+export interface eventInfo {
+  dateTime: string,
+  duration: String
+}
+export interface eventsCountProps {
+  curvaEsquerda: number,
+  curvaDireita: number,
+  trocaFaixaEsquerda: number,
+  trocaFaixaDireita: number,
+  aceleracaoBrusca: number,
+  frenagemBrusca: number,
+}
 export interface viagemProps {
   carId: number,
-  eventInfo: {
-    date: String,
-    time: String,
-  },
-  eventCounts: {
-    curvaEsquerda: number,
-    curvaDireita: number,
-    trocaFaixaEsquerda: number,
-    trocaFaixaDireita: number,
-    aumentoRPM: number,
-    frenagem: number,
-  }
+  eventInfo: eventInfo
+  eventsCount: eventsCountProps
 }
 
 type ScreenNavigationProp<

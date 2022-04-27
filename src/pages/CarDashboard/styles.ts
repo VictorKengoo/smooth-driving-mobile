@@ -17,14 +17,6 @@ export const styles = StyleSheet.create({
     fontSize: 27,
     fontFamily: globalProps.font,
     fontWeight: 'bold',
-    marginBottom: 4,
-  },
-
-  subtitle: {
-    color: globalProps.defaultWhite,
-    fontSize: 18,
-    fontFamily: globalProps.font,
-    fontWeight: 'normal',
     marginBottom: 28,
   },
 
@@ -61,25 +53,6 @@ export const styles = StyleSheet.create({
   secondRow: {
     flexDirection: 'row',
   },
-
-  // speedometerSection: {
-  //   marginTop: 36,
-  // },
-
-  // speedometer: {
-  //   alignItems: 'center',
-  // },
-
-  // speedometerText: {
-  //   color: globalProps.defaultWhite,
-  //   marginTop: '-25%',
-  //   fontSize: 28,
-  // },
-
-  // speedometerMultiplierText: {
-  //   color: globalProps.defaultWhite,
-  //   fontSize: 20,
-  // },
 
   statisticsSection: {
     marginTop: 36,

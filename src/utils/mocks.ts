@@ -41,116 +41,59 @@ export default class Mocks {
     return [{
       carId: 1,
       eventInfo: {
-        date: '2020-01-01',
-        time: '10:36:09',
+        dateTime: '2022-01-01T16:13:58',
+        duration: '1h:01m:01s'
       },
-      eventCounts: {
+      eventsCount: {
         curvaEsquerda: 1,
         curvaDireita: 1,
         trocaFaixaEsquerda: 1,
         trocaFaixaDireita: 1,
-        aumentoRPM: 1,
-        frenagem: 1,
+        aceleracaoBrusca: 1,
+        frenagemBrusca: 1,
       }
     }, {
       carId: 2,
       eventInfo: {
-        date: '2020-01-01',
-        time: '10:36:09',
+        dateTime: '2022-02-02T16:13:58',
+        duration: '2h:02m:02s'
       },
-      eventCounts: {
+      eventsCount: {
         curvaEsquerda: 2,
         curvaDireita: 2,
         trocaFaixaEsquerda: 2,
         trocaFaixaDireita: 2,
-        aumentoRPM: 2,
-        frenagem: 2,
+        aceleracaoBrusca: 2,
+        frenagemBrusca: 2,
       }
     }, {
       carId: 3,
       eventInfo: {
-        date: '2020-01-01',
-        time: '10:36:09',
+        dateTime: '2022-03-03T16:13:58',
+        duration: '3h:03m:03s'
       },
-      eventCounts: {
+      eventsCount: {
         curvaEsquerda: 3,
         curvaDireita: 3,
         trocaFaixaEsquerda: 3,
         trocaFaixaDireita: 3,
-        aumentoRPM: 3,
-        frenagem: 3,
+        aceleracaoBrusca: 3,
+        frenagemBrusca: 3,
       }
     }, {
       carId: 4,
       eventInfo: {
-        date: '2020-01-01',
-        time: '10:36:09',
+        dateTime: '2022-04-04T16:13:58',
+        duration: '4h:04m:04s'
       },
-      eventCounts: {
+      eventsCount: {
         curvaEsquerda: 4,
         curvaDireita: 4,
         trocaFaixaEsquerda: 4,
         trocaFaixaDireita: 4,
-        aumentoRPM: 4,
-        frenagem: 4,
+        aceleracaoBrusca: 4,
+        frenagemBrusca: 4,
       }
-    }, {
-      carId: 1,
-      eventInfo: {
-        date: '2020-01-01',
-        time: '10:36:09',
-      },
-      eventCounts: {
-        curvaEsquerda: 1,
-        curvaDireita: 1,
-        trocaFaixaEsquerda: 1,
-        trocaFaixaDireita: 1,
-        aumentoRPM: 1,
-        frenagem: 1,
-      }
-    }, {
-      carId: 2,
-      eventInfo: {
-        date: '2020-01-01',
-        time: '10:36:09',
-      },
-      eventCounts: {
-        curvaEsquerda: 2,
-        curvaDireita: 2,
-        trocaFaixaEsquerda: 2,
-        trocaFaixaDireita: 2,
-        aumentoRPM: 2,
-        frenagem: 2,
-      }
-    }, {
-      carId: 3,
-      eventInfo: {
-        date: '2020-01-01',
-        time: '10:36:09',
-      },
-      eventCounts: {
-        curvaEsquerda: 3,
-        curvaDireita: 3,
-        trocaFaixaEsquerda: 3,
-        trocaFaixaDireita: 3,
-        aumentoRPM: 3,
-        frenagem: 3,
-      }
-    }, {
-      carId: 4,
-      eventInfo: {
-        date: '2020-01-01',
-        time: '10:36:09',
-      },
-      eventCounts: {
-        curvaEsquerda: 4,
-        curvaDireita: 4,
-        trocaFaixaEsquerda: 4,
-        trocaFaixaDireita: 4,
-        aumentoRPM: 4,
-        frenagem: 4,
-      }
-    },
-    ]
+    }]
   }
 }

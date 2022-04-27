@@ -14,7 +14,7 @@ import Mocks from '../../utils/mocks'
 import ViagemInfo from '../../components/ViagemInfo'
 import Select from '../../components/Select'
 import Filters from '../../utils/filters'
-import ViagemStatisticsModal from '../../components/ViagemStatisticsModal'
+import moment from 'moment'
 
 const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
 
@@ -25,7 +25,6 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
   const [periodo, setPeriodo] = useState(periodos[0]);
   const [ordem, setOrdem] = useState(ordens[0]);
   const [viagens, setViagens] = useState([] as viagemProps[])
-  const [showStatisticsModal, setShowStatisticsModal] = useState(false)
 
   useEffect(() => {
     getViagens()
@@ -41,8 +40,43 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
     setViagens(viagensList)
   }
 
-  function handleShowStatisticsModal() {
-    setShowStatisticsModal(true)
+  function isToday(date: Date) {
+    return moment().diff(date, 'day') === 0
+  }
+
+  function isBefore(date: Date, daysBefore: number) {
+
+    const today = moment()
+    const parsedDate = moment(date)
+
+    console.log('today: ', today.toString())
+    console.log('parsedDate: ', parsedDate.toString())
+
+    return parsedDate.isSame(today.subtract(daysBefore, 'day'))
+  }
+
+  function renderViagemInfo(viagem: viagemProps, index: React.Key) {
+    const eventInfo = viagem.eventInfo
+    const eventsCount = viagem.eventsCount
+    const eventInfoDateTime = new Date(eventInfo.dateTime)
+
+    if ((periodo === 'Sempre') ||
+      (periodo === 'Hoje' && isToday(eventInfoDateTime) ||
+        (periodo === 'Ontem' && isBefore(eventInfoDateTime, 1) ||
+          (periodo === 'Últimos 7 dias' && isBefore(eventInfoDateTime, 7)
+          )))) {
+      return (
+        <ViagemInfo
+          key={index}
+          eventsCount={eventsCount}
+          dateTime={eventInfo.dateTime}
+          duration={eventInfo.duration}
+        />
+      )
+    }
+    else {
+      console.log('Não é sempre, é: ' + periodo)
+    }
   }
 
   return (
@@ -58,10 +92,6 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
         <View style={styles.mainContent}>
           <Text style={styles.title}>
             {manufacturer} {model}
-          </Text >
-
-          <Text style={styles.subtitle}>
-            {transmission}
           </Text>
 
           <LinearGradient
@@ -89,17 +119,21 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                     infoValue={plate}
                   />
                   <InfoCard
-                    infoName='CNH Associada'
-                    infoValue='Não possui'
+                    infoName='Transmissão'
+                    infoValue={transmission}
                   />
                   <InfoCard
                     infoName='Ano'
                     infoValue={year}
                   />
+                  <InfoCard
+                    infoName='Cor'
+                    infoValue='Vermelha'
+                  />
                 </View>
                 <View style={styles.secondRow}>
                   <InfoCard
-                    infoName='Score de Segurança'
+                    infoName='Score de Segurança Médio'
                     infoValue='9.3'
                   />
                   <InfoCard
@@ -107,8 +141,12 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                     infoValue='Não possui'
                   />
                   <InfoCard
-                    infoName='Ano'
-                    infoValue={year}
+                    infoName='Combustível'
+                    infoValue='Flex'
+                  />
+                  <InfoCard
+                    infoName='IPVA'
+                    infoValue='Pago'
                   />
                 </View>
               </View>
@@ -133,35 +171,16 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                 title={'Selecionar ordem'}
                 setState={setOrdem}
               />
-
             </View>
             <View style={styles.viagens}>
               {
                 viagens.map((viagem, index) => {
-                  if (periodo === periodos[0]) {
-                    return (
-                      <ViagemInfo
-                        key={index}
-                        infoName={'Viagem ' + viagem.eventInfo.date + ' - ' + viagem.eventInfo.time}
-                        infoValue='2h:36m:23s'
-                        onPress={handleShowStatisticsModal}
-                      />
-                    )
-                  } else {
-                    console.log('Não é sempre, é: ' + periodo)
-                  }
+                  return renderViagemInfo(viagem, index)
                 })
               }
             </View>
           </View>
         </View>
-        <ViagemStatisticsModal
-          title={'My modal'}
-          visible={showStatisticsModal}
-          // visible={false}
-          onClose={() => { setShowStatisticsModal(false) }}
-          onSelect={() => { }}
-        />
       </ScrollView>
     </LinearGradient>
   )

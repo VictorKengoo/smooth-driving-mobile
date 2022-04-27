@@ -1,20 +1,23 @@
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
-import { Modal, View, Text, ScrollView } from 'react-native';
+import { Modal, View, Text } from 'react-native';
+import { Arc, Background, DangerPath, Indicator, Marks, Needle, Progress } from 'react-native-cool-speedometer';
+import Speedometer from 'react-native-cool-speedometer/dist/Speedometer';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import InfoCard from '../InfoCard';
+import { eventsCountProps } from '../../utils/interfaces';
 
 import { styles } from './styles'
-
 interface ViagemStatisticsModalProps {
   title: string,
   visible: boolean,
+  eventsCount: eventsCountProps,
   onClose: () => void,
   onSelect: (value: string) => void,
 }
 
 const ViagemStatisticsModal: React.FC<ViagemStatisticsModalProps> = ({
-  title, visible, onClose, onSelect
+  title, visible, onClose, onSelect, eventsCount
 }) => {
 
   return (
@@ -36,84 +39,73 @@ const ViagemStatisticsModal: React.FC<ViagemStatisticsModalProps> = ({
           </View>
 
           <View style={styles.body}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              <View style={styles.infoCards}>
-                <View style={styles.firstRow}>
-                  <InfoCard
-                    infoName='Placa'
-                    infoValue='{plate}'
-                  />
-                  <InfoCard
-                    infoName='CNH Associada'
-                    infoValue='Não possui'
-                  />
-                  <InfoCard
-                    infoName='Ano'
-                    infoValue='{year}'
-                  />
-                </View>
-                <View style={styles.secondRow}>
-                  <InfoCard
-                    infoName='Score de Segurança'
-                    infoValue='9.3'
-                  />
-                  <InfoCard
-                    infoName='CNH Associada'
-                    infoValue='Não possui'
-                  />
-                  <InfoCard
-                    infoName='Ano'
-                    infoValue='{year}'
-                  />
-                </View>
-              </View>
-            </ScrollView>
-          </View>
-
-          {/* <View style={styles.body}>
+            <Text style={styles.sectionTitle}>
+              Estatísticas
+            </Text>
             <View style={styles.infoCards}>
               <View style={styles.firstRow}>
                 <InfoCard
-                  infoName='Curvas à esquerda'
-                  infoValue='12'
+                  infoName='Curvas arriscadas à esquerda'
+                  infoValue={eventsCount.curvaEsquerda.toString()}
                 />
                 <InfoCard
                   infoName='Trocas de faixa à esquerda'
-                  infoValue='12'
+                  infoValue={eventsCount.trocaFaixaEsquerda.toString()}
                 />
                 <InfoCard
-                  infoName='Curvas à esquerda'
-                  infoValue='12'
+                  infoName='Frenagens bruscas'
+                  infoValue={eventsCount.frenagemBrusca.toString()}
                 />
               </View>
-              <View style={styles.firstRow}>
+              <View style={styles.secondRow}>
                 <InfoCard
-                  infoName='Curvas à direita'
-                  infoValue='12'
+                  infoName='Curvas arriscadas à direita'
+                  infoValue={eventsCount.curvaDireita.toString()}
                 />
                 <InfoCard
                   infoName='Trocas de faixa à direita'
-                  infoValue='12'
+                  infoValue={eventsCount.trocaFaixaDireita.toString()}
                 />
                 <InfoCard
-                  infoName='Aumentos bruscos de R.P.M.'
-                  infoValue='12'
+                  infoName='Acelerações bruscas'
+                  infoValue={eventsCount.aceleracaoBrusca.toString()}
                 />
               </View>
-            </View> */}
-          <View style={styles.totalSection}>
-            <Text style={styles.totalTitle}>
-              Total de Ocorrências
-            </Text>
-            <Text style={styles.totalValue}>
-              54
-            </Text>
-          </View >
+            </View>
+            <View style={styles.totalSection}>
+              <Text style={styles.totalTitle}>
+                Total de Ocorrências
+              </Text>
+              <Text style={styles.totalValue}>
+                54
+              </Text>
+            </View >
+            <View style={styles.speedometerSection}>
+              <Text style={styles.sectionTitle}>
+                R.P.M. máximo
+              </Text>
+              <Speedometer
+                value={8}
+                max={8}
+                angle={180}
+                accentColor='#212121'
+              >
+                <Background angle={180} />
+                <Arc />
+                <Needle />
+                <Progress />
+                <Marks step={0.5} />
+                <DangerPath angle={70} />
+              </Speedometer>
+              <Text style={styles.speedometerText}>
+                6 R.P.M.
+              </Text>
+              <Text style={styles.speedometerMultiplierText}>
+                x1000
+              </Text>
+            </View>
+          </View>
         </View>
-        {/* </View> */}
       </Modal>
     </>
   )

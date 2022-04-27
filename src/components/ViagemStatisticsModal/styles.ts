@@ -6,7 +6,7 @@ const { width } = Dimensions.get('window')
 export const styles = StyleSheet.create({
   main: {
     // flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
     width: '100%',
     height: '100%',
     justifyContent: 'center',
@@ -35,34 +35,30 @@ export const styles = StyleSheet.create({
   },
 
   body: {
+    // flex: 1,
     backgroundColor: '#212121',
-    padding: 12,
-    height: 250,
+    padding: 16,
+    height: '80%',
     borderBottomEndRadius: 14,
     borderBottomStartRadius: 14,
   },
 
   infoCards: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1
   },
 
   firstRow: {
-    flexDirection: 'row',
+    height: '100%',
   },
 
   secondRow: {
-    flexDirection: 'row',
+    flex: 1,
+    marginLeft: 58,
+    justifyContent: 'flex-end',
   },
-
-  // infoCards: {
-  //   // justifyContent: 'center',
-  // },
-
-  // firstRow: {
-  //   justifyContent: 'space-between',
-  //   height: '50%',
-  //   marginRight: 32,
-  //   flexDirection: 'row',
-  // },
 
   totalSection: {
     backgroundColor: '#4F4F4F',
@@ -87,5 +83,34 @@ export const styles = StyleSheet.create({
     fontSize: 28,
     fontFamily: globalProps.font,
     fontWeight: 'bold',
-  }
+  },
+
+  speedometerSection: {
+    marginTop: 36,
+    alignItems: 'center',
+  },
+
+  sectionTitle: {
+    color: globalProps.defaultWhite,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 18,
+    alignSelf: 'flex-start'
+  },
+
+  speedometer: {
+
+  },
+
+
+  speedometerText: {
+    color: globalProps.defaultWhite,
+    marginTop: '-25%',
+    fontSize: 28,
+  },
+
+  speedometerMultiplierText: {
+    color: globalProps.defaultWhite,
+    fontSize: 20,
+  },
 });

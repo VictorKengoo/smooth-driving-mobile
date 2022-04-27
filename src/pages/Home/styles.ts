@@ -53,9 +53,6 @@ export const styles = StyleSheet.create({
 
   addButton: {
     backgroundColor: '#000',
-    // justifyContent: 'flex-start',
-    // position: 'absolute',
-    // paddingLeft: 340,
   },
 
   veiculosTitle: {
