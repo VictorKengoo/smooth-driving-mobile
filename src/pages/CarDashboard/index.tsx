@@ -13,7 +13,7 @@ import InfoCard from '../../components/InfoCard'
 import Mocks from '../../utils/mocks'
 import ViagemInfo from '../../components/ViagemInfo'
 import Select from '../../components/Select'
-import Filters from '../../utils/filters'
+import Filters from '../../utils/Filters'
 import DateUtils from '../../utils/dateUtils'
 
 const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
@@ -65,9 +65,6 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
           duration={eventInfo.duration}
         />
       )
-    }
-    else {
-      console.log('Não é sempre, é: ' + periodo)
     }
   }
 

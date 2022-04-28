@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     padding: 20,
+    paddingTop: 64,
     borderRadius: 14,
     fontSize: 20,
   },
@@ -27,7 +28,7 @@ export const styles = StyleSheet.create({
   titleSection: {
     flex: 1,
     alignItems: 'center',
-    marginLeft: 36,
+    marginLeft: 32,
   },
 
   title: {

@@ -128,7 +128,6 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
               {
                 veiculos.map((veiculo, index) => {
-                  console.log('RPM: ' + veiculo.maxRPMReached)
                   return (
                     <CarInfo
                       key={index}

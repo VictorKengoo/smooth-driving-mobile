@@ -19,6 +19,6 @@ export const styles = StyleSheet.create({
 
   text: {
     color: '#C4C4C4',
-    fontSize: 16,
+    fontSize: 18,
   },
 });

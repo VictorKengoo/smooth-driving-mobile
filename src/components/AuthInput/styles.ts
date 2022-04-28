@@ -9,6 +9,6 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 12,
     marginVertical: 12,
-    fontSize: 16,
+    fontSize: 18,
   },
 });

@@ -45,7 +45,6 @@ const PickerModal: React.FC<PickerModalProps> = ({
 
               <TouchableOpacity onPress={() => {
                 onSelect(selectedValue)
-                console.log('selectedValue: ', selectedValue)
               }}>
                 <MaterialIcons name='check' size={36} color='#54b339' />
               </TouchableOpacity>

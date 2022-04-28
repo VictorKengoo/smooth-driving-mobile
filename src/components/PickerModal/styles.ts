@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'flex-end',
     borderRadius: 14,
-    fontSize: 20,
   },
 
   pickerContainer: {

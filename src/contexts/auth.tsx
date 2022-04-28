@@ -54,8 +54,6 @@ const AuthProvider: React.FC = ({ children }) => {
 
   async function signIn(user: SignInCredentials) {
     const response = await auth.signIn(user.name, user.password, user.email)
-    console.log('Armazenando user no AsyncStorage')
-    console.log('User: ', response.user)
 
     setUser(response.user)
 

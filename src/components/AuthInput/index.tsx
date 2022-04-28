@@ -14,7 +14,6 @@ type AuthInputProps = {
 const AuthInput: React.FC<AuthInputProps> = ({ setUseState, value, placeholder, additionalProps }) => {
 
   function handleOnChangeText(text: string) {
-    console.log("Text: " + text)
     setUseState(text);
   }
 

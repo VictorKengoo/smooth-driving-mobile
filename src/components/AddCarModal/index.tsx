@@ -1,10 +1,10 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { Modal, View, Text } from 'react-native';
+import { Modal, View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Filters from '../../utils/Filters';
 import AuthInput from '../AuthInput';
 import Button from '../Button';
-import PickerModal from '../PickerModal';
 import Select from '../Select';
 
 import { styles } from './styles'
@@ -19,14 +19,16 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
   title, visible, onClose
 }) => {
 
-  const [year, setYear] = useState('');
-  const [fuel, setFuel] = useState('');
+  const currentYear = new Date().getFullYear()
+
+  const [year, setYear] = useState('Ano');
+  const [fuel, setFuel] = useState("Combustível");
   const [plate, setPlate] = useState('');
   const [model, setModel] = useState('');
   const [color, setColor] = useState('');
   const [manufacturer, setManufacturer] = useState('');
-  const [transmission, setTransmission] = useState('');
-  const [situacaoIPVA, setSituacaoIPVA] = useState('');
+  const [transmission, setTransmission] = useState('Transmissão');
+  const [situacaoIPVA, setSituacaoIPVA] = useState('Situação IPVA');
 
   function handleInsertCar() {
     console.log('year: ' + year)
@@ -39,128 +41,104 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
     console.log('situacaoIPVA: ' + situacaoIPVA)
   }
 
-  const range = (start: number, end: number) => {
-    return Array.from(Array(end - start + 1).keys()).map(x => (Math.floor(x + start)).toString())
+  function createYearsList() {
+    const start = 1960
+    return [...Array(currentYear - start + 1).keys()].map(x => (x + start).toString()).reverse()
   }
 
-  const currentYear = new Date().getFullYear()
-  const yearsList = range(currentYear, 1960).reverse()
+  var yearsList = createYearsList();
 
   return (
-    <>
-      <Modal
-        animated
-        transparent
-        visible={visible}
-        animationType="fade"
-      >
-        <View style={styles.main}>
-          <View style={styles.header}>
-            <View style={styles.titleSection}>
-              <Text style={styles.title}>{title}</Text>
+    <Modal
+      animated
+      transparent
+      visible={visible}
+      animationType="fade"
+    >
+      <View style={styles.main}>
+        <KeyboardAvoidingView
+          enabled
+          style={{ flex: 1 }}
+        >
+          <ScrollView
+            contentContainerStyle={{ flex: 1 }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.header}>
+              <View style={styles.titleSection}>
+                <Text style={styles.title}>{title}</Text>
+              </View>
+              <TouchableOpacity onPress={onClose}>
+                <MaterialCommunityIcons name="close-circle" size={36} color='#b33939' />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={onClose}>
-              <MaterialCommunityIcons name="close-circle" size={36} color='#b33939' />
-            </TouchableOpacity>
-          </View>
 
-          <View style={styles.body}>
-            <View
-              style={styles.inputFields}
-            >
+            <View style={styles.body}>
+              <View
+                style={styles.inputFields}
+              >
+                <Select
+                  options={yearsList}
+                  text={year}
+                  title={'Ano do carro'}
+                  setState={setYear}
+                />
 
-              <Select
-                options={yearsList}
-                text={new Date().getFullYear().toString()}
-                title={'Selecionar período'}
-                setState={setYear}
-              />
+                <Select
+                  options={Filters.fuelList}
+                  text={fuel}
+                  title={'Combustível do Motor'}
+                  setState={setFuel}
+                />
 
-              <AuthInput
-                value={fuel}
-                setUseState={setFuel}
-                placeholder="Digite o email"
-                additionalProps={{
-                  keyboardType: "email-address",
-                  autoCapitalize: "none",
-                  returnKeyType: "next"
-                }}
-              />
+                <Select
+                  options={Filters.transmissionsList}
+                  text={transmission}
+                  title={'Transmissão do carro'}
+                  setState={setTransmission}
+                />
 
-              <AuthInput
-                value={plate}
-                setUseState={setPlate}
-                placeholder="Digite a senha"
-                additionalProps={{
-                  secureTextEntry: true,
-                  returnKeyType: "next"
-                }}
-              />
+                <Select
+                  options={Filters.situationIPVAList}
+                  text={situacaoIPVA}
+                  title={'Situação IPVA'}
+                  setState={setSituacaoIPVA}
+                />
 
-              <AuthInput
-                value={model}
-                setUseState={setModel}
-                placeholder="Confirme a senha"
-                additionalProps={{
-                  secureTextEntry: true,
-                  textContentType: "newPassword",
-                  returnKeyType: "send"
-                }}
-              />
+                <AuthInput
+                  value={plate}
+                  setUseState={setPlate}
+                  placeholder="Placa do carro"
+                />
 
-              <AuthInput
-                value={color}
-                setUseState={setColor}
-                placeholder="Confirme a senha"
-                additionalProps={{
-                  secureTextEntry: true,
-                  textContentType: "newPassword",
-                  returnKeyType: "send"
-                }}
-              />
+                <AuthInput
+                  value={model}
+                  setUseState={setModel}
+                  placeholder="Modelo do carro"
+                />
 
-              <AuthInput
-                value={manufacturer}
-                setUseState={setManufacturer}
-                placeholder="Confirme a senha"
-                additionalProps={{
-                  secureTextEntry: true,
-                  textContentType: "newPassword",
-                  returnKeyType: "send"
-                }}
-              />
+                <AuthInput
+                  value={manufacturer}
+                  setUseState={setManufacturer}
+                  placeholder="Fabricante do carro"
+                />
 
-              <AuthInput
-                value={transmission}
-                setUseState={setTransmission}
-                placeholder="Confirme a senha"
-                additionalProps={{
-                  secureTextEntry: true,
-                  textContentType: "newPassword",
-                  returnKeyType: "send"
-                }}
-              />
+                <AuthInput
+                  value={color}
+                  setUseState={setColor}
+                  placeholder="Cor do carro"
+                />
 
-              <AuthInput
-                value={situacaoIPVA}
-                setUseState={setSituacaoIPVA}
-                placeholder="Confirme a senha"
-                additionalProps={{
-                  secureTextEntry: true,
-                  textContentType: "newPassword",
-                  returnKeyType: "send"
-                }}
-              />
-
-              <Button
-                action={handleInsertCar}
-                text={'Confirmar'}
-              />
+                <Button
+                  action={handleInsertCar}
+                  text={'Confirmar'}
+                />
+              </View>
             </View>
-          </View>
-        </View>
-      </Modal>
-    </>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </View>
+    </Modal>
   )
 }
 

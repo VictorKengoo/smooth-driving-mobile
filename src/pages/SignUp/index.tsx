@@ -37,8 +37,6 @@ const SignUp = () => {
 
       signUpPasswordValidation()
 
-      console.log("Dados: " + JSON.stringify({ email: data.email, name: data.name, password: data.password }))
-
     } catch (err) {
 
       Alert.alert(
@@ -49,10 +47,6 @@ const SignUp = () => {
   };
 
   function signUpPasswordValidation() {
-
-    console.log('User: ' + JSON.stringify(userAuth))
-    console.log('password: ' + password)
-
     if (password === confirmPassword) {
       Alert.alert("Senhas conferem")
 
