@@ -16,6 +16,7 @@ import CarInfo from '../../components/CarInfo'
 import { Props, veiculoProps } from '../../utils/interfaces'
 import Mocks from '../../utils/mocks'
 import { LinearGradient } from 'expo-linear-gradient'
+import AddCarModal from '../../components/AddCarModal'
 
 const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const context = useContext(AuthContext)
@@ -23,6 +24,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const [veiculos, setVeiculos] = useState([] as veiculoProps[])
   const [veiculoSearch, setVeiculoSearch] = useState('')
   const [allVeiculos, setAllVeiculos] = useState([] as veiculoProps[])
+  const [showAddCarModal, setShowAddCarModal] = useState(false)
 
   useEffect(() => {
     getVeiculos()
@@ -51,12 +53,14 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
     getVeiculos()
 
     if (veiculoSearch) {
+      const veiculoSearchLower = veiculoSearch.toLowerCase()
+
       allVeiculos.forEach((veiculo) => {
-        if (veiculo.model.includes(veiculoSearch) ||
-          veiculo.manufacturer.includes(veiculoSearch) ||
-          veiculo.transmission.includes(veiculoSearch) ||
-          veiculo.plate.includes(veiculoSearch) ||
-          veiculo.year.includes(veiculoSearch)) {
+        if (veiculo.model.includes(veiculoSearchLower) ||
+          veiculo.manufacturer.includes(veiculoSearchLower) ||
+          veiculo.transmission.includes(veiculoSearchLower) ||
+          veiculo.plate.includes(veiculoSearchLower) ||
+          veiculo.year.includes(veiculoSearchLower)) {
 
           result.push(veiculo)
         }
@@ -111,7 +115,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
               <TouchableOpacity
                 activeOpacity={0.5}
                 style={styles.addButton}
-                onPress={() => { }}
+                onPress={() => setShowAddCarModal(true)}
               >
                 <MaterialIcons name='add-circle-outline' size={40} color='white' />
               </TouchableOpacity>
@@ -143,9 +147,13 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
                 })
               }
             </View>
-
           </View>
         </ScrollView>
+        <AddCarModal
+          visible={showAddCarModal}
+          title={'Adicionar Carro'}
+          onClose={() => { setShowAddCarModal(false) }}
+        />
       </KeyboardAvoidingView>
     </LinearGradient>
   )

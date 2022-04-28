@@ -11,13 +11,16 @@ export const styles = StyleSheet.create({
   },
 
   infoSection: {
-    width: width / 3,
+
+    width: width / 2.8,
     height: '100%',
     flex: 1,
     justifyContent: 'space-between',
     borderRadius: 14,
     backgroundColor: '#4F4F4F',
     padding: 16,
+    // flexWrap: 'wrap',
+    alignItems: 'flex-start',
   },
 
   infoName: {

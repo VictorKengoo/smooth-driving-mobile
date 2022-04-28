@@ -14,7 +14,7 @@ import Mocks from '../../utils/mocks'
 import ViagemInfo from '../../components/ViagemInfo'
 import Select from '../../components/Select'
 import Filters from '../../utils/filters'
-import moment from 'moment'
+import DateUtils from '../../utils/dateUtils'
 
 const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
 
@@ -28,31 +28,21 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
 
   useEffect(() => {
     getViagens()
-  }, [])
+  }, [ordem])
 
   function getViagens() {
     // fetch(BACKEND_USER_URL)
-    //   .then(response => response.json())
+    //   .then(response => r  esponse.json())
     //   .then(data => {
     //     setViagens(data)
     //   })
-    const viagensList = Mocks.createViagensList()
+    const viagensList = orderViagens(Mocks.createViagensList())
     setViagens(viagensList)
   }
 
-  function isToday(date: Date) {
-    return moment().diff(date, 'day') === 0
-  }
-
-  function isBefore(date: Date, daysBefore: number) {
-
-    const today = moment()
-    const parsedDate = moment(date)
-
-    console.log('today: ', today.toString())
-    console.log('parsedDate: ', parsedDate.toString())
-
-    return parsedDate.isSame(today.subtract(daysBefore, 'day'))
+  function orderViagens(viagensList: viagemProps[]) {
+    DateUtils.sortByDate(viagensList, ordem)
+    return viagensList
   }
 
   function renderViagemInfo(viagem: viagemProps, index: React.Key) {
@@ -61,9 +51,11 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
     const eventInfoDateTime = new Date(eventInfo.dateTime)
 
     if ((periodo === 'Sempre') ||
-      (periodo === 'Hoje' && isToday(eventInfoDateTime) ||
-        (periodo === 'Ontem' && isBefore(eventInfoDateTime, 1) ||
-          (periodo === 'Últimos 7 dias' && isBefore(eventInfoDateTime, 7)
+      (periodo === 'Hoje' && DateUtils.isToday(eventInfoDateTime) ||
+        (periodo === 'Ontem' && DateUtils.isBefore(eventInfoDateTime, 1) ||
+          (periodo === 'Últimos 7 dias' && DateUtils.isBefore(eventInfoDateTime, 7) ||
+            (periodo === 'Últimos 30 dias' && DateUtils.isBefore(eventInfoDateTime, 30)) ||
+            (periodo === 'Últimos 60 dias' && DateUtils.isBefore(eventInfoDateTime, 60))
           )))) {
       return (
         <ViagemInfo

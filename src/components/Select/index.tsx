@@ -33,7 +33,6 @@ const Select: React.FC<SelectButtonProps> = ({ text, title, options, setState })
         title={title}
         onClose={() => { setModalVisible(false) }}
         onSelect={(value) => {
-          console.log('value: ', value)
           setTxt(value)
           setState(value)
           setModalVisible(false)

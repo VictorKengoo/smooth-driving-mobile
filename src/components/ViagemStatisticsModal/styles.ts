@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#212121',
     padding: 16,
-    height: '80%',
+    height: '85%',
     borderBottomEndRadius: 14,
     borderBottomStartRadius: 14,
   },
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
 
   secondRow: {
     flex: 1,
-    marginLeft: 58,
+    marginLeft: 39,
     justifyContent: 'flex-end',
   },
 

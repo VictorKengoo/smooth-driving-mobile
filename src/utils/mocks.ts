@@ -41,7 +41,7 @@ export default class Mocks {
     return [{
       carId: 1,
       eventInfo: {
-        dateTime: '2022-01-01T16:13:58',
+        dateTime: '2022/01/01 16:13:58',
         duration: '1h:01m:01s'
       },
       eventsCount: {
@@ -55,7 +55,7 @@ export default class Mocks {
     }, {
       carId: 2,
       eventInfo: {
-        dateTime: '2022-02-02T16:13:58',
+        dateTime: '2022/02/02 16:13:58',
         duration: '2h:02m:02s'
       },
       eventsCount: {
@@ -69,7 +69,7 @@ export default class Mocks {
     }, {
       carId: 3,
       eventInfo: {
-        dateTime: '2022-03-03T16:13:58',
+        dateTime: '2022/03/03 16:13:58',
         duration: '3h:03m:03s'
       },
       eventsCount: {
@@ -83,7 +83,7 @@ export default class Mocks {
     }, {
       carId: 4,
       eventInfo: {
-        dateTime: '2022-04-04T16:13:58',
+        dateTime: '2022/04/04 16:13:58',
         duration: '4h:04m:04s'
       },
       eventsCount: {

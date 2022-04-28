@@ -44,6 +44,7 @@ export const styles = StyleSheet.create({
   },
 
   infoCards: {
+
   },
 
   firstRow: {
