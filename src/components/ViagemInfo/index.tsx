@@ -18,8 +18,10 @@ const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTime, duration, eventsCount
 
   const [showStatisticsModal, setShowStatisticsModal] = useState(false)
 
-  const viagemDate = dateTime.split('T')[0]
-  const viagemTime = dateTime.split('T')[1]
+  const viagemDateTimeSplit = dateTime.split(' ')
+  const viagemDate = viagemDateTimeSplit[0]
+  const viagemTime = viagemDateTimeSplit[1]
+
   const infoName = `Viagem ${viagemDate} - ${viagemTime}`
 
   return (

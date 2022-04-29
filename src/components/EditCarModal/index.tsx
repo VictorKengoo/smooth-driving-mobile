@@ -101,7 +101,7 @@ const EditCarModal: React.FC<EditCarModalProps> = ({
               >
                 <Select
                   options={yearsList}
-                  text={carData.year.toString()}
+                  text={carData.year}
                   title={'Ano do carro'}
                   setState={setYear}
                 />

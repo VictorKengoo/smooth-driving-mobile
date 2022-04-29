@@ -91,6 +91,22 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
     }
   }
 
+  function renderSortIcon() {
+    if (ordem === 'Mais recentes') {
+      return (
+        <TouchableOpacity onPress={() => setOrdem('Mais antigos')}>
+          <MaterialCommunityIcons name='sort-descending' size={36} color='white' />
+        </TouchableOpacity>
+      )
+    } else {
+      return (
+        <TouchableOpacity onPress={() => setOrdem('Mais recentes')}>
+          <MaterialCommunityIcons name='sort-ascending' size={36} color='white' />
+        </TouchableOpacity>
+      )
+    }
+  }
+
   return (
     <LinearGradient
       colors={['#000000', '#0c1144']}
@@ -146,7 +162,7 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                   />
                   <InfoCard
                     infoName='Cor'
-                    infoValue='Vermelha'
+                    infoValue={color}
                   />
                 </View>
                 <View style={styles.secondRow}>
@@ -160,11 +176,11 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                   />
                   <InfoCard
                     infoName='Combustível'
-                    infoValue='Flex'
+                    infoValue={fuel}
                   />
                   <InfoCard
                     infoName='IPVA'
-                    infoValue='Pago'
+                    infoValue={situacaoIPVA}
                   />
                 </View>
               </View>
@@ -183,12 +199,14 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                 setState={setPeriodo}
               />
 
-              <Select
+              {/* <Select
                 options={ordens}
                 text={ordens[0]}
                 title={'Selecionar ordem'}
                 setState={setOrdem}
-              />
+              /> */}
+
+              {renderSortIcon()}
             </View>
             <View style={styles.viagens}>
               {
