@@ -10,7 +10,7 @@ import { styles } from './styles'
 interface SelectButtonProps {
   // onChangeSelect: () => void,
   options: string[],
-  text: string,
+  text: String,
   title: string,
   setState: (value: string) => void,
 }

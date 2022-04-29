@@ -1,6 +1,8 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import { globalProps } from '../../global/globalProps';
 
+const { width } = Dimensions.get('window')
+
 export const styles = StyleSheet.create({
   main: {
     // flex: 1,

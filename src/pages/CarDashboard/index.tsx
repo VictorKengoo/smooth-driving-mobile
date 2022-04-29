@@ -3,11 +3,12 @@ import {
   View,
   Text,
   Image,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from 'react-native'
 import CarImage from '../../../images/car.png'
 import { styles } from './styles'
-import { Props, viagemProps } from '../../utils/interfaces'
+import { Props, veiculoProps, viagemProps } from '../../utils/interfaces'
 import { LinearGradient } from 'expo-linear-gradient'
 import InfoCard from '../../components/InfoCard'
 import Mocks from '../../utils/mocks'
@@ -15,16 +16,22 @@ import ViagemInfo from '../../components/ViagemInfo'
 import Select from '../../components/Select'
 import Filters from '../../utils/Filters'
 import DateUtils from '../../utils/dateUtils'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import EditCarModal from '../../components/EditCarModal'
 
 const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
 
-  const { manufacturer, model, plate, transmission, year, maxRPMReached } = route.params;
+  const {
+    manufacturer, model, plate, transmission, year, color, fuel, situacaoIPVA, maxRPMReached
+  } = route.params;
 
   const { ordens, periodos } = Filters
 
   const [periodo, setPeriodo] = useState(periodos[0]);
   const [ordem, setOrdem] = useState(ordens[0]);
   const [viagens, setViagens] = useState([] as viagemProps[])
+  const [showEditCarModal, setShowEditCarModal] = useState(false)
+  const [carData, setCarData] = useState({} as veiculoProps)
 
   useEffect(() => {
     getViagens()
@@ -45,6 +52,21 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
     return viagensList
   }
 
+  function handleEdit() {
+    setCarData({
+      manufacturer: manufacturer,
+      model: model,
+      plate: plate,
+      transmission: transmission,
+      year: year,
+      maxRPMReached: maxRPMReached,
+      color: color,
+      fuel: fuel,
+      situacaoIPVA: situacaoIPVA,
+    })
+    setShowEditCarModal(true)
+  }
+
   function renderViagemInfo(viagem: viagemProps, index: React.Key) {
     const eventInfo = viagem.eventInfo
     const eventsCount = viagem.eventsCount
@@ -63,6 +85,7 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
           eventsCount={eventsCount}
           dateTime={eventInfo.dateTime}
           duration={eventInfo.duration}
+          maxRPMReached={maxRPMReached}
         />
       )
     }
@@ -79,9 +102,15 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.mainContent}>
-          <Text style={styles.title}>
-            {manufacturer} {model}
-          </Text>
+          <View style={styles.header}>
+            <Text style={styles.title}>
+              {manufacturer} {model}
+            </Text>
+
+            <TouchableOpacity onPress={handleEdit}>
+              <MaterialCommunityIcons name='square-edit-outline' size={36} color='white' />
+            </TouchableOpacity>
+          </View>
 
           <LinearGradient
             colors={['rgba(64, 64, 64, 0.3)', 'rgba(150, 150, 150, 1)']}
@@ -171,6 +200,12 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
           </View>
         </View>
       </ScrollView>
+      <EditCarModal
+        carData={carData}
+        visible={showEditCarModal}
+        title={'Editar Carro'}
+        onClose={() => { setShowEditCarModal(false) }}
+      />
     </LinearGradient>
   )
 }

@@ -43,7 +43,6 @@ const AppStack: React.FC = () => {
       <Stack.Screen name="Home" component={Home} options={{ gestureEnabled: false }} />
       <Stack.Screen name="CarDashboard" component={CarDashboard} />
 
-
     </Stack.Navigator>
   )
 }

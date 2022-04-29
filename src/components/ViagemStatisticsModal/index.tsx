@@ -12,12 +12,13 @@ interface ViagemStatisticsModalProps {
   title: string,
   visible: boolean,
   eventsCount: eventsCountProps,
+  maxRPMReached: number,
   onClose: () => void,
   onSelect: (value: string) => void,
 }
 
 const ViagemStatisticsModal: React.FC<ViagemStatisticsModalProps> = ({
-  title, visible, onClose, onSelect, eventsCount
+  title, visible, onClose, onSelect, eventsCount, maxRPMReached
 }) => {
 
   return (
@@ -85,7 +86,7 @@ const ViagemStatisticsModal: React.FC<ViagemStatisticsModalProps> = ({
                 R.P.M. máximo
               </Text>
               <Speedometer
-                value={8}
+                value={maxRPMReached}
                 max={8}
                 angle={180}
                 accentColor='#212121'

@@ -9,6 +9,9 @@ export default class Mocks {
       transmission: 'Manual',
       year: '2020',
       plate: 'ABC-1234',
+      fuel: 'Gasolina',
+      situacaoIPVA: 'Pago',
+      color: 'Preto',
       maxRPMReached: 6
     }, {
       id: 2,
@@ -17,6 +20,9 @@ export default class Mocks {
       transmission: 'Manual',
       year: '2020',
       plate: 'ABC-1234',
+      fuel: 'Gasolina',
+      situacaoIPVA: 'Pago',
+      color: 'Preto',
       maxRPMReached: 4
     }, {
       id: 3,
@@ -25,6 +31,9 @@ export default class Mocks {
       transmission: 'Manual',
       year: '2020',
       plate: 'ABC-1234',
+      fuel: 'Gasolina',
+      situacaoIPVA: 'Pago',
+      color: 'Preto',
       maxRPMReached: 9
     }, {
       id: 4,
@@ -33,6 +42,9 @@ export default class Mocks {
       transmission: 'Manual',
       year: '2020',
       plate: 'ABC-1234',
+      fuel: 'Gasolina',
+      situacaoIPVA: 'Pago',
+      color: 'Preto',
       maxRPMReached: 11
     }]
   }

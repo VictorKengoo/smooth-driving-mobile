@@ -139,6 +139,9 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
                         transmission: veiculo.transmission,
                         year: veiculo.year,
                         plate: veiculo.plate,
+                        color: veiculo.color,
+                        fuel: veiculo.fuel,
+                        situacaoIPVA: veiculo.situacaoIPVA,
                         maxRPMReached: veiculo.maxRPMReached
                       }}
                     />

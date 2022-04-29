@@ -5,7 +5,7 @@ import { styles } from './styles'
 
 type AuthInputProps = {
   setUseState: React.Dispatch<React.SetStateAction<string>>;
-  value: string
+  value: String
   placeholder: string;
   keyboardType?: string;
   additionalProps?: any;

@@ -7,7 +7,12 @@ import CarImage from '../../../images/car.png'
 
 import { veiculoPropsNavigate } from '../../utils/interfaces'
 
-const CarInfo: React.FC<veiculoPropsNavigate> = ({ veiculoProps: { manufacturer, model, transmission, plate, year, maxRPMReached }, navigation }) => {
+const CarInfo: React.FC<veiculoPropsNavigate> = ({
+  veiculoProps: {
+    manufacturer, model, transmission, plate, year, maxRPMReached, color, fuel, situacaoIPVA
+  },
+  navigation
+}) => {
   // const navigation = useNavigation();
 
   function handleNavigateToDashboard() {
@@ -17,7 +22,10 @@ const CarInfo: React.FC<veiculoPropsNavigate> = ({ veiculoProps: { manufacturer,
       transmission: transmission,
       plate: plate,
       year: year,
-      maxRPMReached: maxRPMReached
+      maxRPMReached: maxRPMReached,
+      color: color,
+      fuel: fuel,
+      situacaoIPVA: situacaoIPVA
     });
   }
 
@@ -29,7 +37,6 @@ const CarInfo: React.FC<veiculoPropsNavigate> = ({ veiculoProps: { manufacturer,
       <View style={styles.cardHeader}>
         <Text style={styles.model}>{manufacturer}</Text>
         <Text style={styles.model}>{model}</Text>
-        {/* <Text style={styles.model}>{manufacturer} {model}</Text> */}
         <Text style={styles.year}>{year}</Text>
         <Text style={styles.transmission}>{transmission}</Text>
         <Text style={styles.plate}>{plate}</Text>

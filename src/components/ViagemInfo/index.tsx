@@ -10,10 +10,11 @@ import { styles } from './styles'
 interface ViagemInfoProps {
   dateTime: String,
   duration: String,
-  eventsCount: eventsCountProps
+  eventsCount: eventsCountProps,
+  maxRPMReached: number,
 }
 
-const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTime, duration, eventsCount }) => {
+const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTime, duration, eventsCount, maxRPMReached }) => {
 
   const [showStatisticsModal, setShowStatisticsModal] = useState(false)
 
@@ -42,9 +43,9 @@ const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTime, duration, eventsCount
         eventsCount={eventsCount}
         title={infoName}
         visible={showStatisticsModal}
-        // visible={false}
-        onClose={() => { setShowStatisticsModal(false) }}
+        onClose={() => { setShowStatisticsModal(false); }}
         onSelect={() => { }}
+        maxRPMReached={maxRPMReached}
       />
     </TouchableOpacity >
   )

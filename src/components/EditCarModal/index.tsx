@@ -3,19 +3,22 @@ import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Filters from '../../utils/Filters';
+import { veiculoProps } from '../../utils/interfaces';
 import AuthInput from '../AuthInput';
 import Button from '../Button';
 import Select from '../Select';
 
 import { styles } from './styles'
-interface AddCarModalProps {
+
+interface EditCarModalProps {
+  carData: veiculoProps,
   title: string,
   visible: boolean,
   onClose: () => void,
 }
 
-const AddCarModal: React.FC<AddCarModalProps> = ({
-  title, visible, onClose
+const EditCarModal: React.FC<EditCarModalProps> = ({
+  title, visible, onClose, carData
 }) => {
 
   const currentYear = new Date().getFullYear()
@@ -98,52 +101,52 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
               >
                 <Select
                   options={yearsList}
-                  text={year}
+                  text={carData.year.toString()}
                   title={'Ano do carro'}
                   setState={setYear}
                 />
 
                 <Select
                   options={Filters.fuelList}
-                  text={fuel}
+                  text={carData.fuel}
                   title={'Combustível do Motor'}
                   setState={setFuel}
                 />
 
                 <Select
                   options={Filters.transmissionsList}
-                  text={transmission}
+                  text={carData.transmission}
                   title={'Transmissão do carro'}
                   setState={setTransmission}
                 />
 
                 <Select
                   options={Filters.situationIPVAList}
-                  text={situacaoIPVA}
+                  text={carData.situacaoIPVA}
                   title={'Situação IPVA'}
                   setState={setSituacaoIPVA}
                 />
 
                 <AuthInput
-                  value={plate}
+                  value={carData.plate}
                   setUseState={setPlate}
                   placeholder="Placa do carro"
                 />
 
                 <AuthInput
-                  value={model}
+                  value={carData.model}
                   setUseState={setModel}
                   placeholder="Modelo do carro"
                 />
 
                 <AuthInput
-                  value={manufacturer}
+                  value={carData.manufacturer}
                   setUseState={setManufacturer}
                   placeholder="Fabricante do carro"
                 />
 
                 <AuthInput
-                  value={color}
+                  value={carData.color}
                   setUseState={setColor}
                   placeholder="Cor do carro"
                 />
@@ -161,4 +164,4 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
   )
 }
 
-export default AddCarModal
+export default EditCarModal

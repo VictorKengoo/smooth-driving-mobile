@@ -12,6 +12,11 @@ export const styles = StyleSheet.create({
     paddingTop: 98,
   },
 
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
   title: {
     color: globalProps.defaultWhite,
     fontSize: 27,

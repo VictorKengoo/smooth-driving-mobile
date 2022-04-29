@@ -4,12 +4,15 @@ import { number } from "yup";
 import { RootStackParamList } from "../routes/AppStack";
 
 export interface veiculoProps {
-  id: number,
+  id?: number,
   manufacturer: String,
   model: String,
   transmission: String,
   year: String,
   plate: String,
+  fuel: String,
+  situacaoIPVA: String,
+  color: String,
   maxRPMReached: number
 }
 export interface eventInfo {
@@ -44,7 +47,6 @@ export type Props<T extends keyof RootStackParamList> = {
   navigation: ScreenNavigationProp<T>;
 };
 
-
 export interface veiculoPropsNavigate {
   veiculoProps: veiculoProps,
   navigation: ScreenNavigationProp<"Home">
@@ -56,5 +58,8 @@ export interface CarDashboardProps {
   transmission: String,
   plate: String,
   year: String,
-  maxRPMReached: number
+  maxRPMReached: number,
+  color: String,
+  fuel: String,
+  situacaoIPVA: String,
 }
