@@ -9,6 +9,8 @@ import Login from '../pages/Login';
 import Landing from '../pages/Landing';
 import CarDashboard from '../pages/CarDashboard';
 import { CarDashboardProps } from '../utils/interfaces';
+import AccelerometerData from '../pages/AccelerometerData';
+import GyroscopeData from '../pages/GyroscopeData';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -18,6 +20,8 @@ export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   CarDashboard: CarDashboardProps;
+  AccelerometerData: undefined
+  GyroscopeData: undefined
 };
 
 const AppStack: React.FC = () => {
@@ -37,11 +41,14 @@ const AppStack: React.FC = () => {
         headerShown: false
       }}
     >
-      <Stack.Screen name="Landing" component={Landing} />
+      {/* <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={Home} options={{ gestureEnabled: false }} />
-      <Stack.Screen name="CarDashboard" component={CarDashboard} />
+      <Stack.Screen name="CarDashboard" component={CarDashboard} /> */}
+
+      {/* <Stack.Screen name="AccelerometerData" component={AccelerometerData} /> */}
+      <Stack.Screen name="GyroscopeData" component={GyroscopeData} />
 
     </Stack.Navigator>
   )
