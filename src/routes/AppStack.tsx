@@ -41,14 +41,14 @@ const AppStack: React.FC = () => {
         headerShown: false
       }}
     >
-      {/* <Stack.Screen name="Landing" component={Landing} />
+      <Stack.Screen name="Landing" component={Landing} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={Home} options={{ gestureEnabled: false }} />
-      <Stack.Screen name="CarDashboard" component={CarDashboard} /> */}
+      <Stack.Screen name="CarDashboard" component={CarDashboard} />
 
       {/* <Stack.Screen name="AccelerometerData" component={AccelerometerData} /> */}
-      <Stack.Screen name="GyroscopeData" component={GyroscopeData} />
+      {/* <Stack.Screen name="GyroscopeData" component={GyroscopeData} /> */}
 
     </Stack.Navigator>
   )
