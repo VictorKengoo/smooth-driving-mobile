@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-// import { BACKEND_USER_URL } from '@env';
 import {
   KeyboardAvoidingView,
   View,
@@ -7,16 +6,28 @@ import {
   TouchableOpacity,
   ScrollView
 } from 'react-native'
-
-import { styles } from './styles'
+import { LinearGradient } from 'expo-linear-gradient'
 import { TextInput } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
-import AuthContext from '../../contexts/auth'
-import CarInfo from '../../components/CarInfo'
-import { Props, veiculoProps } from '../../utils/interfaces'
+import { Gyroscope, Accelerometer } from 'expo-sensors';
+
+import { Subscription } from 'expo-modules-core';
+
+import { Props, SensorDataPostProps, SensorDataProps, veiculoProps } from '../../utils/interfaces'
 import Mocks from '../../utils/mocks'
-import { LinearGradient } from 'expo-linear-gradient'
+
+import { styles } from './styles'
+
+import AuthContext from '../../contexts/auth'
+
+import Button from '../../components/Button'
+import CarInfo from '../../components/CarInfo'
 import AddCarModal from '../../components/AddCarModal'
+
+import SensorData from '../../services/SensorData'
+import ThreeAxisSensor from 'expo-sensors/build/ThreeAxisSensor'
+import api from '../../services/api'
+
 
 const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const context = useContext(AuthContext)
@@ -25,6 +36,33 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const [veiculoSearch, setVeiculoSearch] = useState('')
   const [allVeiculos, setAllVeiculos] = useState([] as veiculoProps[])
   const [showAddCarModal, setShowAddCarModal] = useState(false)
+
+  const [viagemStarted, setViagemStarted] = useState(false)
+
+  const [accelerometerData, setAccelerometerData] = useState({} as SensorDataProps)
+  const [accelerometerSubscription, setAccelerometerSubscription] = useState<Subscription | undefined>()
+
+  const [gyroscopeData, setGyroscopeData] = useState({} as SensorDataProps)
+  const [gyroscopeSubscription, setGyroscopeSubscription] = useState<Subscription | undefined>()
+
+  const [accelerometerPostData, setAccelerometerPostData] = useState([] as SensorDataProps[])
+  const [gyroscopePostData, setGyroscopePostData] = useState([] as SensorDataProps[])
+
+  const _accelerometerData = new SensorData(
+    'Accelerometer',
+    Accelerometer,
+    accelerometerData, setAccelerometerData,
+    accelerometerSubscription, setAccelerometerSubscription,
+    setAccelerometerPostData
+  )
+
+  const _gyroscopeData = new SensorData(
+    'Gyroscope',
+    Gyroscope,
+    gyroscopeData, setGyroscopeData,
+    gyroscopeSubscription, setGyroscopeSubscription,
+    setGyroscopePostData
+  )
 
   useEffect(() => {
     getVeiculos()
@@ -69,6 +107,22 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
     } else {
       getVeiculos()
     }
+  }
+
+  function handleUnsubscribe() {
+    _accelerometerData._unsubscribe()
+    _gyroscopeData._unsubscribe()
+    setViagemStarted(false)
+  }
+
+  function handleSubscribe() {
+    setViagemStarted(true)
+    _accelerometerData._subscribe();
+    _gyroscopeData._subscribe();
+
+    let postData = [] as SensorDataPostProps[]
+
+    // api.postSensorsData(Mocks.composeData(gyroscopePostData, accelerometerPostData, postData))
   }
 
   return (
@@ -119,6 +173,13 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
               >
                 <MaterialIcons name='add-circle-outline' size={40} color='white' />
               </TouchableOpacity>
+            </View>
+
+            <View style={styles.startTripButton}>
+              <Button
+                action={viagemStarted ? handleUnsubscribe : handleSubscribe}
+                text={viagemStarted ? 'Finalizar viagem' : 'Começar viagem'}
+              />
             </View>
 
             <View style={styles.veiculosSection}>

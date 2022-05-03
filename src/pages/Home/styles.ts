@@ -39,6 +39,10 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
   },
 
+  startTripButton: {
+    paddingTop: 24,
+  },
+
   input: {
     flex: 1,
     alignItems: 'center',
@@ -60,7 +64,7 @@ export const styles = StyleSheet.create({
     fontSize: 27,
     fontFamily: globalProps.font,
     fontWeight: 'bold',
-    paddingTop: 64,
+    paddingTop: 48,
   },
 
   veiculosSection: {

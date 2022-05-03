@@ -1,4 +1,4 @@
-import { veiculoProps, viagemProps } from "./interfaces";
+import { SensorDataPostProps, SensorDataProps, veiculoProps, viagemProps } from "./interfaces";
 
 export default class Mocks {
   static createCarList(): veiculoProps[] {
@@ -107,5 +107,92 @@ export default class Mocks {
         frenagemBrusca: 4,
       }
     }]
+  }
+
+  static composeData(
+    gyroscopePostData: SensorDataProps[],
+    accelerometerPostData: SensorDataProps[],
+    data: SensorDataPostProps[]): SensorDataPostProps[] {
+    {
+      accelerometerPostData.map(accelerometerData => {
+        gyroscopePostData.map(gyroscopeData => {
+          data.push({
+            AceleracaoVeiculo: {
+              type: "float",
+              value: accelerometerData.x.toString(),
+              metadata: {}
+            },
+            EixoXAcelerometro: {
+              type: "float",
+              value: accelerometerData.x.toString(),
+              metadata: {}
+            },
+            EixoYAcelerometro: {
+              type: "float",
+              value: accelerometerData.y.toString(),
+              metadata: {}
+            },
+            EixoZAcelerometro: {
+              type: "float",
+              value: accelerometerData.z.toString(),
+              metadata: {}
+            },
+            EixoXGiroscopio: {
+              type: "float",
+              value: gyroscopeData.x.toString(),
+              metadata: {}
+            },
+            EixoYGiroscopio: {
+              type: "float",
+              value: gyroscopeData.y.toString(),
+              metadata: {}
+            },
+            EixoZGiroscopio: {
+              type: "float",
+              value: gyroscopeData.z.toString(),
+              metadata: {}
+            },
+            DistanciaCodLimpo: {
+              type: "float",
+              value: gyroscopeData.z.toString(),
+              metadata: {}
+            },
+            VelocidadeVeiculo: {
+              type: "float",
+              value: gyroscopeData.z.toString(),
+              metadata: {}
+            },
+            IdViagem: {
+              type: "float",
+              value: gyroscopeData.z.toString(),
+              metadata: {}
+            },
+            NivelCombustivel: {
+              type: "float",
+              value: gyroscopeData.z.toString(),
+              metadata: {}
+            },
+            PorcentagemEtanol: {
+              type: "float",
+              value: gyroscopeData.z.toString(),
+              metadata: {}
+            },
+            RPMveiculo: {
+              type: "float",
+              value: gyroscopeData.z.toString(),
+              metadata: {}
+            },
+            TipoCombustivel: {
+              type: "float",
+              value: gyroscopeData.z.toString(),
+              metadata: {}
+            },
+            id: 'urn:ngsi-ld:entity:023',
+            type: 'iot'
+          })
+        })
+      })
+      return data
+    }
   }
 }

@@ -1,16 +1,15 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import SignUp from '../pages/SignUp';
-import Home from '../pages/Home';
-import { useContext } from 'react';
-import AuthContext from '../contexts/auth';
+import React, { useContext } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import Login from '../pages/Login';
-import Landing from '../pages/Landing';
-import CarDashboard from '../pages/CarDashboard';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import AuthContext from '../contexts/auth';
+
 import { CarDashboardProps } from '../utils/interfaces';
-import AccelerometerData from '../pages/AccelerometerData';
-import GyroscopeData from '../pages/GyroscopeData';
+import Landing from '../pages/Landing';
+import SignUp from '../pages/SignUp';
+import Login from '../pages/Login';
+import Home from '../pages/Home';
+import CarDashboard from '../pages/CarDashboard';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
