@@ -28,7 +28,6 @@ import SensorData from '../../services/SensorData'
 import ThreeAxisSensor from 'expo-sensors/build/ThreeAxisSensor'
 import api from '../../services/api'
 
-
 const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const context = useContext(AuthContext)
 
@@ -45,23 +44,18 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const [gyroscopeData, setGyroscopeData] = useState({} as SensorDataProps)
   const [gyroscopeSubscription, setGyroscopeSubscription] = useState<Subscription | undefined>()
 
-  const [accelerometerPostData, setAccelerometerPostData] = useState([] as SensorDataProps[])
-  const [gyroscopePostData, setGyroscopePostData] = useState([] as SensorDataProps[])
-
   const _accelerometerData = new SensorData(
     'Accelerometer',
     Accelerometer,
     accelerometerData, setAccelerometerData,
-    accelerometerSubscription, setAccelerometerSubscription,
-    setAccelerometerPostData
+    accelerometerSubscription, setAccelerometerSubscription
   )
 
   const _gyroscopeData = new SensorData(
     'Gyroscope',
     Gyroscope,
     gyroscopeData, setGyroscopeData,
-    gyroscopeSubscription, setGyroscopeSubscription,
-    setGyroscopePostData
+    gyroscopeSubscription, setGyroscopeSubscription
   )
 
   useEffect(() => {
@@ -117,12 +111,18 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
   function handleSubscribe() {
     setViagemStarted(true)
+    const viagemId = Math.floor(Math.random() * 1000000000000).toString()
+
     _accelerometerData._subscribe();
     _gyroscopeData._subscribe();
 
-    let postData = [] as SensorDataPostProps[]
-
     // api.postSensorsData(Mocks.composeData(gyroscopePostData, accelerometerPostData, postData))
+    console.log("postData: ",
+      JSON.stringify(Mocks.composeData(
+        _accelerometerData.data,
+        _gyroscopeData.data,
+        viagemId
+      )))
   }
 
   return (

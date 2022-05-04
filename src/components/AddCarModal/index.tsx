@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Modal, View, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Filters from '../../utils/Filters';
+import Filters from '../../utils/filters';
 import AuthInput from '../AuthInput';
 import Button from '../Button';
 import Select from '../Select';

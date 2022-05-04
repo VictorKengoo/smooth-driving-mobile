@@ -110,88 +110,58 @@ export default class Mocks {
   }
 
   static composeData(
-    gyroscopePostData: SensorDataProps[],
-    accelerometerPostData: SensorDataProps[],
-    data: SensorDataPostProps[]): SensorDataPostProps[] {
+    gyroscopePostData: SensorDataProps,
+    accelerometerPostData: SensorDataProps,
+    viagemId: string
+  ): SensorDataPostProps[] {
     {
-      accelerometerPostData.map(accelerometerData => {
-        gyroscopePostData.map(gyroscopeData => {
-          data.push({
-            AceleracaoVeiculo: {
-              type: "float",
-              value: accelerometerData.x.toString(),
-              metadata: {}
-            },
-            EixoXAcelerometro: {
-              type: "float",
-              value: accelerometerData.x.toString(),
-              metadata: {}
-            },
-            EixoYAcelerometro: {
-              type: "float",
-              value: accelerometerData.y.toString(),
-              metadata: {}
-            },
-            EixoZAcelerometro: {
-              type: "float",
-              value: accelerometerData.z.toString(),
-              metadata: {}
-            },
-            EixoXGiroscopio: {
-              type: "float",
-              value: gyroscopeData.x.toString(),
-              metadata: {}
-            },
-            EixoYGiroscopio: {
-              type: "float",
-              value: gyroscopeData.y.toString(),
-              metadata: {}
-            },
-            EixoZGiroscopio: {
-              type: "float",
-              value: gyroscopeData.z.toString(),
-              metadata: {}
-            },
-            DistanciaCodLimpo: {
-              type: "float",
-              value: gyroscopeData.z.toString(),
-              metadata: {}
-            },
-            VelocidadeVeiculo: {
-              type: "float",
-              value: gyroscopeData.z.toString(),
-              metadata: {}
-            },
-            IdViagem: {
-              type: "float",
-              value: gyroscopeData.z.toString(),
-              metadata: {}
-            },
-            NivelCombustivel: {
-              type: "float",
-              value: gyroscopeData.z.toString(),
-              metadata: {}
-            },
-            PorcentagemEtanol: {
-              type: "float",
-              value: gyroscopeData.z.toString(),
-              metadata: {}
-            },
-            RPMveiculo: {
-              type: "float",
-              value: gyroscopeData.z.toString(),
-              metadata: {}
-            },
-            TipoCombustivel: {
-              type: "float",
-              value: gyroscopeData.z.toString(),
-              metadata: {}
-            },
-            id: 'urn:ngsi-ld:entity:023',
-            type: 'iot'
-          })
+      let data = [] as SensorDataPostProps[]
+      console.log("composeData ------")
+      console.log('gyroscopePostData: ',
+        JSON.stringify(gyroscopePostData))
+
+      console.log('accelerometerPostData: ',
+        JSON.stringify(accelerometerPostData))
+
+      if (gyroscopePostData && accelerometerPostData) {
+        data.push({
+          EixoXAcelerometro: {
+            type: "float",
+            value: gyroscopePostData.x,
+            metadata: {}
+          },
+          EixoYAcelerometro: {
+            type: "float",
+            value: gyroscopePostData.y,
+            metadata: {}
+          },
+          EixoZAcelerometro: {
+            type: "float",
+            value: gyroscopePostData.z,
+            metadata: {}
+          },
+          EixoXGiroscopio: {
+            type: "float",
+            value: accelerometerPostData.x,
+            metadata: {}
+          },
+          EixoYGiroscopio: {
+            type: "float",
+            value: accelerometerPostData.y,
+            metadata: {}
+          },
+          EixoZGiroscopio: {
+            type: "float",
+            value: accelerometerPostData.z,
+            metadata: {}
+          },
+          IdViagem: {
+            type: "float",
+            value: viagemId,
+            metadata: {}
+          },
         })
-      })
+      }
       return data
     }
   }

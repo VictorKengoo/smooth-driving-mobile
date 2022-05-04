@@ -65,24 +65,12 @@ export interface CarDashboardProps {
 }
 
 export interface SensorDataProps {
-  x: number,
-  y: number,
-  z: number,
+  x: string,
+  y: string,
+  z: string,
 }
 
 export interface SensorDataPostProps {
-  "id": string,
-  "type": string,
-  "AceleracaoVeiculo": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "DistanciaCodLimpo": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
   "EixoXAcelerometro": {
     "type": string,
     "value": string,
@@ -114,31 +102,6 @@ export interface SensorDataPostProps {
     "metadata": {}
   },
   "IdViagem": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "NivelCombustivel": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "PorcentagemEtanol": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "RPMveiculo": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "TipoCombustivel": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "VelocidadeVeiculo": {
     "type": string,
     "value": string,
     "metadata": {}

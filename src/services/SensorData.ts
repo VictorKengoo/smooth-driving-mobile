@@ -4,6 +4,7 @@ import { Gyroscope, Accelerometer } from 'expo-sensors';
 import { Subscription } from 'expo-modules-core';
 import { SensorDataProps } from '../utils/interfaces';
 import ThreeAxisSensor from 'expo-sensors/build/ThreeAxisSensor';
+import Mocks from '../utils/mocks';
 
 export default class SensorData<T extends ThreeAxisSensor> {
 
@@ -13,7 +14,6 @@ export default class SensorData<T extends ThreeAxisSensor> {
   setData: Dispatch<SetStateAction<SensorDataProps>>
   subscription: Subscription | undefined
   setSubscription: Dispatch<SetStateAction<Subscription | undefined>>
-  setSensorPostData: React.Dispatch<React.SetStateAction<SensorDataProps[]>>
 
   constructor(
     sensorType: string,
@@ -21,8 +21,7 @@ export default class SensorData<T extends ThreeAxisSensor> {
     data: SensorDataProps,
     setData: Dispatch<SetStateAction<SensorDataProps>>,
     subscription: Subscription | undefined,
-    setSubscription: Dispatch<SetStateAction<Subscription | undefined>>,
-    setSensorPostData: React.Dispatch<React.SetStateAction<SensorDataProps[]>>) {
+    setSubscription: Dispatch<SetStateAction<Subscription | undefined>>) {
 
     this.sensorType = sensorType;
     this.sensor = sensor
@@ -30,7 +29,6 @@ export default class SensorData<T extends ThreeAxisSensor> {
     this.setData = setData;
     this.subscription = subscription;
     this.setSubscription = setSubscription;
-    this.setSensorPostData = setSensorPostData;
   }
 
   _subscribe() {
@@ -38,7 +36,12 @@ export default class SensorData<T extends ThreeAxisSensor> {
     this.setSubscription(
       this.sensor.addListener(sensorData => {
         console.log('subscribe: ' + this.sensorType + ': ', JSON.stringify(sensorData))
-        this.setData(sensorData);
+
+        this.setData({
+          x: sensorData.x.toString(),
+          y: sensorData.y.toString(),
+          z: sensorData.z.toString(),
+        });
       })
     );
   };
