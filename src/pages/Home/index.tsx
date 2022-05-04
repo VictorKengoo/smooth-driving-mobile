@@ -13,7 +13,7 @@ import { Gyroscope, Accelerometer } from 'expo-sensors';
 
 import { Subscription } from 'expo-modules-core';
 
-import { Props, SensorDataPostProps, SensorDataProps, veiculoProps } from '../../utils/interfaces'
+import { Props, veiculoProps } from '../../utils/interfaces'
 import Mocks from '../../utils/mocks'
 
 import { styles } from './styles'
@@ -25,8 +25,6 @@ import CarInfo from '../../components/CarInfo'
 import AddCarModal from '../../components/AddCarModal'
 
 import SensorData from '../../services/SensorData'
-import ThreeAxisSensor from 'expo-sensors/build/ThreeAxisSensor'
-import api from '../../services/api'
 
 const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const context = useContext(AuthContext)
@@ -38,23 +36,19 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
   const [viagemStarted, setViagemStarted] = useState(false)
 
-  const [accelerometerData, setAccelerometerData] = useState({} as SensorDataProps)
   const [accelerometerSubscription, setAccelerometerSubscription] = useState<Subscription | undefined>()
 
-  const [gyroscopeData, setGyroscopeData] = useState({} as SensorDataProps)
   const [gyroscopeSubscription, setGyroscopeSubscription] = useState<Subscription | undefined>()
 
   const _accelerometerData = new SensorData(
     'Accelerometer',
     Accelerometer,
-    accelerometerData, setAccelerometerData,
     accelerometerSubscription, setAccelerometerSubscription
   )
 
   const _gyroscopeData = new SensorData(
     'Gyroscope',
     Gyroscope,
-    gyroscopeData, setGyroscopeData,
     gyroscopeSubscription, setGyroscopeSubscription
   )
 
@@ -113,16 +107,8 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
     setViagemStarted(true)
     const viagemId = Math.floor(Math.random() * 1000000000000).toString()
 
-    _accelerometerData._subscribe();
-    _gyroscopeData._subscribe();
-
-    // api.postSensorsData(Mocks.composeData(gyroscopePostData, accelerometerPostData, postData))
-    console.log("postData: ",
-      JSON.stringify(Mocks.composeData(
-        _accelerometerData.data,
-        _gyroscopeData.data,
-        viagemId
-      )))
+    _accelerometerData._subscribe(viagemId);
+    _gyroscopeData._subscribe(viagemId);
   }
 
   return (
