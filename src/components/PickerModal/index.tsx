@@ -51,7 +51,7 @@ const PickerModal: React.FC<PickerModalProps> = ({
             </View>
             <Picker
               selectedValue={selectedValue}
-              onValueChange={(value) => setSelectedValue(value)}
+              onValueChange={(value) => value ? setSelectedValue(value) : selectedValue}
             >
               {
                 options.map((option, index) => {

@@ -1,6 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { number } from "yup";
+import { string } from "yup";
 import { RootStackParamList } from "../routes/AppStack";
 
 export interface veiculoProps {
@@ -18,6 +18,13 @@ export interface veiculoProps {
 export interface eventInfo {
   dateTime: string,
   duration: String
+}
+export interface userProps {
+  id?: string,
+  name: String,
+  email: String,
+  password: String,
+  vehicles?: veiculoProps[]
 }
 export interface eventsCountProps {
   curvaEsquerda: number,

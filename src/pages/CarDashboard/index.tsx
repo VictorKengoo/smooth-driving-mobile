@@ -27,6 +27,16 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
 
   const { ordens, periodos } = Filters
 
+  // const [manufacturerState, setManufacturerState] = useState(manufacturer)
+  // const [modelState, setModelState] = useState(model)
+  // const [plateState, setPlateState] = useState(plate)
+  // const [transmissionState, setTransmissionState] = useState(transmission)
+  // const [yearState, setYearState] = useState(year)
+  // const [colorState, setColorState] = useState(color)
+  // const [fuelState, setFuelState] = useState(fuel)
+  // const [situacaoIPVAState, setSituacaoIPVAState] = useState(situacaoIPVA)
+  // const [maxRPMReachedState, setMaxRPMReachedState] = useState(maxRPMReached)
+
   const [periodo, setPeriodo] = useState(periodos[0]);
   const [ordem, setOrdem] = useState(ordens[0]);
   const [viagens, setViagens] = useState([] as viagemProps[])

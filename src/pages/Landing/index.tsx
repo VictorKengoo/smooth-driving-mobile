@@ -1,29 +1,23 @@
 import React from 'react'
 
 import {
-  KeyboardAvoidingView,
   View,
   Text,
   TouchableOpacity,
-  Image,
   ImageBackground,
 } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 // import api from '../../services/api'
 
 import { globalProps } from '../../global/globalProps'
 
-import driving from '../../assets/images/driving.png'
 import { styles } from './styles'
 import Button from '../../components/Button'
-import { LinearGradient } from 'expo-linear-gradient'
 
 import CarBackground from '../../../images/car-background.png'
 
 function Landing({ navigation }: any) {
 
   function navigateToLogin() {
-    AsyncStorage.clear()
     navigation.navigate('Login' as never)
   }
 

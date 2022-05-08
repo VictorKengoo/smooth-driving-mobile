@@ -12,14 +12,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Button from '../../components/Button';
 
 import AuthInput from '../../components/AuthInput';
-import { globalProps } from '../../global/globalProps';
 import { styles } from './styles'
 import { useAuth } from '../../contexts/auth';
 
 export default function Login() {
 
-  const [userAuth, setUserAuth] = useState('');
+  const [emailAuth, setEmailAuth] = useState('');
   const [password, setPassword] = useState("");
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   const { signIn } = useAuth();
 
@@ -31,7 +31,7 @@ export default function Login() {
 
   let errors = [''];
   function validateFields() {
-    if (!userAuth) {
+    if (!emailAuth) {
       errors.push("Usuário/E-mail obrigatório")
     }
 
@@ -46,9 +46,9 @@ export default function Login() {
   }
 
   function handleSignIn() {
+
     if (validateFields()) {
-      signIn({ name: userAuth, password: password })
-      handleNavigateToHome()
+      signIn({ email: emailAuth, password: password }, handleNavigateToHome);
     }
     else
       Alert.alert('Erro', JSON.stringify(errors))
@@ -75,9 +75,9 @@ export default function Login() {
               style={styles.inputFields}
             >
               <AuthInput
-                value={userAuth}
-                setUseState={setUserAuth}
-                placeholder={"Digite o usuário/email"}
+                value={emailAuth}
+                setUseState={setEmailAuth}
+                placeholder={"Digite o email"}
               />
 
               <AuthInput

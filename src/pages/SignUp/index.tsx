@@ -8,14 +8,12 @@ import {
   Text,
   Alert,
   ScrollView,
-  TextInput,
-  Platform
 } from 'react-native'
 import Button from '../../components/Button';
 
 import AuthInput from '../../components/AuthInput';
-import { globalProps } from '../../global/globalProps';
 import { styles } from './styles'
+import api from '../../services/api';
 
 interface SignUpFormData {
   name: string;
@@ -30,29 +28,39 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [data, setData] = useState<object>({});
+  // const [data, setData] = useState<object>({});
 
-  const handleSignUp = (data: SignUpFormData) => {
+  const handleSignUp = () => {
     try {
+      console.log("Handling sign up");
 
-      signUpPasswordValidation()
+      const user = {
+        name: userAuth,
+        email: email,
+        password: password
+      }
+
+      if (signUpPasswordValidation()) {
+        console.log("Senhas conferem");
+        api.signUpUser(user)
+        // alertDelegator.showCreationAlert(, "Usuário")
+      }
 
     } catch (err) {
-
       Alert.alert(
         'Erro na autenticação',
         'Erro: ' + err,
       );
     }
-  };
+  }
 
   function signUpPasswordValidation() {
     if (password === confirmPassword) {
-      Alert.alert("Senhas conferem")
-
-    } else {
-      Alert.alert("Senhas não conferem")
+      return true
     }
+
+    Alert.alert("Senhas não conferem")
+    return false
   }
 
   return (

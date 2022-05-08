@@ -2,7 +2,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Modal, View, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import api from '../../services/api';
 import Filters from '../../utils/filters';
+import { veiculoProps } from '../../utils/interfaces';
 import AuthInput from '../AuthInput';
 import Button from '../Button';
 import Select from '../Select';
@@ -12,10 +14,11 @@ interface AddCarModalProps {
   title: string,
   visible: boolean,
   onClose: () => void,
+  userId: string | undefined,
 }
 
 const AddCarModal: React.FC<AddCarModalProps> = ({
-  title, visible, onClose
+  title, visible, onClose, userId
 }) => {
 
   const currentYear = new Date().getFullYear()
@@ -48,14 +51,20 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
   }
 
   function handleInsertCar() {
-    console.log('year: ' + year)
-    console.log('fuel: ' + fuel)
-    console.log('plate: ' + plate)
-    console.log('model: ' + model)
-    console.log('color: ' + color)
-    console.log('manufacturer: ' + manufacturer)
-    console.log('transmission: ' + transmission)
-    console.log('situacaoIPVA: ' + situacaoIPVA)
+    const vehicle = {
+      manufacturer: manufacturer,
+      model: model,
+      color: color,
+      year: year,
+      fuel: fuel,
+      transmission: transmission,
+      situacaoIPVA: situacaoIPVA,
+      plate: plate,
+      maxRPMReached: 0,
+    } as veiculoProps
+
+    api.addVehicleToUser(userId, vehicle)
+
     clearStates()
     onClose()
   }
@@ -66,6 +75,7 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
   }
 
   var yearsList = createYearsList();
+  yearsList.unshift('')
 
   return (
     <Modal

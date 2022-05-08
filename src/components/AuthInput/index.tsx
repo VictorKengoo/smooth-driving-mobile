@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextInput } from 'react-native';
 
 import { styles } from './styles'
@@ -13,7 +13,11 @@ type AuthInputProps = {
 
 const AuthInput: React.FC<AuthInputProps> = ({ setUseState, value, placeholder, additionalProps }) => {
 
+  const [inputValue, setInputValue] = useState(value);
+
   function handleOnChangeText(text: string) {
+    console.log("Mudando texto: " + text)
+    setInputValue(text);
     setUseState(text);
   }
 
@@ -23,7 +27,7 @@ const AuthInput: React.FC<AuthInputProps> = ({ setUseState, value, placeholder, 
       placeholder={placeholder}
       placeholderTextColor={'#a0a0a0'}
       autoCorrect={false}
-      value={value}
+      value={inputValue}
       onChangeText={(text) => handleOnChangeText(text)}
       {...additionalProps}
     />

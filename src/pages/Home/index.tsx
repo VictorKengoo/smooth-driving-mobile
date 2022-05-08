@@ -29,6 +29,8 @@ import SensorData from '../../services/SensorData'
 const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const context = useContext(AuthContext)
 
+  const authUser = context.user
+
   const [veiculos, setVeiculos] = useState([] as veiculoProps[])
   const [veiculoSearch, setVeiculoSearch] = useState('')
   const [allVeiculos, setAllVeiculos] = useState([] as veiculoProps[])
@@ -54,15 +56,9 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
   useEffect(() => {
     getVeiculos()
-  }, [])
+  }, [veiculoSearch])
 
   function getVeiculos() {
-    // fetch(BACKEND_USER_URL)
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     setVeiculos(data)
-    //   })
-
     const veiculosList = Mocks.createCarList()
 
     setAllVeiculos(veiculosList)
@@ -71,25 +67,28 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
   function handleLogout() {
     context.signOut()
-    navigation.navigate('Login');
+    navigation.navigate('Login')
   }
 
   function handleSearch() {
     const result = [] as veiculoProps[]
+    // console.log("Searching for: " + veiculoSearch)
     getVeiculos()
 
     if (veiculoSearch) {
       const veiculoSearchLower = veiculoSearch.toLowerCase()
 
       allVeiculos.forEach((veiculo) => {
-        if (veiculo.model.includes(veiculoSearchLower) ||
-          veiculo.manufacturer.includes(veiculoSearchLower) ||
-          veiculo.transmission.includes(veiculoSearchLower) ||
-          veiculo.plate.includes(veiculoSearchLower) ||
-          veiculo.year.includes(veiculoSearchLower)) {
+        // console.log("Validation: ", veiculo.manufacturer.toLowerCase().includes(veiculoSearchLower))
+        if (veiculo.model.toLowerCase().includes(veiculoSearchLower) ||
+          veiculo.manufacturer.toLowerCase().includes(veiculoSearchLower) ||
+          veiculo.transmission.toLowerCase().includes(veiculoSearchLower) ||
+          veiculo.plate.toLowerCase().includes(veiculoSearchLower) ||
+          veiculo.year.toLowerCase().includes(veiculoSearchLower)) {
 
           result.push(veiculo)
         }
+        // console.log("Result: " + JSON.stringify(result))
         setVeiculos(result)
       })
     } else {
@@ -125,7 +124,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
             <View style={styles.header}>
               <Text style={styles.title}>
                 Bem-vindo(a) de volta,
-                {"\n"}{context.user?.name}
+                {"\n"}{authUser?.name}
               </Text>
 
               <TouchableOpacity
@@ -202,6 +201,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
           visible={showAddCarModal}
           title={'Adicionar Carro'}
           onClose={() => { setShowAddCarModal(false) }}
+          userId={authUser?.id}
         />
       </KeyboardAvoidingView>
     </LinearGradient>

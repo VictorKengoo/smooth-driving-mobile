@@ -4,23 +4,24 @@ import React, {
   useState,
   useContext,
   useEffect,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import api from '../services/api';
-import * as auth from '../services/auth';
+import { userProps } from '../utils/interfaces';
+import api from '../services/api';
 interface AuthState {
-  token: string;
+  // token: string;
   user: object;
 }
 interface SignInCredentials {
-  email?: string | null;
-  name: string
+  email: string;
   password: string;
 }
 interface AuthContextData {
-  user: SignInCredentials | null;
+  user: userProps | null;
   loading: boolean;
-  signIn(user: SignInCredentials): Promise<void>;
+  signIn(user: SignInCredentials, handleNavigateToHome: () => void): Promise<void>;
   signOut(): void;
 }
 
@@ -29,22 +30,23 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 const AuthProvider: React.FC = ({ children }) => {
 
   const [data, setData] = useState<AuthState>({} as AuthState); // add
-  const [user, setUser] = useState<SignInCredentials | null>(null); // add
+  const [user, setUser] = useState<userProps | null>(null); // add
 
   // para verificar enquanto o app carrega
   const [loading, setLoading] = useState(true); // evita os flashs de carregamento passando por uma tela a outra
 
   useEffect(() => {
     async function loadStorageData(): Promise<void> {
-      const [token, user] = await AsyncStorage.multiGet([
-        '@SmoothDriving:token',
+      // AsyncStorage.clear()
+      const [user] = await AsyncStorage.multiGet([
+        // '@SmoothDriving:token',
         '@SmoothDriving:user',
       ]);
 
       await new Promise(resolve => setTimeout(resolve, 1000))
 
-      if (token[1] && user[1]) {
-        setData({ token: token[1], user: JSON.parse(user[1]) });
+      if (user[1]) {
+        setData({ user: JSON.parse(user[1]) });
       }
       setLoading(false);
     }
@@ -52,19 +54,23 @@ const AuthProvider: React.FC = ({ children }) => {
     loadStorageData();
   }, []);
 
-  async function signIn(user: SignInCredentials) {
-    const response = await auth.signIn(user.name, user.password, user.email)
+  async function signIn(user: SignInCredentials, handleNavigateToHome: () => void) {
+    const response = await api.loginUser(user.email, user.password);
 
-    setUser(response.user)
+    setUser(response)
 
-    await AsyncStorage.setItem('@SmoothDriving:token', response.token)
-    await AsyncStorage.setItem('@SmoothDriving:user', JSON.stringify(response.user))
+    console.log("Resposta Login: ", response)
+
+    await AsyncStorage.setItem('@SmoothDriving:user', JSON.stringify(response))
+    if (response) {
+      handleNavigateToHome()
+    }
   }
 
   // // Desloga
   const signOut = useCallback(async () => {
-    await AsyncStorage.multiRemove(['@SmoothDriving:token', '@SmoothDriving:user']);
-
+    // await AsyncStorage.multiRemove(['@SmoothDriving:token', '@SmoothDriving:user']);
+    await AsyncStorage.removeItem('@SmoothDriving:user');
     setUser(null)
     setData({} as AuthState);
   }, []);

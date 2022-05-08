@@ -1,32 +1,70 @@
-// import { BACKEND_USER_URL, BROKER_UPDATE_URL } from '@env';
-import { SensorDataPostProps } from '../utils/interfaces';
+import { userProps, veiculoProps } from '../utils/interfaces';
 import ENV from '../../env'
 import axios from "axios";
+import AlertDelegator from '../utils/alertDelegator';
+// const brokerApi = axios.create({
+//   baseURL: ENV.BROKER_UPDATE_URL,
+// });
 
-const api = axios.create({
-  baseURL: "http://192.168.15.14:3333",
+const backendApi = axios.create({
+  baseURL: ENV.BACKEND_URL
 });
 
-async function postSensorsData(data: SensorDataPostProps) {
+async function signUpUser(user: userProps) {
   try {
-    const headers = {
-      'Content-Type': 'application/json',
-      'fiware-service': 'helixiot',
-      'fiware-servicepath': '/',
-    }
 
-    await api.post(ENV.BROKER_UPDATE_URL, data, {
-      headers: headers,
-    }).then(response => {
-      console.log("Response: ", response);
-    })
+    const response = await backendApi.post('User/Create', user);
+    AlertDelegator.showAlert(response.status, "Usuário cadastrado com sucesso!");
 
-  } catch (error) {
-    console.error("Erro: ", error);
+  } catch (error: any) {
+    AlertDelegator.showAlert(error.response.status, error.response.data)
   }
 }
 
+async function loginUser(email: string, password: string) {
+  try {
+    const response = await backendApi.post('User/Login', { email, password });
+
+    return response.data as userProps
+
+  } catch (error: any) {
+    AlertDelegator.showAlert(error.response.status, error.response.data)
+    return null;
+  }
+}
+
+async function addVehicleToUser(userId: string | undefined, vehicle: veiculoProps) {
+  try {
+    const response = await backendApi.put(`User/AddVehicle/${userId}`, vehicle);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// async function postSensorsData(data: SensorDataPostProps) {
+//   try {
+//     const headers = {
+//       'Content-Type': 'application/json',
+//       'fiware-service': 'helixiot',
+//       'fiware-servicepath': '/',
+//     }
+
+//     await brokerApi.post(ENV.BROKER_UPDATE_URL, data, {
+//       headers: headers,
+//     }).then(response => {
+//       console.log("Response: ", response);
+//     })
+
+//   } catch (error) {
+//     console.error("Erro: ", error);
+//   }
+// }
+
 export default {
-  postSensorsData
+  // postSensorsData,
+  addVehicleToUser,
+  signUpUser,
+  loginUser
 }
 
