@@ -35,11 +35,11 @@ export default class SensorData<T extends ThreeAxisSensor> {
           z: sensorData.z.toString(),
         };
 
-        api.postSensorsData(builder.composeData(
-          this.sensorType,
-          data,
-          viagemId
-        ))
+        // api.postSensorsData(builder.composeData(
+        //   this.sensorType,
+        //   data,
+        //   viagemId
+        // ))
       })
     );
   };

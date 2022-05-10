@@ -4,27 +4,28 @@ import { string } from "yup";
 import { RootStackParamList } from "../routes/AppStack";
 
 export interface veiculoProps {
-  id?: number,
+  id: string,
   manufacturer: String,
   model: String,
   transmission: String,
   year: String,
   plate: String,
   fuel: String,
-  situacaoIPVA: String,
+  IPVA: String,
   color: String,
-  maxRPMReached: number
+  maxRPMReached?: number,
+  maxSpeedReached?: number,
 }
 export interface eventInfo {
   dateTime: string,
   duration: String
 }
 export interface userProps {
-  id?: string,
+  id: string,
   name: String,
   email: String,
   password: String,
-  vehicles?: veiculoProps[]
+  vehicles: veiculoProps[]
 }
 export interface eventsCountProps {
   curvaEsquerda: number,
@@ -35,7 +36,7 @@ export interface eventsCountProps {
   frenagemBrusca: number,
 }
 export interface viagemProps {
-  carId: number,
+  carId: string,
   eventInfo: eventInfo
   eventsCount: eventsCountProps
 }
@@ -60,6 +61,7 @@ export interface veiculoPropsNavigate {
 }
 
 export interface CarDashboardProps {
+  id: string,
   manufacturer: String,
   model: String,
   transmission: String,
@@ -68,7 +70,7 @@ export interface CarDashboardProps {
   maxRPMReached: number,
   color: String,
   fuel: String,
-  situacaoIPVA: String,
+  IPVA: String,
 }
 
 export interface SensorDataProps {

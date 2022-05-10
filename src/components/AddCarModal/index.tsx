@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Modal, View, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import api from '../../services/api';
@@ -15,58 +15,66 @@ interface AddCarModalProps {
   visible: boolean,
   onClose: () => void,
   userId: string | undefined,
+  refreshScreen: () => void
 }
 
 const AddCarModal: React.FC<AddCarModalProps> = ({
-  title, visible, onClose, userId
+  title, visible, onClose, userId, refreshScreen
 }) => {
 
   const currentYear = new Date().getFullYear()
 
   const statesPlaceholder = [
-    'Ano',
+    '2022',
     'Combustível',
     'Transmissão',
     'Situação IPVA'
   ]
 
   const [year, setYear] = useState(statesPlaceholder[0]);
-  const [fuel, setFuel] = useState(statesPlaceholder[1]);
+  const [fuel, setFuel] = useState('');
   const [plate, setPlate] = useState('');
   const [model, setModel] = useState('');
   const [color, setColor] = useState('');
   const [manufacturer, setManufacturer] = useState('');
-  const [transmission, setTransmission] = useState(statesPlaceholder[2]);
-  const [situacaoIPVA, setSituacaoIPVA] = useState(statesPlaceholder[3]);
+  const [transmission, setTransmission] = useState('');
+  const [IPVA, setIPVA] = useState('');
 
   function clearStates() {
-    setYear(statesPlaceholder[0]);
-    setFuel(statesPlaceholder[1]);
+    console.log("Limpando estados")
+    setYear('');
+    setFuel('');
     setPlate('');
     setModel('');
     setColor('');
     setManufacturer('');
-    setTransmission(statesPlaceholder[2]);
-    setSituacaoIPVA(statesPlaceholder[3]);
+    setTransmission('');
+    setIPVA('');
   }
 
-  function handleInsertCar() {
+  async function handleInsertCar() {
     const vehicle = {
+      id: '',
       manufacturer: manufacturer,
       model: model,
       color: color,
       year: year,
       fuel: fuel,
       transmission: transmission,
-      situacaoIPVA: situacaoIPVA,
+      IPVA: IPVA,
       plate: plate,
-      maxRPMReached: 0,
     } as veiculoProps
 
-    api.addVehicleToUser(userId, vehicle)
+    // console.log("-------- Veiculo a adicionar: ", vehicle)
 
-    clearStates()
-    onClose()
+    api.addVehicleToUser(userId, vehicle).then((response) => {
+      // console.log("-------- Veiculo adicionado: ", JSON.stringify(response))
+      if (response) {
+        clearStates()
+        refreshScreen()
+        onClose()
+      }
+    })
   }
 
   function createYearsList() {
@@ -108,30 +116,30 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
               >
                 <Select
                   options={yearsList}
-                  text={year}
+                  text={statesPlaceholder[0]}
                   title={'Ano do carro'}
                   setState={setYear}
                 />
 
                 <Select
                   options={Filters.fuelList}
-                  text={fuel}
+                  text={statesPlaceholder[1]}
                   title={'Combustível do Motor'}
                   setState={setFuel}
                 />
 
                 <Select
                   options={Filters.transmissionsList}
-                  text={transmission}
+                  text={statesPlaceholder[2]}
                   title={'Transmissão do carro'}
                   setState={setTransmission}
                 />
 
                 <Select
                   options={Filters.situationIPVAList}
-                  text={situacaoIPVA}
+                  text={statesPlaceholder[3]}
                   title={'Situação IPVA'}
-                  setState={setSituacaoIPVA}
+                  setState={setIPVA}
                 />
 
                 <AuthInput

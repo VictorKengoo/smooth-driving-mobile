@@ -28,21 +28,25 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // const [data, setData] = useState<object>({});
+
+  const navigation = useNavigation();
 
   const handleSignUp = () => {
     try {
       console.log("Handling sign up");
 
       const user = {
+        id: "",
         name: userAuth,
         email: email,
-        password: password
+        password: password,
+        vehicles: []
       }
 
       if (signUpPasswordValidation()) {
         console.log("Senhas conferem");
         api.signUpUser(user)
+        navigation.navigate('Login' as never)
         // alertDelegator.showCreationAlert(, "Usuário")
       }
 

@@ -9,22 +9,22 @@ import {
 import { LinearGradient } from 'expo-linear-gradient'
 import { TextInput } from 'react-native-gesture-handler'
 import { MaterialIcons } from '@expo/vector-icons'
-import { Gyroscope, Accelerometer } from 'expo-sensors';
-
-import { Subscription } from 'expo-modules-core';
+// import { Gyroscope, Accelerometer } from 'expo-sensors';
+// import Button from '../../components/Button'
+// import SensorData from '../../services/SensorData'
+// import { Subscription } from 'expo-modules-core';
 
 import { Props, veiculoProps } from '../../utils/interfaces'
-import Mocks from '../../utils/mocks'
 
 import { styles } from './styles'
 
 import AuthContext from '../../contexts/auth'
 
-import Button from '../../components/Button'
 import CarInfo from '../../components/CarInfo'
 import AddCarModal from '../../components/AddCarModal'
 
-import SensorData from '../../services/SensorData'
+import api from '../../services/api'
+import { useReducer } from 'react'
 
 const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const context = useContext(AuthContext)
@@ -33,36 +33,42 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
   const [veiculos, setVeiculos] = useState([] as veiculoProps[])
   const [veiculoSearch, setVeiculoSearch] = useState('')
-  const [allVeiculos, setAllVeiculos] = useState([] as veiculoProps[])
   const [showAddCarModal, setShowAddCarModal] = useState(false)
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
 
-  const [viagemStarted, setViagemStarted] = useState(false)
+  // const [viagemStarted, setViagemStarted] = useState(false)
 
-  const [accelerometerSubscription, setAccelerometerSubscription] = useState<Subscription | undefined>()
+  // const [accelerometerSubscription, setAccelerometerSubscription] = useState<Subscription | undefined>()
 
-  const [gyroscopeSubscription, setGyroscopeSubscription] = useState<Subscription | undefined>()
+  // const [gyroscopeSubscription, setGyroscopeSubscription] = useState<Subscription | undefined>()
 
-  const _accelerometerData = new SensorData(
-    'Accelerometer',
-    Accelerometer,
-    accelerometerSubscription, setAccelerometerSubscription
-  )
+  // const _accelerometerData = new SensorData(
+  //   'Accelerometer',
+  //   Accelerometer,
+  //   accelerometerSubscription, setAccelerometerSubscription
+  // )
 
-  const _gyroscopeData = new SensorData(
-    'Gyroscope',
-    Gyroscope,
-    gyroscopeSubscription, setGyroscopeSubscription
-  )
+  // const _gyroscopeData = new SensorData(
+  //   'Gyroscope',
+  //   Gyroscope,
+  //   gyroscopeSubscription, setGyroscopeSubscription
+  // )
 
   useEffect(() => {
     getVeiculos()
-  }, [veiculoSearch])
+  }, [veiculoSearch, ignored])
 
-  function getVeiculos() {
-    const veiculosList = Mocks.createCarList()
+  async function getVeiculos() {
+    await sleep(500)
+    api
+      .getUserVehicles(context.user.id)
+      .then(item => {
+        setVeiculos(item.data)
+      })
+  }
 
-    setAllVeiculos(veiculosList)
-    setVeiculos(veiculosList)
+  const sleep = (milliseconds: number) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
   }
 
   function handleLogout() {
@@ -73,12 +79,12 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   function handleSearch() {
     const result = [] as veiculoProps[]
     // console.log("Searching for: " + veiculoSearch)
-    getVeiculos()
+    // getVeiculos()
 
     if (veiculoSearch) {
       const veiculoSearchLower = veiculoSearch.toLowerCase()
 
-      allVeiculos.forEach((veiculo) => {
+      veiculos.forEach((veiculo) => {
         // console.log("Validation: ", veiculo.manufacturer.toLowerCase().includes(veiculoSearchLower))
         if (veiculo.model.toLowerCase().includes(veiculoSearchLower) ||
           veiculo.manufacturer.toLowerCase().includes(veiculoSearchLower) ||
@@ -96,19 +102,19 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
     }
   }
 
-  function handleUnsubscribe() {
-    _accelerometerData._unsubscribe()
-    _gyroscopeData._unsubscribe()
-    setViagemStarted(false)
-  }
+  // function handleUnsubscribe() {
+  //   _accelerometerData._unsubscribe()
+  //   _gyroscopeData._unsubscribe()
+  //   setViagemStarted(false)
+  // }
 
-  function handleSubscribe() {
-    setViagemStarted(true)
-    const viagemId = Math.floor(Math.random() * 1000000000000).toString()
+  // function handleSubscribe() {
+  //   setViagemStarted(true)
+  //   const viagemId = Math.floor(Math.random() * 1000000000000).toString()
 
-    _accelerometerData._subscribe(viagemId);
-    _gyroscopeData._subscribe(viagemId);
-  }
+  //   _accelerometerData._subscribe(viagemId);
+  //   _gyroscopeData._subscribe(viagemId);
+  // }
 
   return (
     <LinearGradient
@@ -160,12 +166,12 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.startTripButton}>
+            {/* <View style={styles.startTripButton}>
               <Button
                 action={viagemStarted ? handleUnsubscribe : handleSubscribe}
                 text={viagemStarted ? 'Finalizar viagem' : 'Começar viagem'}
               />
-            </View>
+            </View> */}
 
             <View style={styles.veiculosSection}>
               <Text style={styles.veiculosTitle}>
@@ -173,7 +179,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
               </Text>
 
               {
-                veiculos.map((veiculo, index) => {
+                veiculos ? veiculos.map((veiculo, index) => {
                   return (
                     <CarInfo
                       key={index}
@@ -187,12 +193,12 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
                         plate: veiculo.plate,
                         color: veiculo.color,
                         fuel: veiculo.fuel,
-                        situacaoIPVA: veiculo.situacaoIPVA,
+                        IPVA: veiculo.IPVA,
                         maxRPMReached: veiculo.maxRPMReached
                       }}
                     />
                   )
-                })
+                }) : null
               }
             </View>
           </View>
@@ -200,8 +206,9 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
         <AddCarModal
           visible={showAddCarModal}
           title={'Adicionar Carro'}
-          onClose={() => { setShowAddCarModal(false) }}
+          onClose={() => { setShowAddCarModal(false); console.log("Fechando o Modal") }}
           userId={authUser?.id}
+          refreshScreen={forceUpdate}
         />
       </KeyboardAvoidingView>
     </LinearGradient>

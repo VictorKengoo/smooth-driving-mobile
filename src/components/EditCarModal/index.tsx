@@ -2,6 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import api from '../../services/api';
 import Filters from '../../utils/filters';
 import { veiculoProps } from '../../utils/interfaces';
 import AuthInput from '../AuthInput';
@@ -37,7 +38,7 @@ const EditCarModal: React.FC<EditCarModalProps> = ({
   const [color, setColor] = useState('');
   const [manufacturer, setManufacturer] = useState('');
   const [transmission, setTransmission] = useState(statesPlaceholder[2]);
-  const [situacaoIPVA, setSituacaoIPVA] = useState(statesPlaceholder[3]);
+  const [IPVA, setIPVA] = useState(statesPlaceholder[3]);
 
   function clearStates() {
     setYear(statesPlaceholder[0]);
@@ -47,18 +48,25 @@ const EditCarModal: React.FC<EditCarModalProps> = ({
     setColor('');
     setManufacturer('');
     setTransmission(statesPlaceholder[2]);
-    setSituacaoIPVA(statesPlaceholder[3]);
+    setIPVA(statesPlaceholder[3]);
   }
 
-  function handleInsertCar() {
-    console.log('year: ' + year)
-    console.log('fuel: ' + fuel)
-    console.log('plate: ' + plate)
-    console.log('model: ' + model)
-    console.log('color: ' + color)
-    console.log('manufacturer: ' + manufacturer)
-    console.log('transmission: ' + transmission)
-    console.log('situacaoIPVA: ' + situacaoIPVA)
+  function handleEditCar() {
+    const carId = carData.id
+    const vehicle = {
+      id: carId,
+      manufacturer: manufacturer,
+      model: model,
+      color: color,
+      year: year,
+      fuel: fuel,
+      transmission: transmission,
+      IPVA: IPVA,
+      plate: plate,
+    } as veiculoProps
+
+    api.editVehicle(carId, vehicle)
+
     clearStates()
     onClose()
   }
@@ -122,9 +130,9 @@ const EditCarModal: React.FC<EditCarModalProps> = ({
 
                 <Select
                   options={Filters.situationIPVAList}
-                  text={carData.situacaoIPVA}
+                  text={carData.IPVA}
                   title={'Situação IPVA'}
-                  setState={setSituacaoIPVA}
+                  setState={setIPVA}
                 />
 
                 <AuthInput
@@ -152,7 +160,7 @@ const EditCarModal: React.FC<EditCarModalProps> = ({
                 />
 
                 <Button
-                  action={handleInsertCar}
+                  action={handleEditCar}
                   text={'Confirmar'}
                 />
               </View>

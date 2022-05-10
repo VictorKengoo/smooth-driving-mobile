@@ -22,20 +22,10 @@ import EditCarModal from '../../components/EditCarModal'
 const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
 
   const {
-    manufacturer, model, plate, transmission, year, color, fuel, situacaoIPVA, maxRPMReached
+    id, manufacturer, model, plate, transmission, year, color, fuel, IPVA, maxRPMReached
   } = route.params;
 
   const { ordens, periodos } = Filters
-
-  // const [manufacturerState, setManufacturerState] = useState(manufacturer)
-  // const [modelState, setModelState] = useState(model)
-  // const [plateState, setPlateState] = useState(plate)
-  // const [transmissionState, setTransmissionState] = useState(transmission)
-  // const [yearState, setYearState] = useState(year)
-  // const [colorState, setColorState] = useState(color)
-  // const [fuelState, setFuelState] = useState(fuel)
-  // const [situacaoIPVAState, setSituacaoIPVAState] = useState(situacaoIPVA)
-  // const [maxRPMReachedState, setMaxRPMReachedState] = useState(maxRPMReached)
 
   const [periodo, setPeriodo] = useState(periodos[0]);
   const [ordem, setOrdem] = useState(ordens[0]);
@@ -64,6 +54,7 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
 
   function handleEdit() {
     setCarData({
+      id: id,
       manufacturer: manufacturer,
       model: model,
       plate: plate,
@@ -72,7 +63,7 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
       maxRPMReached: maxRPMReached,
       color: color,
       fuel: fuel,
-      situacaoIPVA: situacaoIPVA,
+      IPVA: IPVA,
     })
     setShowEditCarModal(true)
   }
@@ -190,7 +181,7 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                   />
                   <InfoCard
                     infoName='IPVA'
-                    infoValue={situacaoIPVA}
+                    infoValue={IPVA}
                   />
                 </View>
               </View>

@@ -46,7 +46,6 @@ export default function Login() {
   }
 
   function handleSignIn() {
-
     if (validateFields()) {
       signIn({ email: emailAuth, password: password }, handleNavigateToHome);
     }
@@ -78,6 +77,11 @@ export default function Login() {
                 value={emailAuth}
                 setUseState={setEmailAuth}
                 placeholder={"Digite o email"}
+                additionalProps={{
+                  keyboardType: "email-address",
+                  autoCapitalize: "none",
+                  returnKeyType: "next"
+                }}
               />
 
               <AuthInput

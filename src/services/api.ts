@@ -29,15 +29,36 @@ async function loginUser(email: string, password: string) {
 
   } catch (error: any) {
     AlertDelegator.showAlert(error.response.status, error.response.data)
-    return null;
+    return {} as userProps;
   }
 }
 
 async function addVehicleToUser(userId: string | undefined, vehicle: veiculoProps) {
   try {
     const response = await backendApi.put(`User/AddVehicle/${userId}`, vehicle);
+    return response;
+  } catch (error: any) {
+    AlertDelegator.showAlert(error.response.status, error.response.data)
+    throw error;
+  }
+}
+
+async function editVehicle(vehicleId: string | undefined, vehicle: veiculoProps) {
+  try {
+    const response = await backendApi.put(`Vehicle/${vehicleId}`, vehicle);
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
+    AlertDelegator.showAlert(error.response.status, error.response.data)
+    throw error;
+  }
+}
+
+function getUserVehicles(userId: string) {
+  try {
+    const response = backendApi.get(`User/Vehicles/${userId}`);
+    return response
+  } catch (error: any) {
+    AlertDelegator.showAlert(error.response.status, error.response.data)
     throw error;
   }
 }
@@ -65,6 +86,8 @@ export default {
   // postSensorsData,
   addVehicleToUser,
   signUpUser,
-  loginUser
+  loginUser,
+  editVehicle,
+  getUserVehicles
 }
 

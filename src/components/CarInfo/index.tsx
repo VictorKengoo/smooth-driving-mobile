@@ -9,7 +9,7 @@ import { veiculoPropsNavigate } from '../../utils/interfaces'
 
 const CarInfo: React.FC<veiculoPropsNavigate> = ({
   veiculoProps: {
-    manufacturer, model, transmission, plate, year, maxRPMReached, color, fuel, situacaoIPVA
+    id, manufacturer, model, transmission, plate, year, maxRPMReached, color, fuel, IPVA
   },
   navigation
 }) => {
@@ -17,6 +17,7 @@ const CarInfo: React.FC<veiculoPropsNavigate> = ({
 
   function handleNavigateToDashboard() {
     navigation.navigate('CarDashboard', {
+      id: id,
       manufacturer: manufacturer,
       model: model,
       transmission: transmission,
@@ -25,7 +26,7 @@ const CarInfo: React.FC<veiculoPropsNavigate> = ({
       maxRPMReached: maxRPMReached,
       color: color,
       fuel: fuel,
-      situacaoIPVA: situacaoIPVA
+      IPVA: IPVA
     });
   }
 

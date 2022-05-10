@@ -16,7 +16,6 @@ const AuthInput: React.FC<AuthInputProps> = ({ setUseState, value, placeholder, 
   const [inputValue, setInputValue] = useState(value);
 
   function handleOnChangeText(text: string) {
-    console.log("Mudando texto: " + text)
     setInputValue(text);
     setUseState(text);
   }

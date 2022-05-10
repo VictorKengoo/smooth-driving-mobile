@@ -4,8 +4,6 @@ import React, {
   useState,
   useContext,
   useEffect,
-  Dispatch,
-  SetStateAction,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userProps } from '../utils/interfaces';
@@ -19,9 +17,9 @@ interface SignInCredentials {
   password: string;
 }
 interface AuthContextData {
-  user: userProps | null;
+  user: userProps;
   loading: boolean;
-  signIn(user: SignInCredentials, handleNavigateToHome: () => void): Promise<void>;
+  signIn(user: SignInCredentials, handleNavigateToHome: () => void): void;
   signOut(): void;
 }
 
@@ -30,7 +28,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 const AuthProvider: React.FC = ({ children }) => {
 
   const [data, setData] = useState<AuthState>({} as AuthState); // add
-  const [user, setUser] = useState<userProps | null>(null); // add
+  const [user, setUser] = useState<userProps>({} as userProps); // add
 
   // para verificar enquanto o app carrega
   const [loading, setLoading] = useState(true); // evita os flashs de carregamento passando por uma tela a outra
@@ -54,24 +52,23 @@ const AuthProvider: React.FC = ({ children }) => {
     loadStorageData();
   }, []);
 
-  async function signIn(user: SignInCredentials, handleNavigateToHome: () => void) {
-    const response = await api.loginUser(user.email, user.password);
+  function signIn(user: SignInCredentials, handleNavigateToHome: () => void) {
+    const response = api.loginUser(user.email, user.password);
 
-    setUser(response)
-
-    console.log("Resposta Login: ", response)
-
-    await AsyncStorage.setItem('@SmoothDriving:user', JSON.stringify(response))
-    if (response) {
-      handleNavigateToHome()
-    }
+    response.then(async (res) => {
+      setUser(res)
+      AsyncStorage.setItem('@SmoothDriving:user', JSON.stringify(response))
+      if (res.name) {
+        handleNavigateToHome()
+      }
+    })
   }
 
   // // Desloga
   const signOut = useCallback(async () => {
     // await AsyncStorage.multiRemove(['@SmoothDriving:token', '@SmoothDriving:user']);
     await AsyncStorage.removeItem('@SmoothDriving:user');
-    setUser(null)
+    setUser({} as userProps);
     setData({} as AuthState);
   }, []);
 
