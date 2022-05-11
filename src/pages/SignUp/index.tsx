@@ -14,6 +14,7 @@ import Button from '../../components/Button';
 import AuthInput from '../../components/AuthInput';
 import { styles } from './styles'
 import api from '../../services/api';
+import alertDelegator from '../../utils/alertDelegator';
 
 interface SignUpFormData {
   name: string;
@@ -47,7 +48,6 @@ const SignUp = () => {
         console.log("Senhas conferem");
         api.signUpUser(user)
         navigation.navigate('Login' as never)
-        // alertDelegator.showCreationAlert(, "Usuário")
       }
 
     } catch (err) {
