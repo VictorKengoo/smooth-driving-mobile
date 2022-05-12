@@ -13,6 +13,21 @@ function showAlert(status: number, message: string) {
   }
 }
 
+function signUpPasswordValidation(password: string, confirmPassword: string) {
+  if (!password) {
+    Alert.alert("Erro", "Preencha o campo de senha");
+    return false
+  }
+
+  if (password === confirmPassword) {
+    return true
+  }
+
+  Alert.alert("Senhas não conferem")
+  return false
+}
+
 export default {
-  showAlert
+  showAlert,
+  signUpPasswordValidation
 }

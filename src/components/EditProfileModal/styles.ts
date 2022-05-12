@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#212121',
     padding: 16,
-    height: '65%',
+    height: '74%',
     borderBottomEndRadius: 14,
     borderBottomStartRadius: 14,
   },

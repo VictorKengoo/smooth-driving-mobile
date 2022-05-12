@@ -206,7 +206,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
               {
                 veiculos ? veiculos.map((veiculo, index) => {
-                  console.log("IPVA: ", veiculo.IPVA)
+                  console.log("IPVA: ", veiculo.ipva)
                   return (
                     <CarInfo
                       key={index}
@@ -220,7 +220,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
                         plate: veiculo.plate,
                         color: veiculo.color,
                         fuel: veiculo.fuel,
-                        IPVA: veiculo.IPVA,
+                        ipva: veiculo.ipva,
                         maxRPMReached: veiculo.maxRPMReached
                       }}
                     />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Key, useContext, useEffect, useState } from 'react'
 import {
   View,
   Text,
@@ -18,11 +18,13 @@ import Filters from '../../utils/filters'
 import DateUtils from '../../utils/dateUtils'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import EditCarModal from '../../components/EditCarModal'
+import api from '../../services/api'
+import AuthContext from '../../contexts/auth'
 
 const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
-
+  const context = useContext(AuthContext)
   const {
-    id, manufacturer, model, plate, transmission, year, color, fuel, IPVA, maxRPMReached
+    id, manufacturer, model, plate, transmission, year, color, fuel, ipva, maxRPMReached
   } = route.params;
 
   const { ordens, periodos } = Filters
@@ -38,18 +40,9 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
   }, [ordem])
 
   function getViagens() {
-    // fetch(BACKEND_USER_URL)
-    //   .then(response => r  esponse.json())
-    //   .then(data => {
-    //     setViagens(data)
-    //   })
-    const viagensList = orderViagens(Mocks.createViagensList())
-    setViagens(viagensList)
-  }
-
-  function orderViagens(viagensList: viagemProps[]) {
-    DateUtils.sortByDate(viagensList, ordem)
-    return viagensList
+    api.getTripsByUserAndVehicle(id, context.user.id).then(response => {
+      setViagens(orderViagens(response.data))
+    })
   }
 
   function handleEdit() {
@@ -63,15 +56,14 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
       maxRPMReached: maxRPMReached,
       color: color,
       fuel: fuel,
-      IPVA: IPVA,
+      ipva: ipva,
     })
     setShowEditCarModal(true)
   }
 
-  function renderViagemInfo(viagem: viagemProps, index: React.Key) {
-    const eventInfo = viagem.eventInfo
+  function renderViagemInfo(viagem: viagemProps, index: Key) {
     const eventsCount = viagem.eventsCount
-    const eventInfoDateTime = new Date(eventInfo.dateTime)
+    const eventInfoDateTime = new Date(viagem.dateTimeStart)
 
     if ((periodo === 'Sempre') ||
       (periodo === 'Hoje' && DateUtils.isToday(eventInfoDateTime) ||
@@ -84,12 +76,17 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
         <ViagemInfo
           key={index}
           eventsCount={eventsCount}
-          dateTime={eventInfo.dateTime}
-          duration={eventInfo.duration}
+          dateTimeStart={viagem.dateTimeStart}
+          duration={viagem.duration}
           maxRPMReached={maxRPMReached}
         />
       )
     }
+  }
+
+  function orderViagens(viagensList: viagemProps[]) {
+    DateUtils.sortByDate(viagensList, ordem)
+    return viagensList
   }
 
   function renderSortIcon() {
@@ -181,7 +178,7 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                   />
                   <InfoCard
                     infoName='IPVA'
-                    infoValue={IPVA}
+                    infoValue={ipva}
                   />
                 </View>
               </View>
@@ -212,6 +209,7 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
             <View style={styles.viagens}>
               {
                 viagens.map((viagem, index) => {
+                  console.log("Viagem: " + JSON.stringify(viagem))
                   return renderViagemInfo(viagem, index)
                 })
               }

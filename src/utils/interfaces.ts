@@ -11,14 +11,10 @@ export interface veiculoProps {
   year: String,
   plate: String,
   fuel: String,
-  IPVA: String,
+  ipva: String,
   color: String,
   maxRPMReached?: number,
   maxSpeedReached?: number,
-}
-export interface eventInfo {
-  dateTime: string,
-  duration: String
 }
 export interface userProps {
   id: string,
@@ -38,7 +34,9 @@ export interface eventsCountProps {
 }
 export interface viagemProps {
   carId: string,
-  eventInfo: eventInfo
+  dateTimeStart: string,
+  dateTimeEnd: string,
+  duration: String,
   eventsCount: eventsCountProps
 }
 
@@ -66,10 +64,10 @@ export interface CarDashboardProps {
   transmission: String,
   plate: String,
   year: String,
-  maxRPMReached: number,
+  maxRPMReached?: number,
   color: String,
   fuel: String,
-  IPVA: String,
+  ipva: String,
 }
 export interface SensorDataProps {
   x: string,

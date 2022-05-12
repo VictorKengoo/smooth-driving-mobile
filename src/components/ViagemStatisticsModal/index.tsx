@@ -12,7 +12,7 @@ interface ViagemStatisticsModalProps {
   title: string,
   visible: boolean,
   eventsCount: eventsCountProps,
-  maxRPMReached: number,
+  maxRPMReached?: number,
   onClose: () => void,
   onSelect: (value: string) => void,
 }

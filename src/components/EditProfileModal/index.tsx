@@ -1,9 +1,10 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useContext, useState } from 'react';
-import { Modal, View, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { Modal, View, Text, KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AuthContext from '../../contexts/auth';
 import api from '../../services/api';
+import alertDelegator from '../../utils/alertDelegator';
 import { userProps } from '../../utils/interfaces';
 import AuthInput from '../AuthInput';
 import Button from '../Button';
@@ -37,20 +38,29 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   }
 
   function handleEditProfile() {
-    const userId = context.user.id
-    const user = {
-      id: userId,
-      name: name,
-      email: email,
-      password: password,
-      CNH: CNH,
-      vehicles: context.user.vehicles
-    } as userProps
+    try {
+      if (alertDelegator.signUpPasswordValidation(password, confirmPassword)) {
+        const userId = context.user.id
+        const user = {
+          id: userId,
+          name: name,
+          email: userData.email,
+          password: password,
+          CNH: CNH,
+          vehicles: context.user.vehicles
+        } as userProps
 
-    api.editUser(userId, user)
-
-    clearStates()
-    onClose()
+        api.editUser(userId, user)
+        clearStates()
+        onClose()
+      }
+    }
+    catch (err) {
+      Alert.alert(
+        'Erro na autenticação',
+        'Erro: ' + err,
+      );
+    }
   }
 
   return (
@@ -85,13 +95,19 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 <AuthInput
                   value={userData.name}
                   setUseState={setName}
-                  placeholder="Placa do carro"
+                  placeholder="Nome"
                 />
 
                 <AuthInput
                   value={userData.email}
                   setUseState={setEmail}
-                  placeholder="Modelo do carro"
+                  placeholder="Email"
+                />
+
+                <AuthInput
+                  value={userData.CNH}
+                  setUseState={setCNH}
+                  placeholder="CNH"
                 />
 
                 <AuthInput

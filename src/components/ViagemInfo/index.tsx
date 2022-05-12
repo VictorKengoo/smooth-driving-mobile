@@ -8,19 +8,21 @@ import ViagemStatisticsModal from '../ViagemStatisticsModal';
 import { styles } from './styles'
 
 interface ViagemInfoProps {
-  dateTime: String,
+  dateTimeStart: String,
   duration: String,
   eventsCount: eventsCountProps,
-  maxRPMReached: number,
+  maxRPMReached?: number,
 }
 
-const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTime, duration, eventsCount, maxRPMReached }) => {
+const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTimeStart, duration, eventsCount, maxRPMReached }) => {
 
   const [showStatisticsModal, setShowStatisticsModal] = useState(false)
 
-  const viagemDateTimeSplit = dateTime.split(' ')
-  const viagemDate = viagemDateTimeSplit[0]
-  const viagemTime = viagemDateTimeSplit[1]
+  console.log("DateTime: ", dateTimeStart)
+
+  const viagemDateTimeSplit = dateTimeStart.split('T')
+  const viagemDate = viagemDateTimeSplit[0].replaceAll('-', '/')
+  const viagemTime = viagemDateTimeSplit[1].slice(0, -1)
 
   const infoName = `Viagem ${viagemDate} - ${viagemTime}`
 

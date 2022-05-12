@@ -35,21 +35,20 @@ const SignUp = () => {
 
   const handleSignUp = () => {
     try {
-      console.log("Handling sign up");
+      if (alertDelegator.signUpPasswordValidation(password, confirmPassword)) {
+        console.log("Handling sign up");
 
-      const user = {
-        id: "",
-        name: userAuth,
-        email: email,
-        CNH: CNH,
-        password: password,
-        vehicles: []
-      }
+        const user = {
+          id: "",
+          name: userAuth,
+          email: email,
+          CNH: CNH,
+          password: password,
+          vehicles: []
+        }
 
-      if (signUpPasswordValidation()) {
         console.log("Senhas conferem");
         api.signUpUser(user)
-        navigation.navigate('Login' as never)
       }
 
     } catch (err) {
@@ -58,15 +57,6 @@ const SignUp = () => {
         'Erro: ' + err,
       );
     }
-  }
-
-  function signUpPasswordValidation() {
-    if (password === confirmPassword) {
-      return true
-    }
-
-    Alert.alert("Senhas não conferem")
-    return false
   }
 
   return (

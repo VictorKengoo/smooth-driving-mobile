@@ -73,6 +73,16 @@ function getUserVehicles(userId: string) {
   }
 }
 
+function getTripsByUserAndVehicle(vehicleId: string, userId: string) {
+  try {
+    const response = backendApi.get(`Trip/${vehicleId}/${userId}`);
+    return response
+  } catch (error: any) {
+    AlertDelegator.showAlert(error.response.status, error.response.data)
+    throw error;
+  }
+}
+
 // async function postSensorsData(data: SensorDataPostProps) {
 //   try {
 //     const headers = {
@@ -99,6 +109,7 @@ export default {
   loginUser,
   editVehicle,
   getUserVehicles,
-  editUser
+  editUser,
+  getTripsByUserAndVehicle
 }
 
