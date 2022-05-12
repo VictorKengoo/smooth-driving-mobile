@@ -27,6 +27,7 @@ const SignUp = () => {
 
   const [userAuth, setUserAuth] = useState('');
   const [email, setEmail] = useState("");
+  const [CNH, setCNH] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -40,6 +41,7 @@ const SignUp = () => {
         id: "",
         name: userAuth,
         email: email,
+        CNH: CNH,
         password: password,
         vehicles: []
       }
@@ -97,6 +99,13 @@ const SignUp = () => {
                 value={userAuth}
                 setUseState={setUserAuth}
                 placeholder="Digite o usuário"
+                additionalProps={{ autoCapitalize: "words" }}
+              />
+
+              <AuthInput
+                value={CNH}
+                setUseState={setCNH}
+                placeholder="Digite a CNH do usuário"
                 additionalProps={{ autoCapitalize: "words" }}
               />
 

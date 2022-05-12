@@ -53,6 +53,16 @@ async function editVehicle(vehicleId: string | undefined, vehicle: veiculoProps)
   }
 }
 
+async function editUser(userId: string | undefined, user: userProps) {
+  try {
+    const response = await backendApi.put(`User/${userId}`, user);
+    return response.data;
+  } catch (error: any) {
+    AlertDelegator.showAlert(error.response.status, error.response.data)
+    throw error;
+  }
+}
+
 function getUserVehicles(userId: string) {
   try {
     const response = backendApi.get(`User/Vehicles/${userId}`);
@@ -88,6 +98,7 @@ export default {
   signUpUser,
   loginUser,
   editVehicle,
-  getUserVehicles
+  getUserVehicles,
+  editUser
 }
 

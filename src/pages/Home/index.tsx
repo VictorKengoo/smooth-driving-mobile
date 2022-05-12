@@ -8,13 +8,13 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { TextInput } from 'react-native-gesture-handler'
-import { MaterialIcons } from '@expo/vector-icons'
+import { Feather, FontAwesome5, MaterialIcons } from '@expo/vector-icons'
 // import { Gyroscope, Accelerometer } from 'expo-sensors';
 // import Button from '../../components/Button'
 // import SensorData from '../../services/SensorData'
 // import { Subscription } from 'expo-modules-core';
 
-import { Props, veiculoProps } from '../../utils/interfaces'
+import { Props, userProps, veiculoProps } from '../../utils/interfaces'
 
 import { styles } from './styles'
 
@@ -25,6 +25,7 @@ import AddCarModal from '../../components/AddCarModal'
 
 import api from '../../services/api'
 import { useReducer } from 'react'
+import EditProfileModal from '../../components/EditProfileModal'
 
 const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const context = useContext(AuthContext)
@@ -34,6 +35,8 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
   const [veiculos, setVeiculos] = useState([] as veiculoProps[])
   const [veiculoSearch, setVeiculoSearch] = useState('')
   const [showAddCarModal, setShowAddCarModal] = useState(false)
+  const [showEditUserModal, setShowEditUserModal] = useState(false)
+  const [userData, setUserData] = useState({} as userProps)
   const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
 
   // const [viagemStarted, setViagemStarted] = useState(false)
@@ -71,6 +74,18 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
   }
 
+  function handleEditProfile() {
+    setUserData({
+      id: authUser.id,
+      name: authUser.name,
+      email: authUser.email,
+      password: authUser.password,
+      CNH: userData.CNH,
+      vehicles: authUser.vehicles
+    })
+    setShowEditUserModal(true)
+  }
+
   function handleLogout() {
     context.signOut()
     navigation.navigate('Login')
@@ -86,16 +101,21 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
       veiculos.forEach((veiculo) => {
         // console.log("Validation: ", veiculo.manufacturer.toLowerCase().includes(veiculoSearchLower))
-        if (veiculo.model.toLowerCase().includes(veiculoSearchLower) ||
-          veiculo.manufacturer.toLowerCase().includes(veiculoSearchLower) ||
-          veiculo.transmission.toLowerCase().includes(veiculoSearchLower) ||
-          veiculo.plate.toLowerCase().includes(veiculoSearchLower) ||
-          veiculo.year.toLowerCase().includes(veiculoSearchLower)) {
+        console.log(veiculo)
+        if (veiculo) {
+          if (veiculo.model.toLowerCase().includes(veiculoSearchLower) ||
+            veiculo.manufacturer.toLowerCase().includes(veiculoSearchLower) ||
+            veiculo.transmission.toLowerCase().includes(veiculoSearchLower) ||
+            veiculo.plate.toLowerCase().includes(veiculoSearchLower) ||
+            veiculo.year.toString().includes(veiculoSearchLower)) {
 
-          result.push(veiculo)
+            result.push(veiculo)
+          }
+          // console.log("Result: " + JSON.stringify(result))
+          setVeiculos(result)
+        } else {
+          setVeiculos([] as veiculoProps[])
         }
-        // console.log("Result: " + JSON.stringify(result))
-        setVeiculos(result)
       })
     } else {
       getVeiculos()
@@ -133,6 +153,12 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
                 {"\n"}{authUser?.name}
               </Text>
 
+              <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={handleEditProfile}
+              >
+                <FontAwesome5 name='user-edit' size={36} color='white' />
+              </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.5}
                 // style={styles.logoutButton}
@@ -180,6 +206,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
               {
                 veiculos ? veiculos.map((veiculo, index) => {
+                  console.log("IPVA: ", veiculo.IPVA)
                   return (
                     <CarInfo
                       key={index}
@@ -206,9 +233,15 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
         <AddCarModal
           visible={showAddCarModal}
           title={'Adicionar Carro'}
-          onClose={() => { setShowAddCarModal(false); console.log("Fechando o Modal") }}
+          onClose={() => { setShowAddCarModal(false) }}
           userId={authUser?.id}
           refreshScreen={forceUpdate}
+        />
+        <EditProfileModal
+          userData={userData}
+          visible={showEditUserModal}
+          title={'Editar User'}
+          onClose={() => { setShowEditUserModal(false) }}
         />
       </KeyboardAvoidingView>
     </LinearGradient>

@@ -35,6 +35,6 @@ export const styles = StyleSheet.create({
 
   inputFields: {
     justifyContent: 'space-between',
-    paddingVertical: 70,
+    paddingVertical: 40,
   },
 });

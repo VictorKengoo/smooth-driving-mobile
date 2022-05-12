@@ -28,7 +28,8 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
     '2022',
     'Combustível',
     'Transmissão',
-    'Situação IPVA'
+    'IPVA',
+    'Cor do carro'
   ]
 
   const [year, setYear] = useState(statesPlaceholder[0]);
@@ -114,6 +115,24 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
               <View
                 style={styles.inputFields}
               >
+                <AuthInput
+                  value={plate}
+                  setUseState={setPlate}
+                  placeholder="Placa do carro"
+                />
+
+                <AuthInput
+                  value={model}
+                  setUseState={setModel}
+                  placeholder="Modelo do carro"
+                />
+
+                <AuthInput
+                  value={manufacturer}
+                  setUseState={setManufacturer}
+                  placeholder="Fabricante do carro"
+                />
+
                 <Select
                   options={yearsList}
                   text={statesPlaceholder[0]}
@@ -142,28 +161,11 @@ const AddCarModal: React.FC<AddCarModalProps> = ({
                   setState={setIPVA}
                 />
 
-                <AuthInput
-                  value={plate}
-                  setUseState={setPlate}
-                  placeholder="Placa do carro"
-                />
-
-                <AuthInput
-                  value={model}
-                  setUseState={setModel}
-                  placeholder="Modelo do carro"
-                />
-
-                <AuthInput
-                  value={manufacturer}
-                  setUseState={setManufacturer}
-                  placeholder="Fabricante do carro"
-                />
-
-                <AuthInput
-                  value={color}
-                  setUseState={setColor}
-                  placeholder="Cor do carro"
+                <Select
+                  options={Filters.coresList}
+                  text={statesPlaceholder[4]}
+                  title={'Cor do carro'}
+                  setState={setColor}
                 />
 
                 <Button

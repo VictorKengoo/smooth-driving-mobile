@@ -23,6 +23,7 @@ export interface eventInfo {
 export interface userProps {
   id: string,
   name: String,
+  CNH: string,
   email: String,
   password: String,
   vehicles: veiculoProps[]
@@ -48,18 +49,16 @@ type ScreenNavigationProp<
 type ScreenRouteProp<T extends keyof RootStackParamList> = RouteProp<
   RootStackParamList,
   T
->;
+>
 
 export type Props<T extends keyof RootStackParamList> = {
   route: ScreenRouteProp<T>;
   navigation: ScreenNavigationProp<T>;
-};
-
+}
 export interface veiculoPropsNavigate {
   veiculoProps: veiculoProps,
   navigation: ScreenNavigationProp<"Home">
 }
-
 export interface CarDashboardProps {
   id: string,
   manufacturer: String,
@@ -72,47 +71,25 @@ export interface CarDashboardProps {
   fuel: String,
   IPVA: String,
 }
-
 export interface SensorDataProps {
   x: string,
   y: string,
   z: string,
 }
-
+interface iotDataProps {
+  "type": string,
+  "value": string,
+  "metadata": {}
+}
 export interface SensorDataPostProps {
-  "EixoXAcelerometro": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "EixoXGiroscopio": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "EixoYAcelerometro": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "EixoYGiroscopio": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "EixoZAcelerometro": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "EixoZGiroscopio": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  },
-  "IdViagem": {
-    "type": string,
-    "value": string,
-    "metadata": {}
-  }
+  type: string,
+  IdViagem: iotDataProps,
+  EixoXAcelerometro: iotDataProps,
+  EixoXGiroscopio: iotDataProps,
+  EixoYAcelerometro: iotDataProps,
+  EixoYGiroscopio: iotDataProps,
+  EixoZAcelerometro: iotDataProps,
+  EixoZGiroscopio: iotDataProps,
+  Velocidade: iotDataProps
+  RPMveiculo: iotDataProps
 }
