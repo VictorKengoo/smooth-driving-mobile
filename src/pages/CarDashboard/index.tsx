@@ -1,4 +1,4 @@
-import React, { Key, useContext, useEffect, useState } from 'react'
+import React, { Key, useEffect, useReducer, useState } from 'react'
 import {
   View,
   Text,
@@ -11,7 +11,6 @@ import { styles } from './styles'
 import { Props, veiculoProps, viagemProps } from '../../utils/interfaces'
 import { LinearGradient } from 'expo-linear-gradient'
 import InfoCard from '../../components/InfoCard'
-import Mocks from '../../utils/mocks'
 import ViagemInfo from '../../components/ViagemInfo'
 import Select from '../../components/Select'
 import Filters from '../../utils/filters'
@@ -19,12 +18,11 @@ import DateUtils from '../../utils/dateUtils'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import EditCarModal from '../../components/EditCarModal'
 import api from '../../services/api'
-import AuthContext from '../../contexts/auth'
+import AppLoader from '../../components/AppLoader'
 
-const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
-  const context = useContext(AuthContext)
+const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route, navigation }) => {
   const {
-    id, manufacturer, model, plate, transmission, year, color, fuel, ipva, maxRPMReached
+    id, manufacturer, model, plate, transmission, year, color, fuel, ipva, entityId
   } = route.params;
 
   const { ordens, periodos } = Filters
@@ -34,13 +32,14 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
   const [viagens, setViagens] = useState([] as viagemProps[])
   const [showEditCarModal, setShowEditCarModal] = useState(false)
   const [carData, setCarData] = useState({} as veiculoProps)
+  const [showAppLoader, setShowAppLoader] = useState(false)
 
   useEffect(() => {
-    getViagens()
+    getBrokerTrips()
   }, [ordem])
 
-  function getViagens() {
-    api.getTripsByUserAndVehicle(id, context.user.id).then(response => {
+  function getBrokerTrips() {
+    api.getBrokerTrips(entityId).then(response => {
       setViagens(orderViagens(response.data))
     })
   }
@@ -53,17 +52,18 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
       plate: plate,
       transmission: transmission,
       year: year,
-      maxRPMReached: maxRPMReached,
       color: color,
       fuel: fuel,
       ipva: ipva,
+      entityId: entityId
     })
     setShowEditCarModal(true)
   }
 
   function renderViagemInfo(viagem: viagemProps, index: Key) {
-    const eventsCount = viagem.eventsCount
     const eventInfoDateTime = new Date(viagem.dateTimeStart)
+    const eventInfoDateTimeEnd = new Date(viagem.dateTimeEnd)
+    const duration = DateUtils.subtractDates(eventInfoDateTime, eventInfoDateTimeEnd)
 
     if ((periodo === 'Sempre') ||
       (periodo === 'Hoje' && DateUtils.isToday(eventInfoDateTime) ||
@@ -75,10 +75,12 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
       return (
         <ViagemInfo
           key={index}
-          eventsCount={eventsCount}
+          entityId={entityId}
+          tripId={viagem.tripId}
           dateTimeStart={viagem.dateTimeStart}
-          duration={viagem.duration}
-          maxRPMReached={maxRPMReached}
+          duration={duration}
+          navigation={navigation}
+          setShowAppLoader={setShowAppLoader}
         />
       )
     }
@@ -151,10 +153,6 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                     infoValue={plate}
                   />
                   <InfoCard
-                    infoName='Transmissão'
-                    infoValue={transmission}
-                  />
-                  <InfoCard
                     infoName='Ano'
                     infoValue={year}
                   />
@@ -165,12 +163,8 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                 </View>
                 <View style={styles.secondRow}>
                   <InfoCard
-                    infoName='Score de Segurança Médio'
-                    infoValue='9.3'
-                  />
-                  <InfoCard
-                    infoName='CNH Associada'
-                    infoValue='Não possui'
+                    infoName='Transmissão'
+                    infoValue={transmission}
                   />
                   <InfoCard
                     infoName='Combustível'
@@ -197,19 +191,11 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
                 setState={setPeriodo}
               />
 
-              {/* <Select
-                options={ordens}
-                text={ordens[0]}
-                title={'Selecionar ordem'}
-                setState={setOrdem}
-              /> */}
-
               {renderSortIcon()}
             </View>
             <View style={styles.viagens}>
               {
-                viagens.map((viagem, index) => {
-                  console.log("Viagem: " + JSON.stringify(viagem))
+                viagens.slice(0, 20).map((viagem, index) => {
                   return renderViagemInfo(viagem, index)
                 })
               }
@@ -223,6 +209,7 @@ const CarDashboard: React.FC<Props<'CarDashboard'>> = ({ route }) => {
         title={'Editar Carro'}
         onClose={() => { setShowEditCarModal(false) }}
       />
+      {showAppLoader ? <AppLoader /> : null}
     </LinearGradient>
   )
 }

@@ -23,8 +23,17 @@ function sortByDate(list: any[], ordem: string) {
   }
 }
 
+function subtractDates(dateStart: Date, dateEnd: Date) {
+
+  const duration = moment.duration(moment(dateEnd).diff(dateStart, 'milliseconds'))
+  console.log("Duration: ", duration)
+  return `${duration.hours()}h:${duration.minutes()}m:${duration.seconds()}s`
+  // return moment(dateEnd).diff(dateStart, 'minutes')
+}
+
 export default {
   isToday,
   isBefore,
   sortByDate,
+  subtractDates
 }

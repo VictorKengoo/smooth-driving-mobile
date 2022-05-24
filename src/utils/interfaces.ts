@@ -13,34 +13,39 @@ export interface veiculoProps {
   fuel: String,
   ipva: String,
   color: String,
-  maxRPMReached?: number,
-  maxSpeedReached?: number,
+  entityId: String
 }
 export interface userProps {
   id: string,
   name: String,
-  CNH: string,
   email: String,
   password: String,
   vehicles: veiculoProps[]
 }
-export interface eventsCountProps {
-  curvaEsquerda: number,
-  curvaDireita: number,
-  trocaFaixaEsquerda: number,
-  trocaFaixaDireita: number,
-  aceleracaoBrusca: number,
-  frenagemBrusca: number,
+export interface TripResultProps {
+  CurvasAgressivas: number,
+  TrocasAgressivas: number,
+  RPMmedio: number,
+  VelocidadeMax: number,
+  VelocidadeMedia: number,
 }
 export interface viagemProps {
-  carId: string,
+  tripId: string,
   dateTimeStart: string,
   dateTimeEnd: string,
-  duration: String,
-  eventsCount: eventsCountProps
 }
 
-type ScreenNavigationProp<
+export interface relatorioProps {
+  id?: string
+  EntityId: String,
+  TripId: string,
+  DateTimeStart: string,
+  DateTimeEnd: string,
+  Duration: number,
+  TripResult: TripResultProps
+}
+
+export type ScreenNavigationProp<
   T extends keyof RootStackParamList
   > = StackNavigationProp<RootStackParamList, T>;
 
@@ -59,6 +64,7 @@ export interface veiculoPropsNavigate {
 }
 export interface CarDashboardProps {
   id: string,
+  entityId: String,
   manufacturer: String,
   model: String,
   transmission: String,
@@ -68,6 +74,11 @@ export interface CarDashboardProps {
   color: String,
   fuel: String,
   ipva: String,
+}
+
+export interface ViagemStatisticsProps {
+  relatorio: relatorioProps,
+  title: string
 }
 export interface SensorDataProps {
   x: string,

@@ -1,7 +1,8 @@
-import { userProps, veiculoProps } from '../utils/interfaces';
+import { relatorioProps, userProps, veiculoProps } from '../utils/interfaces';
 import ENV from '../../env'
 import axios from "axios";
 import AlertDelegator from '../utils/alertDelegator';
+import { Dispatch, SetStateAction } from 'react';
 // const brokerApi = axios.create({
 //   baseURL: ENV.BROKER_UPDATE_URL,
 // });
@@ -10,10 +11,14 @@ const backendApi = axios.create({
   baseURL: ENV.BACKEND_URL
 });
 
+const MLApi = axios.create({
+  baseURL: ENV.ML_URL
+});
+
 async function signUpUser(user: userProps) {
   try {
 
-    const response = await backendApi.post('User/Create', user);
+    const response = await backendApi.post('User/Create', user)
     AlertDelegator.showAlert(response.status, "Usuário cadastrado com sucesso!");
 
   } catch (error: any) {
@@ -83,6 +88,45 @@ function getTripsByUserAndVehicle(vehicleId: string, userId: string) {
   }
 }
 
+function getRelatorioByTripId(tripId: String) {
+  try {
+    console.log("tripId: ", tripId)
+    const response = backendApi.get(`Relatorio/BrokerTrip/${tripId}`);
+    return response
+  } catch (error: any) {
+    AlertDelegator.showAlert(error.response.status, error.response.data)
+    throw error;
+  }
+}
+
+function getBrokerTrips(entityId: String) {
+  try {
+    console.log("EntityId: ", entityId)
+    const response = backendApi.get(`BrokerTrip/${entityId}`);
+    return response
+  } catch (error: any) {
+    AlertDelegator.showAlert(error.response.status, error.response.data)
+    throw error;
+  }
+}
+
+async function requestRelatorio(tripId: String, entityId: String) {
+  try {
+    console.log("EntityId: ", 'sth_/_' + entityId)
+    console.log("tripId: ", tripId)
+    const response = backendApi.post('ML/Relatorio', {
+      trip_id: tripId,
+      entity_id: entityId
+    });
+    return response
+
+  } catch (error: any) {
+    console.log("error: ", error)
+    AlertDelegator.showAlert(error.response.status, error.response.data)
+    throw error;
+  }
+}
+
 // async function postSensorsData(data: SensorDataPostProps) {
 //   try {
 //     const headers = {
@@ -110,6 +154,9 @@ export default {
   editVehicle,
   getUserVehicles,
   editUser,
-  getTripsByUserAndVehicle
+  getTripsByUserAndVehicle,
+  getRelatorioByTripId,
+  getBrokerTrips,
+  requestRelatorio
 }
 

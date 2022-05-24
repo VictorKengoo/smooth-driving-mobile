@@ -28,7 +28,7 @@ const EditCarModal: React.FC<EditCarModalProps> = ({
     'Ano',
     'Combustível',
     'Transmissão',
-    'Situação IPVA'
+    'Situação ipva'
   ]
 
   const [year, setYear] = useState(statesPlaceholder[0]);
@@ -38,7 +38,7 @@ const EditCarModal: React.FC<EditCarModalProps> = ({
   const [color, setColor] = useState('');
   const [manufacturer, setManufacturer] = useState('');
   const [transmission, setTransmission] = useState(statesPlaceholder[2]);
-  const [IPVA, setIPVA] = useState(statesPlaceholder[3]);
+  const [ipva, setIpva] = useState(statesPlaceholder[3]);
 
   function clearStates() {
     setYear(statesPlaceholder[0]);
@@ -48,20 +48,21 @@ const EditCarModal: React.FC<EditCarModalProps> = ({
     setColor('');
     setManufacturer('');
     setTransmission(statesPlaceholder[2]);
-    setIPVA(statesPlaceholder[3]);
+    setIpva(statesPlaceholder[3]);
   }
 
   function handleEditCar() {
     const carId = carData.id
     const vehicle = {
       id: carId,
+      entityId: carData.entityId,
       manufacturer: manufacturer,
       model: model,
       color: color,
       year: year,
       fuel: fuel,
       transmission: transmission,
-      IPVA: IPVA,
+      ipva: ipva,
       plate: plate,
     } as veiculoProps
 
@@ -130,9 +131,9 @@ const EditCarModal: React.FC<EditCarModalProps> = ({
 
                 <Select
                   options={Filters.situationIPVAList}
-                  text={carData.IPVA}
-                  title={'Situação IPVA'}
-                  setState={setIPVA}
+                  text={carData.ipva}
+                  title={'Situação ipva'}
+                  setState={setIpva}
                 />
 
                 <AuthInput

@@ -6,13 +6,13 @@ const width = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
   main: {
     flex: 1,
-    paddingRight: 12,
+    // paddingRight: 12,
     paddingBottom: 12,
   },
 
   infoSection: {
-
-    width: width / 2.8,
+    // width: width / 2.8
+    width: '98%',
     height: '100%',
     flex: 1,
     justifyContent: 'space-between',
@@ -23,18 +23,29 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+
   infoName: {
+    textAlign: 'center',
     color: globalProps.defaultWhite,
-    fontSize: 18,
+    fontSize: 24,
     fontFamily: globalProps.font,
     fontWeight: 'normal',
     marginBottom: 12,
   },
 
-  infoValue: {
+  infoValueSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  unidade: {
     color: globalProps.defaultWhite,
     fontSize: 24,
-    // alignSelf: 'center',
+  },
+
+  infoValue: {
+    color: globalProps.defaultWhite,
+    fontSize: 56,
     fontFamily: globalProps.font,
     fontWeight: 'bold',
   }

@@ -1,36 +1,51 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalProps } from '../../global/globalProps';
-import { eventsCountProps } from '../../utils/interfaces';
-import ViagemStatisticsModal from '../ViagemStatisticsModal';
+import api from '../../services/api';
+import { ScreenNavigationProp } from '../../utils/interfaces';
 
 import { styles } from './styles'
 
 interface ViagemInfoProps {
   dateTimeStart: String,
-  duration: String,
-  eventsCount: eventsCountProps,
-  maxRPMReached?: number,
+  duration: string,
+  tripId: string,
+  entityId: String,
+  navigation: ScreenNavigationProp<"CarDashboard">
+  setShowAppLoader: Dispatch<SetStateAction<boolean>>
 }
 
-const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTimeStart, duration, eventsCount, maxRPMReached }) => {
-
-  const [showStatisticsModal, setShowStatisticsModal] = useState(false)
-
-  console.log("DateTime: ", dateTimeStart)
+const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTimeStart, duration, tripId, entityId, navigation, setShowAppLoader }) => {
 
   const viagemDateTimeSplit = dateTimeStart.split('T')
   const viagemDate = viagemDateTimeSplit[0].replaceAll('-', '/')
   const viagemTime = viagemDateTimeSplit[1].slice(0, -1)
-
   const infoName = `Viagem ${viagemDate} - ${viagemTime}`
+
+  function getRelatorio() {
+    setShowAppLoader(true)
+    api.requestRelatorio(tripId, entityId).then(response => {
+      if (response.status === 200) {
+        console.log("Relatoio retornado: ", response.data)
+
+        setShowAppLoader(false)
+
+        navigation.navigate('ViagemStatistics', {
+          relatorio: response.data,
+          title: infoName
+        })
+      }
+    })
+  }
 
   return (
     <TouchableOpacity
       style={styles.main}
       activeOpacity={globalProps.buttonActiveOpacity}
-      onPress={() => setShowStatisticsModal(true)}
+      onPress={() => {
+        getRelatorio()
+      }}
     >
       <View style={styles.infoSection}>
         <Text style={styles.infoName}>
@@ -43,14 +58,6 @@ const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTimeStart, duration, events
           {duration}
         </Text>
       </View>
-      <ViagemStatisticsModal
-        eventsCount={eventsCount}
-        title={infoName}
-        visible={showStatisticsModal}
-        onClose={() => { setShowStatisticsModal(false); }}
-        onSelect={() => { }}
-        maxRPMReached={maxRPMReached}
-      />
     </TouchableOpacity >
   )
 }

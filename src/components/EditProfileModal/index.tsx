@@ -105,12 +105,6 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 />
 
                 <AuthInput
-                  value={userData.CNH}
-                  setUseState={setCNH}
-                  placeholder="CNH"
-                />
-
-                <AuthInput
                   value=''
                   setUseState={setPassword}
                   placeholder="Senha"

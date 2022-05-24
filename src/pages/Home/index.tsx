@@ -21,7 +21,7 @@ import { styles } from './styles'
 import AuthContext from '../../contexts/auth'
 
 import CarInfo from '../../components/CarInfo'
-import AddCarModal from '../../components/AddCarModal'
+// import AddCarModal from '../../components/AddCarModal'
 
 import api from '../../services/api'
 import { useReducer } from 'react'
@@ -74,17 +74,16 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
   }
 
-  function handleEditProfile() {
-    setUserData({
-      id: authUser.id,
-      name: authUser.name,
-      email: authUser.email,
-      password: authUser.password,
-      CNH: userData.CNH,
-      vehicles: authUser.vehicles
-    })
-    setShowEditUserModal(true)
-  }
+  // function handleEditProfile() {
+  //   setUserData({
+  //     id: authUser.id,
+  //     name: authUser.name,
+  //     email: authUser.email,
+  //     password: authUser.password,
+  //     vehicles: authUser.vehicles
+  //   })
+  //   setShowEditUserModal(true)
+  // }
 
   function handleLogout() {
     context.signOut()
@@ -100,8 +99,6 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
       const veiculoSearchLower = veiculoSearch.toLowerCase()
 
       veiculos.forEach((veiculo) => {
-        // console.log("Validation: ", veiculo.manufacturer.toLowerCase().includes(veiculoSearchLower))
-        console.log(veiculo)
         if (veiculo) {
           if (veiculo.model.toLowerCase().includes(veiculoSearchLower) ||
             veiculo.manufacturer.toLowerCase().includes(veiculoSearchLower) ||
@@ -153,15 +150,14 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
                 {"\n"}{authUser?.name}
               </Text>
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 activeOpacity={0.5}
                 onPress={handleEditProfile}
               >
                 <FontAwesome5 name='user-edit' size={36} color='white' />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 activeOpacity={0.5}
-                // style={styles.logoutButton}
                 onPress={handleLogout}
               >
                 <MaterialIcons name='logout' size={40} color='white' />
@@ -206,7 +202,6 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
 
               {
                 veiculos ? veiculos.map((veiculo, index) => {
-                  console.log("IPVA: ", veiculo.ipva)
                   return (
                     <CarInfo
                       key={index}
@@ -221,7 +216,7 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
                         color: veiculo.color,
                         fuel: veiculo.fuel,
                         ipva: veiculo.ipva,
-                        maxRPMReached: veiculo.maxRPMReached
+                        entityId: veiculo.entityId,
                       }}
                     />
                   )
@@ -230,13 +225,13 @@ const Home: React.FC<Props<'Home'>> = ({ navigation }) => {
             </View>
           </View>
         </ScrollView>
-        <AddCarModal
+        {/* <AddCarModal
           visible={showAddCarModal}
           title={'Adicionar Carro'}
           onClose={() => { setShowAddCarModal(false) }}
           userId={authUser?.id}
           refreshScreen={forceUpdate}
-        />
+        /> */}
         <EditProfileModal
           userData={userData}
           visible={showEditUserModal}

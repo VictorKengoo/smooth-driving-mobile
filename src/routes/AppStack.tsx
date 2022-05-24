@@ -4,12 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import AuthContext from '../contexts/auth';
 
-import { CarDashboardProps } from '../utils/interfaces';
+import { CarDashboardProps, ViagemStatisticsProps } from '../utils/interfaces';
 import Landing from '../pages/Landing';
 import SignUp from '../pages/SignUp';
 import Login from '../pages/Login';
 import Home from '../pages/Home';
 import CarDashboard from '../pages/CarDashboard';
+import ViagemStatisticsModal from '../components/ViagemStatisticsModal';
+import ViagemStatistics from '../pages/ViagemStatistics';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -21,6 +23,7 @@ export type RootStackParamList = {
   CarDashboard: CarDashboardProps;
   AccelerometerData: undefined
   GyroscopeData: undefined
+  ViagemStatistics: ViagemStatisticsProps
 };
 
 const AppStack: React.FC = () => {
@@ -45,6 +48,7 @@ const AppStack: React.FC = () => {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={Home} options={{ gestureEnabled: false }} />
       <Stack.Screen name="CarDashboard" component={CarDashboard} />
+      <Stack.Screen name="ViagemStatistics" component={ViagemStatistics} />
 
       {/* <Stack.Screen name="AccelerometerData" component={AccelerometerData} /> */}
       {/* <Stack.Screen name="GyroscopeData" component={GyroscopeData} /> */}
