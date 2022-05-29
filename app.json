@@ -17,7 +17,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "org.ftt.smooth.driving.mobile"
     },
     "android": {
       "adaptiveIcon": {

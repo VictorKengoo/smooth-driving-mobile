@@ -27,8 +27,6 @@ const ViagemInfo: React.FC<ViagemInfoProps> = ({ dateTimeStart, duration, tripId
     setShowAppLoader(true)
     api.requestRelatorio(tripId, entityId).then(response => {
       if (response.status === 200) {
-        console.log("Relatoio retornado: ", response.data)
-
         setShowAppLoader(false)
 
         navigation.navigate('ViagemStatistics', {
