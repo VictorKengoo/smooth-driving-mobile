@@ -90,7 +90,6 @@ function getTripsByUserAndVehicle(vehicleId: string, userId: string) {
 
 function getRelatorioByTripId(tripId: String) {
   try {
-    console.log("tripId: ", tripId)
     const response = backendApi.get(`Relatorio/BrokerTrip/${tripId}`);
     return response
   } catch (error: any) {
@@ -101,7 +100,6 @@ function getRelatorioByTripId(tripId: String) {
 
 function getBrokerTrips(entityId: String) {
   try {
-    console.log("EntityId: ", entityId)
     const response = backendApi.get(`BrokerTrip/${entityId}`);
     return response
   } catch (error: any) {
@@ -112,8 +110,6 @@ function getBrokerTrips(entityId: String) {
 
 async function requestRelatorio(tripId: String, entityId: String) {
   try {
-    console.log("EntityId: ", 'sth_/_' + entityId)
-    console.log("tripId: ", tripId)
     const response = backendApi.post('ML/Relatorio', {
       trip_id: tripId,
       entity_id: entityId
